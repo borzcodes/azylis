@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vere",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "dev-server.js"
+      ],
+      "port": 4321
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azylis — Shop</title>
+<meta name="description" content="Hand-finished acetate frames, shaped around real faces.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="is-pdp">
+
+<header class="site-header is-stuck" id="siteHeader">
+  <a class="brand" href="index.html" aria-label="Azylis home">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>
+    </span>
+    <span class="brand-word">AZYLIS</span>
+  </a>
+
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="shop.html" class="nav-link is-active">Shop</a>
+    <a href="index.html#categories" class="nav-link">Collections</a>
+    <a href="index.html#about" class="nav-link">About</a>
+    <a href="index.html#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <div class="utility">
+    <nav class="langs" aria-label="Language">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="es">SPA</button>
+    </nav>
+    <button class="icon-btn" type="button" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.6" stroke="currentColor" stroke-width="1.7"/><path d="m15.7 15.7 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn" type="button" aria-label="Account">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.4" r="3.7" stroke="currentColor" stroke-width="1.7"/><path d="M5.2 19.4c.7-3.5 3.4-5.3 6.8-5.3s6.1 1.8 6.8 5.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn" type="button" aria-label="Bag">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5.6 8.6h12.8l-1 11H6.6l-1-11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.1 10.2V7.9a2.9 2.9 0 0 1 5.8 0v2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="index.html#categories">Collections</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<main class="shop" id="shop">
+
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Home</a><span aria-hidden="true">/</span>
+    <em id="crumbCat">Shop</em>
+  </nav>
+
+  <header class="shop-head">
+    <h1 class="shop-title" id="shopTitle">All frames</h1>
+    <p class="shop-lede" id="shopLede"></p>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <div class="shop-grid" id="shopGrid"></div>
+
+</main>
+
+<footer class="pdp-foot">
+  <a class="back-link" href="index.html#categories">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to categories
+  </a>
+</footer>
+
+<footer class="site-foot">
+  <div class="foot-inner">
+
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="Azylis home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-word">AZYLIS</span>
+        </a>
+        <p class="foot-note">Hand-finished acetate frames, shaped around real faces — designed, cut and fitted in Morocco.</p>
+      </div>
+
+      <div class="foot-side">
+        <div class="foot-where">
+          <h3 class="foot-label">Studio</h3>
+          <p class="foot-city">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.6-5.2 6.6-10.2A6.6 6.6 0 0 0 5.4 10.8C5.4 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.4" stroke="currentColor" stroke-width="1.5"/></svg>
+            Casablanca, Morocco
+          </p>
+        </div>
+
+        <div class="foot-social">
+          <h3 class="foot-label">Follow</h3>
+          <div class="socials">
+        <a class="social" href="#" aria-label="Instagram (opens in a new tab)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.9" stroke="currentColor" stroke-width="1.6"/><circle cx="16.9" cy="7.1" r="1.1" fill="currentColor"/></svg>
+        </a>
+        <a class="social" href="#" aria-label="Facebook (opens in a new tab)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.7 21v-7.6h2.6l.4-3h-3V8.5c0-.9.25-1.5 1.5-1.5H17V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8.2v3h2.6V21Z" fill="currentColor"/></svg>
+        </a>
+        <a class="social" href="#" aria-label="X (opens in a new tab)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.2 3.8h4.1l4 5.5 4.7-5.5h2.4l-6 7 6.4 8.9h-4.1l-4.3-5.9-5 5.9H3.9l6.4-7.5Z" fill="currentColor"/></svg>
+        </a>
+        <a class="social" href="#" aria-label="TikTok (opens in a new tab)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.3 3h2.5a4.9 4.9 0 0 0 4.2 4.3v2.5a7.3 7.3 0 0 1-4.2-1.4v6.4a5.7 5.7 0 1 1-5.7-5.7c.3 0 .5 0 .8.05v2.6a3.15 3.15 0 1 0 2.4 3.05Z" fill="currentColor"/></svg>
+        </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-bar">
+      <p>&copy; 2026 Azylis. All rights reserved.</p>
+    </div>
+
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>
