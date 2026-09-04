@@ -52,37 +52,39 @@
     "Learn more": ["En savoir plus", "اعرف المزيد", "Saber más"],
     "Add new products": ["Voir les nouveautés", "أضف منتجات جديدة", "Ver novedades"],
 
+    /* ---- the reel ---- */
+    "Seen in Azylis": ["Vu en Azylis", "إطلالات أزيليس", "Visto en Azylis"],
+    "Casablanca — 2026": ["Casablanca — 2026", "الدار البيضاء — 2026", "Casablanca — 2026"],
+
     /* ---- bento ---- */
-    "Purchasing with insurance, made easy.": ["L'achat avec assurance, en toute simplicité.", "الشراء بالتأمين، ببساطة.", "Comprar con seguro, sin complicaciones."],
-    "This is our promise to you. We accept most vision insurance plans, both in and out-of-network.":
-      ["C'est notre promesse : nous acceptons la plupart des mutuelles optiques, en réseau comme hors réseau.",
-       "هذا وعدنا لك: نقبل معظم تأمينات البصر، داخل الشبكة وخارجها.",
-       "Esta es nuestra promesa: aceptamos la mayoría de seguros ópticos, dentro y fuera de la red."],
-    "Shop with insurance": ["Acheter avec assurance", "تسوّق بالتأمين", "Comprar con seguro"],
     "Shop online, thrive in-store!": ["En ligne ou en boutique !", "تسوّق أونلاين، وجرّب في المتجر!", "¡Compra online, disfruta en tienda!"],
     "Online convenience meets in-store expertise for your ultimate eyewear experience.":
       ["La simplicité du web et l'expertise en boutique, pour une expérience optique complète.",
        "سهولة الإنترنت وخبرة المتجر معًا، لتجربة نظارات متكاملة.",
        "La comodidad online se une a la experiencia en tienda para una experiencia óptica completa."],
-    "Our lenses": ["Nos verres", "عدساتنا", "Nuestras lentes"],
-    "They quickly darken in sunlight and fade back to clear indoors — eyeglasses and sunglasses in one. Available in prescription and non-prescription.":
-      ["Ils foncent au soleil et redeviennent clairs à l'intérieur : lunettes de vue et de soleil en une seule paire. Avec ou sans correction.",
-       "تغمق تحت الشمس وتعود شفافة في الداخل: نظارة طبية وشمسية في زوج واحد. متوفرة بالمقاس الطبي وبدونه.",
-       "Se oscurecen al sol y vuelven a ser transparentes en interiores: gafas graduadas y de sol en un solo par. Con o sin graduación."],
-    "Blue-violet light": ["Lumière bleu-violet", "الضوء الأزرق البنفسجي", "Luz azul-violeta"],
-    "Prescription sun": ["Solaire à la vue", "شمسية طبية", "Sol graduado"],
-    "Try it virtually": ["Essayage virtuel", "جرّبها افتراضيًا", "Pruébalas virtualmente"],
-    "Experience our top eyeglasses brands online with virtual try-on for a personalised fit.":
-      ["Essayez nos montures en ligne grâce à l'essayage virtuel, pour un ajustement personnalisé.",
-       "جرّب مجموعتنا أونلاين عبر القياس الافتراضي للحصول على مقاس يناسبك.",
-       "Prueba nuestras monturas online con el probador virtual para un ajuste personalizado."],
-    "Need an eye exam?": ["Besoin d'un examen de vue ?", "تحتاج فحص نظر؟", "¿Necesitas un examen visual?"],
-    "Schedule your in-person eye exam at a Azylis studio or partner optician online now.":
-      ["Réservez dès maintenant votre examen de vue en studio Azylis ou chez un opticien partenaire.",
-       "احجز الآن فحص نظرك في استوديو أزيليس أو لدى أحد شركائنا من أخصائيي البصريات.",
-       "Reserva ya tu examen visual en un estudio Azylis o con un óptico asociado."],
-    "Schedule now": ["Prendre rendez-vous", "احجز الآن", "Reservar ahora"],
-    "eye specialists": ["spécialistes de la vue", "أخصائي بصريات", "especialistas ópticos"],
+    "How to know the glasses that fit you":
+      ["Comment savoir quelles lunettes vous vont",
+       "كيف تعرف النظارة التي تناسبك",
+       "Cómo saber qué gafas te quedan bien"],
+    "Three checks. Get them right and any frame you love will sit where it should.":
+      ["Trois repères. Respectez-les et toute monture qui vous plaît tombera juste.",
+       "ثلاث خطوات؛ اضبطها وستستقر أي نظارة تحبّها في مكانها الصحيح.",
+       "Tres comprobaciones. Acertadas, cualquier montura que te guste caerá en su sitio."],
+    "Contrast your face shape": ["Jouez le contraste avec votre visage", "اختر ما يعاكس شكل وجهك", "Contrasta la forma de tu rostro"],
+    "Round and oval faces are flattered by angular frames; square and heart-shaped faces by rounder ones. Opposites, not echoes.":
+      ["Les visages ronds et ovales sont mis en valeur par des montures anguleuses ; les visages carrés et en cœur, par des formes plus rondes. Le contraire, pas l'écho.",
+       "الوجوه المستديرة والبيضاوية تبرزها الإطارات الحادة الزوايا، والوجوه المربّعة والقلبية تناسبها الأشكال الأكثر استدارة: العكس لا التكرار.",
+       "Los rostros redondos y ovalados lucen mejor con monturas angulosas; los cuadrados y de corazón, con formas más redondeadas. Lo contrario, no el eco."],
+    "Match the width to your face": ["Ajustez la largeur à votre visage", "طابِق العرض مع عرض وجهك", "Ajusta el ancho a tu rostro"],
+    "The frame should finish where your face does, never past your temples.":
+      ["La monture doit s'arrêter là où s'arrête votre visage, jamais au-delà des tempes.",
+       "يجب أن ينتهي الإطار حيث ينتهي وجهك، دون أن يتجاوز الصدغين.",
+       "La montura debe terminar donde termina tu rostro, nunca más allá de las sienes."],
+    "Read the numbers on the arm": ["Lisez les chiffres sur la branche", "اقرأ الأرقام على ذراع النظارة", "Lee los números de la varilla"],
+    "Lens width, bridge and temple length are printed inside every temple. Copy them from a pair that already fits.":
+      ["Largeur du verre, pont et longueur de branche sont inscrits à l'intérieur de chaque branche. Reprenez-les d'une paire qui vous va déjà.",
+       "عرض العدسة ومقاس الجسر وطول الذراع مطبوعة داخل كل ذراع؛ انقلها من نظارة تناسبك بالفعل.",
+       "El ancho de la lente, el puente y la longitud de la varilla vienen impresos dentro de cada varilla. Cópialos de unas gafas que ya te queden bien."],
 
     /* ---- perks strip ---- */
     "Total protection": ["Protection totale", "حماية كاملة", "Protección total"],

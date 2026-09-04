@@ -140,7 +140,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    STAGE
    ============================================================ */
 
-.stage{ position:relative; height:300vh }
+/* Three beats share one pin: hero, clarity + card deck, then the reel.
+   Height is what buys each beat its scroll distance — see TUNE in script.js
+   for where one ends and the next begins. */
+.stage{ position:relative; height:460vh }
 
 .stage-pin{
   position:sticky; top:0;
@@ -292,6 +295,64 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 /* ============================================================
+   THE REEL
+   Six cards carrying two arrangements: a stack in the clarity
+   section's empty right half, then a full-width gallery. Only the
+   frame is styled here — every position comes from script.js, so
+   the two layouts are one interpolation rather than two sets of
+   rules fighting each other.
+   ============================================================ */
+
+.reel{
+  position:absolute; inset:0; z-index:1;
+  perspective:1500px; perspective-origin:50% 50%;
+  pointer-events:none;
+  overflow:hidden;
+}
+.reel-track{
+  position:absolute; inset:0;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.reel-card{
+  position:absolute; left:50%; top:50%;
+  margin:0;
+  width:clamp(132px,14.5vw,214px);
+  aspect-ratio:3/4;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  will-change:transform,opacity;
+  opacity:0;
+  box-shadow:0 40px 70px -34px rgba(0,0,0,.75);
+}
+.reel-card img{
+  width:100%; height:100%;
+  object-fit:cover; object-position:center 30%;
+  display:block;
+  /* matches the film behind them; one line to put the colour back */
+  filter:grayscale(1) contrast(1.05);
+}
+
+/* caption set into opposite corners, the way the reference splits its type */
+.reel-copy{
+  position:absolute; inset:auto max(2rem,5vw) 7vh;
+  left:max(2rem,5vw); z-index:3;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem;
+  color:#fff; pointer-events:none;
+  opacity:0; will-change:opacity,transform;
+}
+.reel-title{
+  margin:0;
+  font-size:clamp(1.7rem,3.4vw,3rem);
+  font-weight:800; letter-spacing:-.038em; line-height:1;
+  text-shadow:0 2px 26px rgba(0,0,0,.35);
+}
+.reel-note{
+  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.72); padding-bottom:.35rem;
+}
+
+/* ============================================================
    SCROLL CUE
    ============================================================ */
 
@@ -334,7 +395,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .nav{display:none}
   .icon-btn:nth-child(2){display:none}
   .burger{display:block}
-  .stage{height:280vh}
+  .stage{height:420vh}
   .feature-strip{max-width:none;gap:1rem}
   .feature-txt i{display:none}
   .layer-clarity{
@@ -349,6 +410,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 @media (max-width:640px){
+  .reel-copy{flex-direction:column; align-items:flex-start; gap:.35rem; bottom:5vh}
+  .reel-note{padding-bottom:0}
   .feature-strip{
     flex-direction:column; align-items:center; gap:.55rem;
     bottom:3vh; width:auto;
@@ -461,16 +524,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 .bcard--w2{grid-column:span 2}
-.bcard--w3{grid-column:span 3}
 
-.bcard--lav{background:#DEDDF6}
 .bcard--sun{background:#F6DE72}
-.bcard--rose{background:#E4C6B9}
-.bcard--mint{background:#CFE7D6}
 .bcard--peach{background:#F1DAC5}
 
 .bcard-copy{position:relative;z-index:2;max-width:30ch}
-.bcard--w3 .bcard-copy{max-width:46ch}
+/* The fitting guide carries three steps, so its copy needs more room than a
+   standard card — and its photo (32% of the card) steps back to make it.
+   Both are percentages of the same box, so the gap between them cannot close. */
+.bcard--fit .bcard-copy{max-width:60%}
+/* the hero's "Find my fit" jumps here, and the header sits over the top edge */
+.bcard--fit{scroll-margin-top:92px}
 
 .bcard-title{
   margin:0;
@@ -497,31 +561,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .bcard-art{margin:0;position:absolute;z-index:1;pointer-events:none}
 .bcard-art img{display:block;width:100%;height:100%;object-fit:contain}
 
-.bcard-art--tilt{
-  right:-4%; bottom:-14%; width:56%;
-  transform:rotate(-12deg);
-}
 .bcard-art--drop{
   right:-8%; bottom:-10%; width:74%;
   transform:rotate(14deg);
 }
-
-/* lenses card: two frames stacked on a plinth */
-.bcard-art--pedestal{
-  right:4%; top:50%; width:38%; aspect-ratio:1/.72;
-  transform:translateY(-50%);
-}
-.pedestal{
-  position:absolute; left:6%; right:6%; bottom:6%; height:34%;
-  border-radius:50%;
-  background:radial-gradient(ellipse at 50% 40%, #F6EDE6 0%, #E7D3C8 70%, #DFC7BA 100%);
-}
-.bcard-art--pedestal img{
-  position:absolute; width:82%; height:auto;
-  filter:drop-shadow(0 12px 18px rgba(60,35,20,.28));
-}
-.lens-a{left:9%; bottom:34%}
-.lens-b{left:16%; bottom:14%; width:76%; opacity:.96}
 
 /* photographic cards */
 .bcard-art--photo{
@@ -529,56 +572,61 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   overflow:hidden;
 }
 .bcard-art--photo img{object-fit:cover;object-position:center 26%}
-.bcard-art--exam{width:46%;height:72%}
+/* narrower than a plain photo card: the three steps sit to its left */
+.bcard-art--fit{width:32%;height:80%}
 
-/* ---------------- specialists row ---------------- */
-
-.specialists{display:flex;align-items:center;gap:.55rem;margin-top:1.3rem}
-.faces{display:flex}
-.faces i,
-.faces-more{
-  width:26px;height:26px;border-radius:50%;
-  border:2px solid #F1DAC5;
-  background-size:cover;background-position:center 24%;
-  margin-left:-8px;
+/* Two shots in the same box, holding two seconds each. Only the top one is
+   animated — the one beneath stays opaque, so the card's ground never shows
+   through the middle of the crossfade. */
+.fit-shot{position:absolute;inset:0}
+.fit-shot--top{
+  animation:fitSwap 6.4s ease-in-out infinite;
+  will-change:opacity;
 }
-.faces i:first-child{margin-left:0}
-.faces-more{
-  display:grid;place-items:center;
-  background:var(--ink);color:#fff;
-  font-size:.6rem;font-weight:700;font-style:normal;
+@keyframes fitSwap{
+  0%,   31.25% {opacity:0}   /* 2.0s on the first shot */
+  50%,  81.25% {opacity:1}   /* 1.2s across, 2.0s on the second */
+  100%         {opacity:0}   /* 1.2s back */
 }
-.specialists-txt{font-size:.7rem;color:rgba(20,17,14,.7)}
-.specialists-txt b{font-weight:700;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){
+  .fit-shot--top{animation:none;opacity:0}
+}
 
-/* ---------------- lens list ---------------- */
+/* ---------------- fitting steps ---------------- */
 
-.lens-list{margin-top:1.1rem;display:grid;gap:.5rem;max-width:34ch}
-.lens-row{
+.fit-list{margin-top:1.1rem;display:grid;gap:.5rem}
+.fit-row{
   padding:.6rem .85rem;
   background:rgba(255,255,255,.5);
   font-size:.75rem;
 }
-.lens-row--lead{background:#FBF7F4}
-.lens-row b{display:block;font-weight:700;font-size:.78rem}
-.lens-row span{display:block;margin-top:.3rem;line-height:1.55;color:rgba(20,17,14,.68)}
+.fit-row--lead{background:#FBF7F4}
+.fit-row b{display:block;font-weight:700;font-size:.78rem}
+.fit-row span{display:block;margin-top:.3rem;line-height:1.55;color:rgba(20,17,14,.68)}
 
 /* ---------------- responsive ---------------- */
 
+/* Two cards, one of them two columns wide: an intermediate two-column grid
+   would leave a hole, so the bento stacks straight away. */
 @media (max-width:900px){
-  .bento-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .bcard--w2,.bcard--w3{grid-column:span 2}
-  .bcard-art--pedestal{width:44%}
+  .bento-grid{grid-template-columns:1fr}
+  .bcard--w2{grid-column:span 1}
+  /* Full-width card, so the steps have to be held off the photo explicitly:
+     a ch-based width would run straight under it. Percentages keep the two
+     columns proportional at every width in this band. */
+  .bcard--fit .bcard-copy{max-width:52%}
+  .bcard-art--fit{width:34%;height:86%}
 }
 
 @media (max-width:640px){
-  .bento-grid{grid-template-columns:1fr}
-  .bcard--w2,.bcard--w3{grid-column:span 1}
   .bcard{min-height:260px}
-  .bcard-copy,.bcard--w3 .bcard-copy{max-width:none}
+  .bcard-copy,.bcard--fit .bcard-copy{max-width:none}
   .bcard-art--photo{width:44%;height:52%}
-  .bcard-art--pedestal{position:relative;right:auto;top:auto;transform:none;width:70%;margin:1.2rem auto 0}
-  .lens-list{max-width:none}
+  /* three steps leave no room beside them, so the photo drops into the flow */
+  .bcard-art--fit{
+    position:relative; right:auto; bottom:auto;
+    width:100%; height:150px; margin:1.2rem 0 0;
+  }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -916,8 +964,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .voice-by{margin-top:auto;padding-top:1.6rem}
 .voice-name{
   display:block;
-  font-family:"Sacramento",cursive;
-  font-size:1.55rem; line-height:1; color:var(--ink);
+  /* a signature, but one that still reads as a name at this size */
+  font-family:"Caveat","Segoe Script",cursive;
+  font-size:1.5rem; font-weight:600; line-height:1.05;
+  letter-spacing:.005em; color:var(--ink);
 }
 .voice-role{
   display:block; margin-top:.4rem;
@@ -1430,12 +1480,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 [dir="rtl"] .colours{right:auto;left:.85rem}
 [dir="rtl"] .chip{left:auto;right:.7rem}
 [dir="rtl"] .bag-count{right:auto;left:2px}
-[dir="rtl"] .bcard-art--tilt{right:auto;left:-4%;transform:rotate(12deg)}
 [dir="rtl"] .bcard-art--drop{right:auto;left:-8%;transform:rotate(-14deg)}
-[dir="rtl"] .bcard-art--pedestal{right:auto;left:4%}
 [dir="rtl"] .bcard-art--photo{right:auto;left:0}
-[dir="rtl"] .faces i,[dir="rtl"] .faces-more{margin-left:0;margin-right:-8px}
-[dir="rtl"] .faces i:first-child{margin-right:0}
 [dir="rtl"] .size-dot:first-child span{left:auto;right:0}
 [dir="rtl"] .size-dot:last-child span{right:auto;left:0}
 

@@ -8,7 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,7 +24,7 @@
   <nav class="nav" aria-label="Primary">
     <a href="#top" class="nav-link is-active">Home</a>
     <a href="#shop" class="nav-link">Shop</a>
-    <a href="#collections" class="nav-link">Collections</a>
+    <a href="#categories" class="nav-link">Collections</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#contact" class="nav-link">Contact</a>
   </nav>
@@ -53,7 +53,7 @@
   <nav>
     <a href="#top">Home</a>
     <a href="#shop">Shop</a>
-    <a href="#collections">Collections</a>
+    <a href="#categories">Collections</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -72,6 +72,27 @@
           <video id="heroVideo" src="assets/hero.mp4" muted playsinline preload="auto"></video>
           <span class="film-veil" id="filmVeil"></span>
         </div>
+      </div>
+
+      <!-- ---------------- the reel ----------------
+           Six cards, one set. They grow out of a point beside the clarity
+           copy, hold as a stack, then fan across the full width as the
+           closing beat. Every position is set from script.js. -->
+      <div class="reel" id="reel" aria-hidden="true">
+        <div class="reel-track" id="reelTrack">
+          <figure class="reel-card"><img src="assets/reel-01.jpg" alt="Clear optical frames, city light"></figure>
+          <figure class="reel-card"><img src="assets/reel-02.jpg" alt="Round sunglasses with a black blazer"></figure>
+          <figure class="reel-card"><img src="assets/reel-03.jpg" alt="Square sunglasses, hands framing the shot"></figure>
+          <figure class="reel-card"><img src="assets/reel-04.jpg" alt="Dark oval frames with a camel coat"></figure>
+          <figure class="reel-card"><img src="assets/reel-05.jpg" alt="Olive acetate frames with a navy-collared polo"></figure>
+          <figure class="reel-card"><img src="assets/reel-06.jpg" alt="Tortoise cat-eye frames on the steps"></figure>
+        </div>
+      </div>
+
+      <!-- the reel's own caption, set into opposite corners -->
+      <div class="reel-copy" id="reelCopy" aria-hidden="true">
+        <h2 class="reel-title">Seen in Azylis</h2>
+        <span class="reel-note">Casablanca &mdash; 2026</span>
       </div>
 
       <!-- ---------------- hero copy ---------------- -->
@@ -122,7 +143,7 @@
           </p>
           <div class="cta-row">
             <a class="btn btn-solid" href="#about"><span>Learn more</span></a>
-            <a class="btn btn-ghost" href="#collections"><span>Add new products</span></a>
+            <a class="btn btn-ghost" href="#categories"><span>Add new products</span></a>
           </div>
         </div>
       </div>
@@ -139,20 +160,8 @@
   <section class="bento" id="shop">
     <div class="bento-grid">
 
-      <!-- insurance -->
-      <article class="bcard bcard--lav bcard--w2" data-reveal="card">
-        <div class="bcard-copy">
-          <h2 class="bcard-title">Purchasing with insurance, made easy.</h2>
-          <p class="bcard-text">This is our promise to you. We accept most vision insurance plans, both in and out-of-network.</p>
-          <span class="pill">Shop with insurance</span>
-        </div>
-        <figure class="bcard-art bcard-art--tilt">
-          <img src="assets/frame-midnight.png" alt="Azylis frame in Midnight Black">
-        </figure>
-      </article>
-
       <!-- online / in store -->
-      <article class="bcard bcard--sun" data-reveal="card" style="--d:.08s">
+      <article class="bcard bcard--sun" data-reveal="card" style="--d:0s">
         <div class="bcard-copy">
           <h2 class="bcard-title">Shop online, thrive in-store!</h2>
           <p class="bcard-text">Online convenience meets in-store expertise for your ultimate eyewear experience.</p>
@@ -162,54 +171,29 @@
         </figure>
       </article>
 
-      <!-- lenses -->
-      <article class="bcard bcard--rose bcard--w3 bcard--lenses" id="collections" data-reveal="card" style="--d:.16s">
+      <!-- how to find your fit -->
+      <article class="bcard bcard--peach bcard--w2 bcard--fit" id="fit" data-reveal="card" style="--d:.1s">
         <div class="bcard-copy">
-          <h2 class="bcard-title">Our lenses</h2>
-          <div class="lens-list">
-            <div class="lens-row lens-row--lead">
-              <b>Transitions&reg;</b>
-              <span>They quickly darken in sunlight and fade back to clear indoors — eyeglasses and sunglasses in one. Available in prescription and non-prescription.</span>
+          <h2 class="bcard-title">How to know the glasses that fit you</h2>
+          <p class="bcard-text">Three checks. Get them right and any frame you love will sit where it should.</p>
+          <div class="fit-list">
+            <div class="fit-row fit-row--lead">
+              <b>Contrast your face shape</b>
+              <span>Round and oval faces are flattered by angular frames; square and heart-shaped faces by rounder ones. Opposites, not echoes.</span>
             </div>
-            <div class="lens-row"><b>Blue-violet light</b></div>
-            <div class="lens-row"><b>Prescription sun</b></div>
+            <div class="fit-row">
+              <b>Match the width to your face</b>
+              <span>The frame should finish where your face does, never past your temples.</span>
+            </div>
+            <div class="fit-row">
+              <b>Read the numbers on the arm</b>
+              <span>Lens width, bridge and temple length are printed inside every temple. Copy them from a pair that already fits.</span>
+            </div>
           </div>
         </div>
-        <figure class="bcard-art bcard-art--pedestal">
-          <span class="pedestal" aria-hidden="true"></span>
-          <img class="lens-a" src="assets/frame-front.png" alt="Azylis frame in Havana Tortoise">
-          <img class="lens-b" src="assets/frame-angle.png" alt="Azylis frame, three-quarter view">
-        </figure>
-      </article>
-
-      <!-- virtual try-on -->
-      <article class="bcard bcard--mint" data-reveal="card" style="--d:.24s">
-        <div class="bcard-copy">
-          <h2 class="bcard-title">Try it virtually</h2>
-          <p class="bcard-text">Experience our top eyeglasses brands online with virtual try-on for a personalised fit.</p>
-        </div>
-        <figure class="bcard-art bcard-art--photo">
-          <img src="assets/wear-02.jpg" alt="Model wearing Azylis frames">
-        </figure>
-      </article>
-
-      <!-- eye exam -->
-      <article class="bcard bcard--peach bcard--w2" data-reveal="card" style="--d:.32s">
-        <div class="bcard-copy">
-          <h2 class="bcard-title">Need an eye exam?</h2>
-          <p class="bcard-text">Schedule your in-person eye exam at a Azylis studio or partner optician online now.</p>
-          <span class="pill">Schedule now</span>
-          <div class="specialists">
-            <span class="faces" aria-hidden="true">
-              <i style="background-image:url('assets/wear-02.jpg')"></i>
-              <i style="background-image:url('assets/wear-01.jpg')"></i>
-              <i class="faces-more">+</i>
-            </span>
-            <span class="specialists-txt"><b>100+</b> eye specialists</span>
-          </div>
-        </div>
-        <figure class="bcard-art bcard-art--photo bcard-art--exam">
-          <img src="assets/wear-01.jpg" alt="Eye examination at a Azylis studio">
+        <figure class="bcard-art bcard-art--photo bcard-art--fit">
+          <img class="fit-shot" src="assets/fit-01.jpg" alt="Azylis frames worn at the right width">
+          <img class="fit-shot fit-shot--top" src="assets/fit-02.jpg" alt="" aria-hidden="true">
         </figure>
       </article>
 
@@ -319,7 +303,7 @@
     </header>
     <div class="rail cats-rail">
         <a class="cat cat--men" href="shop.html?c=sun-men" data-reveal="card" style="--d:.0s">
-          <img src="assets/wear-01.jpg" alt="Model wearing sun frames">
+          <img src="assets/cat-sun-men.jpg" alt="Olive acetate sun frames, worn">
           <span class="cat-veil" aria-hidden="true"></span>
           <span class="cat-body">
             <span class="cat-name">Sunglasses men</span>
@@ -327,7 +311,7 @@
           </span>
         </a>
         <a class="cat cat--women" href="shop.html?c=sun-women" data-reveal="card" style="--d:.7s">
-          <img src="assets/wear-02.jpg" alt="Model wearing sun frames">
+          <img src="assets/cat-sun-women.jpg" alt="Dark oval sun frames, worn">
           <span class="cat-veil" aria-hidden="true"></span>
           <span class="cat-body">
             <span class="cat-name">Sunglasses women</span>
@@ -335,7 +319,7 @@
           </span>
         </a>
         <a class="cat cat--lensm" href="shop.html?c=lenses-men" data-reveal="card" style="--d:.14s">
-          <img class="cat-product" src="assets/frame-midnight.png" alt="">
+          <img src="assets/cat-lenses-men.jpg" alt="Clear acetate optical frames, worn">
           <span class="cat-veil" aria-hidden="true"></span>
           <span class="cat-body">
             <span class="cat-name">Lenses men</span>
@@ -343,7 +327,7 @@
           </span>
         </a>
         <a class="cat cat--lensw" href="shop.html?c=lenses-women" data-reveal="card" style="--d:.21s">
-          <img class="cat-product" src="assets/frame-moss.png" alt="">
+          <img src="assets/cat-lenses-women.jpg" alt="Black round optical frames, worn">
           <span class="cat-veil" aria-hidden="true"></span>
           <span class="cat-body">
             <span class="cat-name">Lenses women</span>
@@ -351,7 +335,7 @@
           </span>
         </a>
         <a class="cat cat--clip" href="shop.html?c=clip-on" data-reveal="card" style="--d:.28s">
-          <img class="cat-product" src="assets/frame-angle.png" alt="">
+          <img src="assets/cat-clip-on.jpg" alt="Tortoise clip-on sun lenses, lifted">
           <span class="cat-veil" aria-hidden="true"></span>
           <span class="cat-body">
             <span class="cat-name">Clip-ons</span>

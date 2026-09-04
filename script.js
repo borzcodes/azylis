@@ -10,21 +10,53 @@
   /* ---------- tuning ---------------------------------------------------- */
 
   var TUNE = {
-    /* The film covers both sections. It never shrinks — it turns in 3D and
-       overscales so the rotated plane still reaches every edge. */
-    filmScale: [1, 1.2],
-    filmY:     [0, -11],    // deg of yaw
-    filmTilt:  [0, 5],      // deg of pitch
-    filmVeil:  [0.52, 0.66],
+    /* The film runs under all three beats and never shrinks — it turns in 3D
+       and overscales so the rotated plane still reaches every edge. It also
+       never stops: the loop is the constant the beats are cut against. */
+    filmScale: [1, 1.24],
+    filmY:     [0, -13],    // deg of yaw
+    filmTilt:  [0, 6],      // deg of pitch
+    filmVeil:  [0.52, 0.70],
     filmRun:   [0, 1],
 
-    /* where each thing happens along the 0..1 stage progress */
-    heroOut:    [0.00, 0.30],
-    clarityIn:  [0.52, 0.88],
-
+    /* Where each beat sits on the 0..1 stage progress. The stage is 460vh,
+       so one unit of progress is 3.6 screens of scrolling.
+         .00-.17  hero leaves
+         .29-.49  clarity copy arrives
+         .33-.58  the deck builds beside it
+         .49-.60  both hold — this is the composed frame
+         .60-.97  the deck fans into the reel and travels
+    */
+    heroOut:     [0.00, 0.17],
+    clarityIn:   [0.29, 0.49],
+    clarityOut:  [0.60, 0.73],
+    deckIn:      [0.33, 0.58],
+    reelRun:     [0.60, 0.97],
+    reelCopyIn:  [0.68, 0.82],
+    reelTravel:  [22, -14],   // vw the rail drifts, right to left, and rests filling the frame
+    deckScale:   1.26,        // the stack sits larger than the gallery it becomes
 
     smoothing: 0.14       // 0 = frozen, 1 = no smoothing
   };
+
+  /* Six cards, three arrangements each.
+       origin — a single point beside the clarity copy, where they grow from
+       deck   — the stack that fills the section's empty right half
+       reel   — the full-width gallery that closes the stage
+     x/y are viewport percentages so the composition survives any window
+     size, z is px of depth, r* are degrees. Progress interpolates
+     origin → deck → reel, so one set of cards carries the whole sequence
+     instead of three sets cross-fading. */
+  var DECK_X = 25;   // vw right of centre: the stack's centre, and its origin
+
+  var CARDS = [
+    { deck:{ x:24.5, y:-8, z:-260, rz:-12, ry:15 }, reel:{ x:-53, y: 5, z:-140, rz:-3, ry: 11 } },
+    { deck:{ x:26.5, y: 3, z:-150, rz:  7, ry:12 }, reel:{ x:-32, y:-6, z: -50, rz: 2, ry:  7 } },
+    { deck:{ x:27.5, y:-2, z: -40, rz: -4, ry: 9 }, reel:{ x:-11, y: 4, z:  20, rz:-2, ry:  2 } },
+    { deck:{ x:28.5, y: 6, z:  70, rz: 10, ry: 6 }, reel:{ x: 11, y:-5, z:  20, rz: 3, ry: -2 } },
+    { deck:{ x:30.0, y:-5, z: 180, rz: -8, ry: 3 }, reel:{ x: 32, y: 5, z: -50, rz:-2, ry: -7 } },
+    { deck:{ x:26.0, y: 1, z: 290, rz:  5, ry: 0 }, reel:{ x: 53, y:-4, z:-140, rz: 2, ry:-11 } }
+  ];
 
 
   /* ---------- helpers --------------------------------------------------- */
@@ -55,6 +87,10 @@
   var filmVeil  = $("filmVeil");
   var video     = $("heroVideo");
   var cue      = $("scrollCue");
+  var reelTrack = $("reelTrack");
+  var reelCopy  = $("reelCopy");
+
+  var cardEls = reelTrack ? [].slice.call(reelTrack.querySelectorAll(".reel-card")) : [];
 
   var clarityCopy  = clarity ? clarity.querySelector(".clarity-copy")  : null;
   var clarityMedia = clarity ? clarity.querySelector(".clarity-media") : null;
@@ -111,18 +147,71 @@
 
 
 
-    /* --- clarity in ---------------------------------------------------- */
+    /* --- clarity in, then out under the reel ---------------------------- */
     var ci = easeOut(norm(p, TUNE.clarityIn[0], TUNE.clarityIn[1]));
-    clarity.style.opacity = ci.toFixed(3);
-    clarity.style.visibility = ci <= 0.001 ? "hidden" : "visible";
-    clarity.setAttribute("aria-hidden", ci < 0.5 ? "true" : "false");
+    var co = easeInOut(norm(p, TUNE.clarityOut[0], TUNE.clarityOut[1]));
+    var cv = ci * (1 - co);
+    clarity.style.opacity = cv.toFixed(3);
+    clarity.style.visibility = cv <= 0.001 ? "hidden" : "visible";
+    clarity.setAttribute("aria-hidden", cv < 0.5 ? "true" : "false");
 
     if (clarityCopy) {
-      clarityCopy.style.transform = "translate3d(" + ((1 - ci) * -46).toFixed(2) + "px,0,0)";
+      clarityCopy.style.transform =
+        "translate3d(" + ((1 - ci) * -46 - co * 70).toFixed(2) + "px,0,0)";
     }
-    if (clarityMedia) {
-      clarityMedia.style.transform =
-        "translate3d(" + ((1 - ci) * 56).toFixed(2) + "px," + ((1 - ci) * 18).toFixed(2) + "px,0)";
+
+    /* --- the reel ------------------------------------------------------- */
+    if (cardEls.length) {
+      /* Under 900px the clarity copy runs full width, so the stack cannot sit
+         beside it — it moves to the centre and lifts above the copy, and the
+         gallery pulls in so six cards still read on a narrow screen. */
+      var narrow = vw < 900;
+      var sx = narrow ? -DECK_X : 0;
+      var sy = narrow ? -17 : 0;
+      var rk = narrow ? 0.9 : 1;
+      /* the stack has to clear the copy below it, and a phone has far less
+         height to spend on it than a desktop has width */
+      var ds = narrow ? 0.92 : TUNE.deckScale;
+
+      var ra = easeInOut(norm(p, TUNE.reelRun[0], TUNE.reelRun[1]));
+
+      /* The rail sweeps right-to-left as it forms. This rides on the reel
+         target rather than the track, so at ra = 0 it contributes nothing and
+         the deck is left exactly where it was placed. */
+      var tv = mix(TUNE.reelTravel[0], TUNE.reelTravel[1], ra);
+
+      /* each card starts a little after the one before it */
+      var d0 = TUNE.deckIn[0];
+      var dSpan = TUNE.deckIn[1] - d0;
+      var step = dSpan * 0.1;
+      var run  = dSpan * 0.5;
+
+      for (var i = 0; i < cardEls.length; i++) {
+        var c = CARDS[i];
+        var da = easeOut(norm(p, d0 + i * step, d0 + i * step + run));
+
+        var x  = mix(mix(DECK_X + sx, c.deck.x + sx, da), c.reel.x * rk + tv, ra);
+        var y  = mix(mix(sy,          c.deck.y + sy, da), c.reel.y,      ra);
+        var z  = mix(mix(0,           c.deck.z,      da), c.reel.z,      ra);
+        var rz = mix(mix(0,           c.deck.rz,     da), c.reel.rz,     ra);
+        var ry = mix(mix(0,           c.deck.ry,     da), c.reel.ry,     ra);
+        var sc = mix(mix(0.06, ds, da), 1.06, ra);
+
+        cardEls[i].style.opacity = da.toFixed(3);
+        cardEls[i].style.transform =
+          "translate(-50%,-50%)" +
+          " translate3d(" + x.toFixed(2) + "vw," + y.toFixed(2) + "vh,0)" +
+          " translateZ(" + z.toFixed(1) + "px)" +
+          " rotateY(" + ry.toFixed(2) + "deg)" +
+          " rotateZ(" + rz.toFixed(2) + "deg)" +
+          " scale(" + sc.toFixed(3) + ")";
+      }
+    }
+
+    if (reelCopy) {
+      var rc = easeOut(norm(p, TUNE.reelCopyIn[0], TUNE.reelCopyIn[1]));
+      reelCopy.style.opacity = rc.toFixed(3);
+      reelCopy.style.transform = "translate3d(0," + ((1 - rc) * 26).toFixed(1) + "px,0)";
     }
   }
 
