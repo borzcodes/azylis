@@ -55,8 +55,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   padding:0 max(2rem, 4vw);
   transition:background .5s var(--ease), box-shadow .5s var(--ease), backdrop-filter .5s var(--ease);
 }
-/* the bar stays transparent the whole way down; only the ink colour flips
-   so it stays readable once the film is behind it */
+/* the bar stays transparent the whole way down */
 .site-header.is-stuck{background:transparent}
 
 /* entrance */
@@ -140,10 +139,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    STAGE
    ============================================================ */
 
-/* Three beats share one pin: hero, clarity + card deck, then the reel.
+/* Two beats share one pin: the hero, then the clarity copy + card deck.
    Height is what buys each beat its scroll distance — see TUNE in script.js
    for where one ends and the next begins. */
-.stage{ position:relative; height:460vh }
+.stage{ position:relative; height:320vh }
 
 .stage-pin{
   position:sticky; top:0;
@@ -159,17 +158,31 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .layer a, .layer button{pointer-events:auto}
 
-/* ---------- hero copy ---------- */
-.layer-hero{
-  display:flex; flex-direction:column; align-items:center;
-  padding-top:calc(var(--header-h) + 3.2vh);
-  text-align:center;
+/* ---------- hero ----------
+   Paper-white, most of it empty. The wordmark sits left of centre, the
+   tagline beside it, and the reel's cards run along the bottom edge
+   below both — the mark and its caption are never covered. */
+.layer-hero{z-index:0}
+
+.hero-mark{
+  position:absolute; inset-inline-start:17vw; top:30vh;
+  margin:0;
+  font-size:clamp(3.4rem, min(13.6vw, 25vh), 15.5rem);
+  font-weight:800; line-height:.86; letter-spacing:-.05em;
+  white-space:nowrap;
+}
+
+.hero-side{
+  position:absolute; inset-inline-start:62vw; top:32vh;
+  /* the last term keeps it clear of the right-hand card, which pulls
+     inward when a short window caps the card's width by height */
+  width:min(23.5vw, 21rem, calc(70vh - 12vw));
 }
 
 .hero-title{
   margin:0;
-  font-size:clamp(2.5rem, 6.1vw, 5.3rem);
-  font-weight:800; line-height:1.02; letter-spacing:-.04em;
+  font-size:clamp(1.05rem, 1.5vw, 1.45rem);
+  font-weight:500; line-height:1.3; letter-spacing:-.015em;
 }
 .mask{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
 .mask-in{
@@ -181,11 +194,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @keyframes maskIn{to{transform:none;opacity:1}}
 
 .hero-sub{
-  margin:1.5rem 0 0;
-  max-width:46ch;
-  font-size:clamp(.9rem,1.02vw,1.02rem);
-  font-weight:400; line-height:1.7; color:rgba(255,255,255,.78);
+  margin:1.1rem 0 0;
+  font-size:clamp(.78rem,.86vw,.86rem);
+  font-weight:400; line-height:1.65; color:var(--ink-70);
 }
+
+.hero-links{display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.3rem}
+.hero-link{
+  position:relative; display:inline-flex; align-items:center; gap:.4rem;
+  padding-bottom:.2rem;
+  font-size:.8rem; font-weight:600;
+}
+.hero-link::after{content:"\2192";font-weight:500;transition:transform .45s var(--ease)}
+.hero-link::before{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:currentColor;
+  transform:scaleX(0); transform-origin:right;
+  transition:transform .5s var(--ease);
+}
+.hero-link:hover::before{transform:scaleX(1);transform-origin:left}
+.hero-link:hover::after{transform:translateX(3px)}
 
 .cta-row{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:1.9rem}
 
@@ -231,37 +259,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    FEATURE STRIP
    ============================================================ */
 
+/* a three-line caption under the mark, above the row */
 .feature-strip{
-  position:absolute; z-index:4; left:50%; bottom:4.2vh;
-  transform:translateX(-50%);
-  width:var(--shell); max-width:940px;
-  display:flex; justify-content:center; align-items:stretch;
-  gap:clamp(1.2rem,3.4vw,3.4rem);
+  position:absolute; z-index:0;
+  inset-inline-start:17vw; top:52vh;
+  display:grid; gap:.4rem;
   will-change:opacity,transform;
 }
-.feature{
-  display:flex; align-items:center; gap:.75rem;
-  flex:0 1 auto; padding:0 .2rem;
-  position:relative;
-}
-.feature + .feature::before{
-  content:""; position:absolute; left:clamp(-1.7rem,-1.7vw,-.6rem); top:14%; bottom:14%;
-  width:1px; background:var(--ink-14);
-}
+.feature{display:flex; align-items:center; gap:.55rem}
 .feature-ico{
-  width:38px;height:38px;flex:none;border-radius:50%;
+  width:15px;height:15px;flex:none;
   display:grid;place-items:center;
-  color:var(--ink);
-  background:var(--paper-2);
-  box-shadow:inset 0 0 0 1px var(--ink-14);
+  color:var(--ink-45);
 }
-.feature-ico svg{width:19px;height:19px}
-.feature-txt{display:grid;gap:.12rem;line-height:1.25}
-.feature-txt b{font-size:.84rem;font-weight:700;letter-spacing:-.005em}
-.feature-txt i{font-style:normal;font-size:.74rem;color:var(--ink-45)}
+.feature-ico svg{width:15px;height:15px}
+.feature-txt{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 .45rem;line-height:1.3}
+.feature-txt b{font-size:.74rem;font-weight:600;letter-spacing:-.005em}
+.feature-txt i{font-style:normal;font-size:.72rem;color:var(--ink-45)}
 
 /* ============================================================
-   CLARITY SECTION
+   THE SALE (second beat)
+   A phone-portrait clip with the offer beside it, opposite the deck.
    ============================================================ */
 
 .layer-clarity{
@@ -274,33 +292,36 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   opacity:0; visibility:hidden;
 }
 
-.clarity-copy{max-width:25rem;will-change:opacity,transform}
+.clarity-copy{max-width:38rem;will-change:opacity,transform}
 
-.clarity-title{
+.clarity-promo{display:flex; align-items:center; gap:clamp(1.4rem,2.4vw,2.2rem)}
+.promo-clip{
+  margin:0; flex:none;
+  width:clamp(150px, 15vw, 224px); aspect-ratio:9/16; overflow:hidden;
+  background:var(--paper-3);
+  box-shadow:0 30px 50px -28px rgba(0,0,0,.5);
+}
+.promo-clip video{width:100%; height:100%; object-fit:cover; display:block}
+.promo-copy{display:grid; gap:.9rem; justify-items:start}
+.promo-kicker{
   margin:0;
-  font-size:clamp(2rem,3.9vw,3.4rem);
-  font-weight:800; line-height:1.06; letter-spacing:-.038em;
+  font-size:.68rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-45);
 }
-.clarity-sub{
-  margin:1.4rem 0 0; max-width:44ch;
-  font-size:clamp(.86rem,.95vw,.97rem); line-height:1.75; color:var(--ink-70);
+.promo-line{
+  margin:0;
+  font-size:clamp(1.5rem,2.7vw,2.4rem);
+  font-weight:800; line-height:1.08; letter-spacing:-.035em;
 }
-.layer-clarity .cta-row{justify-content:flex-start;margin-top:2.1rem}
-
-.clarity-media{
-  justify-self:end;
-  display:grid; gap:1rem;
-  width:min(300px,26vw);
-  will-change:opacity,transform;
-}
+.promo-copy .btn{margin-top:.5rem}
 
 /* ============================================================
    THE REEL
-   Six cards carrying two arrangements: a stack in the clarity
-   section's empty right half, then a full-width gallery. Only the
-   frame is styled here — every position comes from script.js, so
-   the two layouts are one interpolation rather than two sets of
-   rules fighting each other.
+   Six cards carrying two arrangements: the hero's photo row, then a
+   stack in the clarity section's empty right half. Only the frame
+   is styled here — every position comes from script.js, so the two
+   layouts are one interpolation rather than two sets of rules
+   fighting each other.
    ============================================================ */
 
 .reel{
@@ -317,39 +338,33 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .reel-card{
   position:absolute; left:50%; top:50%;
   margin:0;
-  width:clamp(132px,14.5vw,214px);
+  /* drawn at the hero row's size — a column of five across, capped so a
+     short window still fits the row — and scaled *down* for the deck,
+     which keeps it crisp (cardK in script.js) */
+  width:min(23.3vw, 45vh);
   aspect-ratio:3/4;
   transform-style:preserve-3d;
   backface-visibility:hidden;
-  will-change:transform,opacity;
-  opacity:0;
-  box-shadow:0 40px 70px -34px rgba(0,0,0,.75);
+  will-change:transform;
 }
+/* the shadow lives on its own layer so fading it is not a repaint of the
+   photo; --sh is 0 while the card lies flat in the row and 1 in the stack */
+.reel-card::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  box-shadow:0 34px 60px -30px rgba(0,0,0,.5);
+  opacity:var(--sh,1);
+  will-change:opacity;
+}
+.reel-card-in{
+  display:block; width:100%; height:100%;
+  opacity:0; transform:translateY(7vh);
+  animation:cardIn 1.25s var(--d,0s) var(--ease-out) forwards;
+}
+@keyframes cardIn{to{opacity:1;transform:none}}
 .reel-card img{
   width:100%; height:100%;
   object-fit:cover; object-position:center 30%;
   display:block;
-  /* matches the film behind them; one line to put the colour back */
-  filter:grayscale(1) contrast(1.05);
-}
-
-/* caption set into opposite corners, the way the reference splits its type */
-.reel-copy{
-  position:absolute; inset:auto max(2rem,5vw) 7vh;
-  left:max(2rem,5vw); z-index:3;
-  display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem;
-  color:#fff; pointer-events:none;
-  opacity:0; will-change:opacity,transform;
-}
-.reel-title{
-  margin:0;
-  font-size:clamp(1.7rem,3.4vw,3rem);
-  font-weight:800; letter-spacing:-.038em; line-height:1;
-  text-shadow:0 2px 26px rgba(0,0,0,.35);
-}
-.reel-note{
-  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
-  color:rgba(255,255,255,.72); padding-bottom:.35rem;
 }
 
 /* ============================================================
@@ -357,8 +372,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    ============================================================ */
 
 .scroll-cue{
-  position:absolute; z-index:5; right:max(2rem,4vw); bottom:4.6vh;
   display:flex; align-items:center; gap:.6rem;
+  margin-top:1.8rem;
   font-size:.66rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
   color:var(--ink-45);
   will-change:opacity;
@@ -387,7 +402,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (max-width:1180px){
   .scroll-cue{display:none}
   .nav{gap:1.5rem}
-  .clarity-media{width:min(250px,25vw)}
 }
 
 @media (max-width:900px){
@@ -395,32 +409,28 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .nav{display:none}
   .icon-btn:nth-child(2){display:none}
   .burger{display:block}
-  .stage{height:420vh}
-  .feature-strip{max-width:none;gap:1rem}
-  .feature-txt i{display:none}
+  .stage{height:300vh}
+
+  /* the mark and tagline stack at the left; the row runs three across with
+     a second row peeking under the fold, so there is no pocket for the caption */
+  .hero-mark{inset-inline-start:6vw;top:24vh;font-size:clamp(3.2rem,21vw,7rem)}
+  .hero-side{inset-inline-start:6vw;top:35vh;width:min(86vw,24rem)}
+  .hero-title{font-size:clamp(1.05rem,4.6vw,1.3rem)}
+  .feature-strip{display:none}
+  .reel-card{width:min(44vw,36vh)}
+
   .layer-clarity{
     grid-template-columns:1fr;
     align-content:end;
     padding-bottom:8vh;
   }
-  .clarity-media{
-    justify-self:start;
-    grid-auto-flow:column; width:auto; gap:.75rem;
-  }
+  /* the deck sits above the offer here, so the clip is kept small */
+  .promo-clip{width:118px}
+  .clarity-promo{gap:1.2rem}
 }
 
 @media (max-width:640px){
-  .reel-copy{flex-direction:column; align-items:flex-start; gap:.35rem; bottom:5vh}
-  .reel-note{padding-bottom:0}
-  .feature-strip{
-    flex-direction:column; align-items:center; gap:.55rem;
-    bottom:3vh; width:auto;
-  }
-  .feature + .feature::before{display:none}
-  .feature-ico{width:30px;height:30px}
-  .feature-ico svg{width:15px;height:15px}
   .scroll-cue{display:none}
-  .hero-sub{max-width:34ch}
   .btn{height:44px;padding:0 1.35rem;font-size:.82rem}
 }
 
@@ -435,7 +445,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     animation-iteration-count:1 !important;
     transition-duration:.01ms !important;
   }
-  .mask-in,.reveal,.site-header > *{opacity:1;transform:none}
+  .mask-in,.reveal,.reel-card-in,.site-header > *{opacity:1;transform:none}
 }
 
 /* ============================================================
@@ -482,186 +492,166 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 
 /* ============================================================
-   BENTO GRID
-   The stretch between the pinned stage and the footer. Cards rise
-   in on scroll with a slight 3D pitch, matching the stage's language.
+   SCROLL-LINKED ASSEMBLY
+   Nothing in a [data-seq] section arrives on its own. script.js turns
+   the section's scroll position into 0..1 and writes --in on each
+   part; the rules below decide what that number means. Every var()
+   carries a default of 1, so with the script absent the section
+   simply renders finished.
    ============================================================ */
 
-/* reveal variant: rises with a pitch, so it reads as 3D like the stage */
-[data-reveal="card"]{
-  opacity:0;
-  transform:perspective(1000px) translateY(42px) rotateX(8deg);
-  transform-origin:50% 100%;
-  transition:opacity 1s var(--ease-out), transform 1.05s var(--ease-out);
-  transition-delay:var(--d,0s);
-}
-[data-reveal="card"].is-in{
-  opacity:1;
-  transform:perspective(1000px) translateY(0) rotateX(0deg);
+.seq-up{
+  opacity:var(--in,1);
+  transform:translate3d(0, calc((1 - var(--in,1)) * 26px), 0);
+  will-change:opacity, transform;
 }
 
-.bento{
-  max-width:1180px; margin:0 auto;
-  padding:clamp(3rem,6vw,5.5rem) max(1.25rem,3vw) clamp(1.4rem,2.4vw,2rem);
-}
-.bento-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(.7rem,1.2vw,1.1rem);
+@media (prefers-reduced-motion:reduce){
+  /* assembly is a scroll effect; without it the parts are just there */
+  .seq-up,
+  .visit-title{opacity:1 !important; transform:none !important}
+  .visit-clip{opacity:1; transform:none}
 }
 
-.bcard{
-  position:relative; overflow:hidden;
-  min-height:clamp(230px,26vw,300px);
-  padding:clamp(1.3rem,2.2vw,2rem);
-  display:flex; flex-direction:column;
-  isolation:isolate;
-  transition:transform .55s var(--ease-out), box-shadow .55s var(--ease-out);
+/* ============================================================
+   VISIT THE STUDIO
+   Title on top, then the two clips with the practical details
+   filling the column beside them. The copy assembles on scroll —
+   see [data-seq] in script.js — while each clip pops from nothing
+   once the section is on screen.
+   ============================================================ */
+
+.visit{
+  background:var(--paper);
+  padding:clamp(3.4rem,6.5vw,6rem) max(1.25rem,3vw);
+  scroll-margin-top:88px;
 }
-.bcard:hover{
-  transform:translateY(-4px);
-  box-shadow:0 26px 46px -30px rgba(20,17,14,.45);
+.visit-wrap{max-width:1180px; margin:0 auto}
+
+.visit-head{margin-bottom:clamp(1.6rem,3vw,2.6rem)}
+.visit-kicker{
+  margin:0 0 1rem;
+  font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-45);
 }
-
-.bcard--w2{grid-column:span 2}
-
-.bcard--sun{background:#F6DE72}
-.bcard--peach{background:#F1DAC5}
-
-.bcard-copy{position:relative;z-index:2;max-width:30ch}
-/* The fitting guide carries three steps, so its copy needs more room than a
-   standard card — and its photo (32% of the card) steps back to make it.
-   Both are percentages of the same box, so the gap between them cannot close. */
-.bcard--fit .bcard-copy{max-width:60%}
-/* the hero's "Find my fit" jumps here, and the header sits over the top edge */
-.bcard--fit{scroll-margin-top:92px}
-
-.bcard-title{
+.visit-title{
   margin:0;
-  font-size:clamp(1.05rem,1.55vw,1.4rem);
-  font-weight:700; line-height:1.22; letter-spacing:-.025em;
-}
-.bcard-text{
-  margin:.6rem 0 0;
-  font-size:clamp(.76rem,.85vw,.84rem); line-height:1.6;
-  color:rgba(20,17,14,.72);
-}
-
-.pill{
-  display:inline-flex; align-items:center; height:34px; padding:0 1.05rem;
-  margin-top:1.1rem; border-radius:999px;
-  background:var(--ink); color:#fff;
-  font-size:.7rem; font-weight:600; letter-spacing:.02em;
-  transition:background .35s var(--ease);
-}
-.bcard:hover .pill{background:var(--navy-hi)}
-
-/* ---------------- artwork ---------------- */
-
-.bcard-art{margin:0;position:absolute;z-index:1;pointer-events:none}
-.bcard-art img{display:block;width:100%;height:100%;object-fit:contain}
-
-.bcard-art--drop{
-  right:-8%; bottom:-10%; width:74%;
-  transform:rotate(14deg);
+  font-size:clamp(1.8rem,3.4vw,3rem);
+  font-weight:800; letter-spacing:-.04em; line-height:1.04;
+  opacity:var(--in,1);
+  transform-origin:50% 100%;
+  transform:
+    perspective(900px)
+    translate3d(0, calc((1 - var(--in,1)) * 34px), 0)
+    rotateX(calc((1 - var(--in,1)) * -16deg));
+  will-change:opacity, transform;
 }
 
-/* photographic cards */
-.bcard-art--photo{
-  right:0; bottom:0; width:52%; height:62%;
-  overflow:hidden;
-}
-.bcard-art--photo img{object-fit:cover;object-position:center 26%}
-/* narrower than a plain photo card: the three steps sit to its left */
-.bcard-art--fit{width:32%;height:80%}
-
-/* Two shots in the same box, holding two seconds each. Only the top one is
-   animated — the one beneath stays opaque, so the card's ground never shows
-   through the middle of the crossfade. */
-.fit-shot{position:absolute;inset:0}
-.fit-shot--top{
-  animation:fitSwap 6.4s ease-in-out infinite;
-  will-change:opacity;
-}
-@keyframes fitSwap{
-  0%,   31.25% {opacity:0}   /* 2.0s on the first shot */
-  50%,  81.25% {opacity:1}   /* 1.2s across, 2.0s on the second */
-  100%         {opacity:0}   /* 1.2s back */
-}
-@media (prefers-reduced-motion:reduce){
-  .fit-shot--top{animation:none;opacity:0}
+.visit-body{
+  display:grid; grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(2rem,4.5vw,4.5rem);
+  align-items:center;
 }
 
-/* ---------------- fitting steps ---------------- */
+/* ---------------- the clips ---------------- */
 
-.fit-list{margin-top:1.1rem;display:grid;gap:.5rem}
-.fit-row{
-  padding:.6rem .85rem;
-  background:rgba(255,255,255,.5);
-  font-size:.75rem;
+/* Phone-portrait cards that show the whole clip, sized by height so a
+   card always fits on one screen and the details keep their column. */
+.visit-clips{
+  --clip-gap:clamp(.9rem,1.6vw,1.5rem);
+  display:flex; gap:var(--clip-gap);
 }
-.fit-row--lead{background:#FBF7F4}
-.fit-row b{display:block;font-weight:700;font-size:.78rem}
-.fit-row span{display:block;margin-top:.3rem;line-height:1.55;color:rgba(20,17,14,.68)}
+.visit-clip{
+  position:relative; margin:0; overflow:hidden;
+  flex:none;
+  width:min(calc(78vh * 9 / 16), 19vw, 380px);
+  aspect-ratio:9/16;
+  background:var(--paper-3);
+  opacity:0; transform:scale(0);
+  will-change:transform, opacity;
+}
+/* visit-01 is pillarboxed inside a 16:9 file; cover on a 9:16 frame crops
+   those bars away exactly and leaves the recording itself untouched */
+.visit-clip video{width:100%; height:100%; object-fit:cover; display:block}
+.visit-chip{
+  position:absolute; top:1.1rem; left:1.1rem; z-index:1;
+  padding:.5rem .75rem;
+  background:rgba(70,66,62,.72); color:#fff;
+  font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  backdrop-filter:blur(6px);
+}
 
-/* ---------------- responsive ---------------- */
+[data-reveal="pop"].is-in{
+  animation:popIn .95s var(--d,0s) cubic-bezier(.2,1.35,.35,1) forwards;
+}
+@keyframes popIn{to{opacity:1; transform:scale(1)}}
 
-/* Two cards, one of them two columns wide: an intermediate two-column grid
-   would leave a hole, so the bento stacks straight away. */
+/* ---------------- the details ---------------- */
+
+.visit-aside{max-width:34rem}
+.visit-lede{
+  margin:0 0 1.8rem; max-width:46ch;
+  font-size:clamp(.88rem,.98vw,.98rem); line-height:1.75; color:var(--ink-70);
+}
+.visit-facts{margin:0; padding:0; display:grid}
+.visit-facts > div{
+  display:grid; grid-template-columns:8.5rem minmax(0,1fr); gap:1rem;
+  padding:.95rem 0;
+  border-top:1px solid var(--ink-14);
+}
+.visit-facts > div:last-child{border-bottom:1px solid var(--ink-14)}
+.visit-facts dt{
+  margin:0;
+  font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-45);
+  padding-top:.15rem;
+}
+.visit-facts dd{margin:0; font-size:.88rem; line-height:1.6}
+
+.visit-cta{display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.8rem}
+.visit-btn{
+  display:inline-flex; align-items:center; height:46px; padding:0 1.4rem;
+  background:var(--ink); color:var(--paper);
+  font-size:.82rem; font-weight:600;
+  text-decoration:none;
+  transition:opacity .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
+}
+.visit-btn--ghost{background:transparent; color:var(--ink); border:1px solid var(--ink-14)}
+.visit-btn:hover{opacity:.85}
+.visit-btn--ghost:hover{background:var(--ink); color:var(--paper); opacity:1}
+
 @media (max-width:900px){
-  .bento-grid{grid-template-columns:1fr}
-  .bcard--w2{grid-column:span 1}
-  /* Full-width card, so the steps have to be held off the photo explicitly:
-     a ch-based width would run straight under it. Percentages keep the two
-     columns proportional at every width in this band. */
-  .bcard--fit .bcard-copy{max-width:52%}
-  .bcard-art--fit{width:34%;height:86%}
+  .visit-body{grid-template-columns:1fr; gap:2.2rem}
+  .visit-clip{flex:1 1 0; width:auto; max-width:calc(80vh * 9 / 16)}
+  .visit-aside{max-width:none}
+  .visit-lede{max-width:none}
+  .visit-facts > div{grid-template-columns:7rem minmax(0,1fr)}
 }
-
 @media (max-width:640px){
-  .bcard{min-height:260px}
-  .bcard-copy,.bcard--fit .bcard-copy{max-width:none}
-  .bcard-art--photo{width:44%;height:52%}
-  /* three steps leave no room beside them, so the photo drops into the flow */
-  .bcard-art--fit{
-    position:relative; right:auto; bottom:auto;
-    width:100%; height:150px; margin:1.2rem 0 0;
-  }
-}
-
-@media (prefers-reduced-motion:reduce){
-  [data-reveal="card"]{opacity:1 !important;transform:none !important}
-}
-
-@media (prefers-reduced-motion:reduce){
-  [data-reveal],[data-reveal] img,[data-reveal] .mask-in{
-    opacity:1 !important; transform:none !important; clip-path:none !important;
-  }
+  .visit-clips{flex-direction:column}
+  .visit-clip{width:100%; max-width:none}
+  .visit-facts > div{grid-template-columns:1fr; gap:.3rem}
 }
 
 /* ============================================================
    SHORT DESKTOP WINDOWS
-   The frame is sized to the gap left between the CTA row and the
-   feature strip. On a squat window that gap collapses and the frame
-   shrinks to a thumbnail, so tighten the hero stack to give it back
-   room. Height-driven, because that is what is actually scarce.
+   The side column has to finish above the card that starts at 68vh
+   beneath it. On a squat window that gap collapses, so the column
+   sheds its least important lines first. Height-driven, because
+   that is what is actually scarce.
    ============================================================ */
 
 @media (min-width:900px) and (max-height:820px){
-  .layer-hero{padding-top:calc(var(--header-h) + 1.4vh)}
-  .hero-title{font-size:clamp(2rem, min(6.1vw, 8.4vh), 5.3rem)}
-  .hero-sub{margin-top:.95rem;font-size:.88rem;line-height:1.6}
-  .cta-row{margin-top:1.15rem}
-  .btn{height:43px;font-size:.84rem}
-  .feature-strip{bottom:2.4vh}
-  .feature-ico{width:32px;height:32px}
-  .feature-ico svg{width:16px;height:16px}
+  .hero-side .scroll-cue{display:none}
+  .hero-sub{margin-top:.8rem;font-size:.8rem;line-height:1.55}
+  .hero-links{margin-top:1rem}
+  .feature-strip{gap:.3rem}
+  .feature-txt i{display:none}
 }
 
-@media (min-width:900px) and (max-height:660px){
+@media (min-width:900px) and (max-height:700px){
   .hero-sub{display:none}          /* the headline still carries the message */
-  .layer-hero{padding-top:calc(var(--header-h) + 1vh)}
-  .cta-row{margin-top:1.4rem}
+  .promo-clip{width:150px}
 }
 
 
@@ -816,25 +806,23 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .cat:hover img{transform:scale(1.06)}
 
-/* the lenses card shows a frame rather than a face, so it sits on the tint */
-.cat-product{
-  object-fit:contain !important;
-  padding:0 12% 22%;
-  object-position:center 46% !important;
-}
-.cat--lensm{background:linear-gradient(170deg,#E7E9EE 0%,#C3C8D2 55%,#9AA2B0 100%)}
-.cat--lensw{background:linear-gradient(170deg,#EDE9F3 0%,#D2C8E0 55%,#AC9DC2 100%)}
-.cat--clip{background:linear-gradient(170deg,#F6E7D4 0%,#E9C9A4 55%,#D9A874 100%)}
-
+/* The veil is one gradient with the opacity ramp written once, so the five
+   cards can differ in hue but never in strength — that drift is what made the
+   lenses and clip-on labels sit lighter than the two sunglasses cards. Each
+   card supplies three colours; nothing else. */
 .cat-veil{
   position:absolute; inset:0; z-index:1;
   transition:opacity .5s var(--ease);
+  background:linear-gradient(180deg,
+    rgb(var(--veil-top) / .20) 0%,
+    rgb(var(--veil-mid) / .30) 46%,
+    rgb(var(--veil-bot) / .80) 100%);
 }
-.cat--men   .cat-veil{background:linear-gradient(180deg, rgba(96,124,150,.20) 0%, rgba(30,48,68,.30) 46%, rgba(16,26,38,.80) 100%)}
-.cat--women .cat-veil{background:linear-gradient(180deg, rgba(196,168,96,.18) 0%, rgba(120,96,52,.28) 46%, rgba(48,36,20,.80) 100%)}
-.cat--lensm .cat-veil{background:linear-gradient(180deg, rgba(120,132,150,.10) 0%, rgba(56,66,82,.22) 46%, rgba(24,30,40,.76) 100%)}
-.cat--lensw .cat-veil{background:linear-gradient(180deg, rgba(140,120,160,.10) 0%, rgba(74,58,92,.22) 46%, rgba(34,26,44,.76) 100%)}
-.cat--clip  .cat-veil{background:linear-gradient(180deg, rgba(214,150,88,.10) 0%, rgba(150,92,44,.20) 46%, rgba(74,42,18,.76) 100%)}
+.cat--men  {--veil-top: 96 124 150; --veil-mid: 30  48  68; --veil-bot:16 26 38}
+.cat--women{--veil-top:196 168  96; --veil-mid:120  96  52; --veil-bot:48 36 20}
+.cat--lensm{--veil-top:120 132 150; --veil-mid: 56  66  82; --veil-bot:24 30 40}
+.cat--lensw{--veil-top:140 120 160; --veil-mid: 74  58  92; --veil-bot:34 26 44}
+.cat--clip {--veil-top:214 150  88; --veil-mid:150  92  44; --veil-bot:74 42 18}
 
 .cat-body{
   position:absolute; z-index:2; left:0; right:0; bottom:0;
@@ -1462,17 +1450,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font-family:"Noto Kufi Arabic","Plus Jakarta Sans",system-ui,sans-serif;
 }
 [dir="rtl"] .brand-word,
+[dir="rtl"] .hero-mark,
 [dir="rtl"] .voice-name{font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+[dir="rtl"] .hero-link::after{content:"\2190"}
 [dir="rtl"] .voice-name{font-size:1rem;font-weight:700;letter-spacing:-.01em}
 
 /* headline tracking that suits Latin is too tight for Arabic */
 [dir="rtl"] .hero-title,
-[dir="rtl"] .clarity-title,
+[dir="rtl"] .promo-line,
 [dir="rtl"] .shelf-title,
 [dir="rtl"] .voices-title,
 [dir="rtl"] .faq-heading,
 [dir="rtl"] .shop-title,
-[dir="rtl"] .bcard-title,
 [dir="rtl"] .cat-name{letter-spacing:0;line-height:1.3}
 
 /* absolutely-placed bits do not mirror on their own */
@@ -1480,8 +1469,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 [dir="rtl"] .colours{right:auto;left:.85rem}
 [dir="rtl"] .chip{left:auto;right:.7rem}
 [dir="rtl"] .bag-count{right:auto;left:2px}
-[dir="rtl"] .bcard-art--drop{right:auto;left:-8%;transform:rotate(-14deg)}
-[dir="rtl"] .bcard-art--photo{right:auto;left:0}
 [dir="rtl"] .size-dot:first-child span{left:auto;right:0}
 [dir="rtl"] .size-dot:last-child span{right:auto;left:0}
 
@@ -1582,94 +1569,4 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 @media (prefers-reduced-motion:reduce){
   .perk-ico{animation:none !important}
-}
-
-/* ============================================================
-   HERO FILM
-   Full-bleed behind the hero, scrubbed by scroll, then folded back
-   in 3D into a panel beside the clarity copy. Greyscale is a filter
-   rather than a baked encode, so it is one line to undo.
-   ============================================================ */
-
-.film{
-  position:absolute; inset:0; z-index:0;
-  perspective:1600px; perspective-origin:50% 45%;
-  pointer-events:none;
-  background:var(--paper);
-}
-.film-plane{
-  position:absolute; inset:-6%;      /* bleed, so a rotated plane keeps covering */
-  transform-origin:50% 50%;
-  will-change:transform;
-  backface-visibility:hidden;
-}
-.film-plane video{
-  width:100%; height:100%; object-fit:cover; display:block;
-  filter:grayscale(1) contrast(1.06);
-  /* a slow pull-back that runs whether or not anyone scrolls */
-  transform-origin:50% 50%;
-  animation:filmZoom 26s ease-in-out infinite alternate;
-}
-@keyframes filmZoom{
-  from{transform:scale(1.16)}
-  to  {transform:scale(1)}
-}
-@media (prefers-reduced-motion:reduce){
-  .film-plane video{animation:none;transform:none}
-}
-/* darkens the film under the hero copy, lifts again once the copy leaves */
-.film-veil{
-  position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(12,10,8,.52) 0%, rgba(12,10,8,.30) 45%, rgba(12,10,8,.58) 100%);
-  will-change:opacity;
-}
-
-/* hero type over film */
-.layer-hero{color:#fff}
-.hero-title{color:#fff;text-shadow:0 2px 26px rgba(0,0,0,.28)}
-.layer-hero .btn-ghost{
-  border-color:rgba(255,255,255,.5); color:#fff; background:transparent;
-}
-.layer-hero .btn-ghost::before{background:#fff}
-.layer-hero .btn-ghost:hover{color:var(--ink);border-color:#fff}
-.layer-hero .btn-solid{background:#fff;color:var(--ink)}
-.layer-hero .btn-solid::before{background:rgba(255,255,255,.82)}
-
-.feature-strip{color:#fff}
-.feature-txt b{color:#fff}
-.feature-txt i{color:rgba(255,255,255,.62)}
-.feature-ico{
-  background:rgba(255,255,255,.14); color:#fff;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
-}
-.feature + .feature::before{background:rgba(255,255,255,.24)}
-.scroll-cue{color:rgba(255,255,255,.66)}
-.scroll-cue-line{background:rgba(255,255,255,.3)}
-.scroll-cue-line::after{background:#fff}
-
-/* header reads light while it sits on the film */
-.site-header:not(.is-stuck){color:#fff}
-.site-header:not(.is-stuck) .brand-mark,
-.site-header:not(.is-stuck) .icon-btn{color:#fff}
-.site-header:not(.is-stuck) .nav-link{color:rgba(255,255,255,.76)}
-.site-header:not(.is-stuck) .nav-link:hover,
-.site-header:not(.is-stuck) .nav-link.is-active{color:#fff}
-.site-header:not(.is-stuck) .langs button{color:rgba(255,255,255,.6)}
-.site-header:not(.is-stuck) .langs button.is-on{color:#fff;background:rgba(255,255,255,.16)}
-.site-header:not(.is-stuck) .burger span{background:#fff}
-.site-header:not(.is-stuck) .icon-btn:hover{background:rgba(255,255,255,.16)}
-
-/* the clarity copy sits on paper once the film has folded away */
-.layer-clarity{color:#fff}
-.clarity-title{color:#fff;text-shadow:0 2px 26px rgba(0,0,0,.3)}
-.clarity-sub{color:rgba(255,255,255,.78)}
-.layer-clarity .btn-solid{background:#fff;color:var(--ink)}
-.layer-clarity .btn-solid::before{background:rgba(255,255,255,.82)}
-.layer-clarity .btn-ghost{border-color:rgba(255,255,255,.5);color:#fff;background:transparent}
-.layer-clarity .btn-ghost::before{background:#fff}
-.layer-clarity .btn-ghost:hover{color:var(--ink);border-color:#fff}
-
-@media (max-width:900px){
-  /* scrubbing is unreliable on touch, so the film simply plays itself */
-  .film-veil{background:linear-gradient(180deg, rgba(12,10,8,.55) 0%, rgba(12,10,8,.35) 45%, rgba(12,10,8,.62) 100%)}
 }

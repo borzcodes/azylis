@@ -38,7 +38,8 @@
   var key = new URLSearchParams(location.search).get("c");
   var cat = CATS[key] ? key : null;
 
-  document.title = "Azylis — " + (cat ? CATS[cat].title : "Shop");
+  var t = window.I18N ? window.I18N.t : function (s) { return s; };
+  document.title = "Azylis — " + t(cat ? CATS[cat].title : "Shop");
   $("shopTitle").textContent = cat ? CATS[cat].title : "All frames";
   $("shopLede").textContent  = cat ? CATS[cat].lede : "Every frame we make, hand-finished in Italian acetate.";
   $("crumbCat").textContent  = cat ? CATS[cat].title : "Shop";

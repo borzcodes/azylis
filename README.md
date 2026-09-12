@@ -22,7 +22,7 @@ serving it with a simpler static server, can leave the film blank.
 
 | File | What it is |
 |---|---|
-| `index.html` | Home — the pinned film stage, bento grid, perks, shelves, categories, testimonials, FAQ |
+| `index.html` | Home — the pinned film stage, the fit index, the studio, perks, shelves, categories, testimonials, FAQ |
 | `shop.html` | Product listing, filtered by `?c=` (`sun-men`, `sun-women`, `lenses-men`, `lenses-women`, `clip-on`) |
 | `product.html` | Product detail, selected by `?p=` (`havana-round`, `cat-eye-sun`, `round-metal`, `rim-round-sun`) |
 
@@ -56,6 +56,47 @@ composition holds at any window size.
 The film runs under all three beats and never stops; it loops on its own and
 scroll only turns it in space.
 
+## The fit index
+
+Section two is built on one device: a two-part label parts in space and a
+photographic card drops into the gap between the halves. All three items sit
+in the DOM together and only `.is-on` moves between them, so a swap is a
+single CSS transition on opacity and a Z translation — the DOM never changes,
+which is why the numbered list can drive the stage without a re-render.
+
+Editing it means touching two places that must stay in step: the three
+`.fitx-item` blocks in `index.html` and the three `.fitx-step` buttons beside
+them. The script pairs them by index and bails out if the counts disagree.
+
+The label halves are separate text nodes, so each translates on its own —
+`Face`/`Shape` becomes `Visage`/`Forme`, not a split phrase. Keep them as
+words that stand up alone, or the dictionary rows stop being true.
+
+## Scroll-linked assembly
+
+The fit index and the studio section below it do not arrive whole. A section
+marked `data-seq` turns its own scroll position into 0–1, and each
+`data-seq-part` inside declares the slice it cares about:
+
+```html
+<h2 class="visit-title" data-seq-part=".24 .58">Come and try them on</h2>
+```
+
+The script writes `--in` (0 to 1) onto that element and stops there; the CSS
+decides what the number means — `.seq-up` just fades and lifts, while the
+label halves, the card and the studio photo each spend it on their own 3D
+move. Every `var(--in, 1)` carries a default of 1, so with the script absent,
+or under `prefers-reduced-motion`, the sections render finished.
+
+A section gets `.is-built` once it is fully assembled. That is what holds the
+fit index carousel back — its timer runs from the start but a tick does
+nothing until the stage exists, so the first swap never fires over a
+half-built card.
+
+Sections finish assembling by the time their top reaches the upper eighth of
+the screen, so nothing is still moving once you are reading it. That ratio is
+the `0.88` in `seqRender`.
+
 ## Editing
 
 **Motion.** Every number worth arguing about sits in the `TUNE` object at the
@@ -88,5 +129,9 @@ product means touching both.
   French. Delivery windows, refund timings and the warranty in the FAQ are
   invented placeholders — check them against your real policy before launch.
 - **Social links in the footer are `#` placeholders.**
+- **The studio section needs a real photograph and real details.**
+  `store-01.jpg` is a lifestyle shot standing in for the Casablanca studio —
+  it is not the shopfront. The opening hours are invented, and there is no
+  street address or map link; add all four before launch.
 - **RTL had a structural pass, not a visual one.** Mirroring is handled; expect
   to nudge some spacing once you look at Arabic on a real screen.

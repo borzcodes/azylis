@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Azylis — Framed for how you see the world</title>
-<meta name="description" content="Azylis frames are shaped around real faces — lightweight acetate and hand-polished hinges for a fit you'll forget you're wearing.">
+<title>Azylis — Des montures à la mesure de votre regard</title>
+<meta name="description" content="Les montures Azylis épousent de vrais visages : acétate léger et charnières polies à la main, pour un confort que vous oublierez de porter.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,53 +65,49 @@
   <section class="stage" id="stage">
     <div class="stage-pin">
 
-      <!-- The film: full-bleed behind the hero, then folds back in 3D into a
-           panel beside the clarity copy. currentTime is driven by scroll. -->
-      <div class="film" id="film" aria-hidden="true">
-        <div class="film-plane" id="filmPlane">
-          <video id="heroVideo" src="assets/hero.mp4" muted playsinline preload="auto"></video>
-          <span class="film-veil" id="filmVeil"></span>
-        </div>
-      </div>
-
       <!-- ---------------- the reel ----------------
-           Six cards, one set. They grow out of a point beside the clarity
-           copy, hold as a stack, then fan across the full width as the
-           closing beat. Every position is set from script.js. -->
+           Six cards, one set. They open as the hero's photo row along the
+           bottom edge, then gather into a stack beside the clarity copy.
+           Every position is set from script.js. -->
       <div class="reel" id="reel" aria-hidden="true">
         <div class="reel-track" id="reelTrack">
-          <figure class="reel-card"><img src="assets/reel-01.jpg" alt="Clear optical frames, city light"></figure>
-          <figure class="reel-card"><img src="assets/reel-02.jpg" alt="Round sunglasses with a black blazer"></figure>
-          <figure class="reel-card"><img src="assets/reel-03.jpg" alt="Square sunglasses, hands framing the shot"></figure>
-          <figure class="reel-card"><img src="assets/reel-04.jpg" alt="Dark oval frames with a camel coat"></figure>
-          <figure class="reel-card"><img src="assets/reel-05.jpg" alt="Olive acetate frames with a navy-collared polo"></figure>
-          <figure class="reel-card"><img src="assets/reel-06.jpg" alt="Tortoise cat-eye frames on the steps"></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.30s"><img src="assets/reel-01.jpg" alt="Clear optical frames, city light"></span></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.38s"><img src="assets/reel-02.jpg" alt="Round sunglasses with a black blazer"></span></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.46s"><img src="assets/reel-03.jpg" alt="Square sunglasses, hands framing the shot"></span></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.54s"><img src="assets/reel-04.jpg" alt="Dark oval frames with a camel coat"></span></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.62s"><img src="assets/reel-05.jpg" alt="Olive acetate frames with a navy-collared polo"></span></figure>
+          <figure class="reel-card"><span class="reel-card-in" style="--d:.70s"><img src="assets/reel-06.jpg" alt="Tortoise cat-eye frames on the steps"></span></figure>
         </div>
       </div>
 
-      <!-- the reel's own caption, set into opposite corners -->
-      <div class="reel-copy" id="reelCopy" aria-hidden="true">
-        <h2 class="reel-title">Seen in Azylis</h2>
-        <span class="reel-note">Casablanca &mdash; 2026</span>
-      </div>
-
-      <!-- ---------------- hero copy ---------------- -->
+      <!-- ---------------- hero ----------------
+           The wordmark sits left of centre with the tagline beside it; the
+           reel's cards run along the bottom and overlap the mark. -->
       <div class="layer layer-hero" id="layerHero">
-        <h1 class="hero-title">
-          <span class="mask"><span class="mask-in" style="--d:.10s">Framed for how</span></span>
-          <span class="mask"><span class="mask-in" style="--d:.20s">you see the world</span></span>
-        </h1>
-        <p class="hero-sub reveal" style="--d:.44s">
-          Azylis frames are shaped around real faces — lightweight acetate and hand-polished hinges for a fit you'll forget you're wearing.
+        <p class="hero-mark" aria-hidden="true">
+          <span class="mask"><span class="mask-in" style="--d:.10s">AZYLIS</span></span>
         </p>
-        <div class="cta-row reveal" style="--d:.54s">
-          <a class="btn btn-solid" href="#shop"><span>Shop the edit</span></a>
-          <a class="btn btn-ghost" href="#fit"><span>Find my fit</span></a>
+        <div class="hero-side">
+          <h1 class="hero-title">
+            <span class="mask"><span class="mask-in" style="--d:.26s">Framed for how</span></span>
+            <span class="mask"><span class="mask-in" style="--d:.34s">you see the world</span></span>
+          </h1>
+          <p class="hero-sub reveal" style="--d:.50s">
+            Azylis frames are shaped around real faces — lightweight acetate and hand-polished hinges for a fit you'll forget you're wearing.
+          </p>
+          <div class="hero-links reveal" style="--d:.60s">
+            <a class="hero-link" href="#shop">Shop the edit</a>
+            <a class="hero-link" href="#categories">Collections</a>
+          </div>
+          <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+            <span>Scroll</span>
+            <span class="scroll-cue-line"></span>
+          </div>
         </div>
       </div>
 
 
-      <!-- ---------------- feature strip ---------------- -->
+      <!-- ---------------- feature strip: a caption under the mark ---------------- -->
       <div class="feature-strip" id="featureStrip">
         <div class="feature reveal" style="--d:.68s">
           <span class="feature-ico">
@@ -133,69 +129,73 @@
         </div>
       </div>
 
-      <!-- ---------------- clarity section ---------------- -->
+      <!-- ---------------- the sale (second beat) ---------------- -->
       <div class="layer layer-clarity" id="layerClarity" aria-hidden="true">
         <div class="clarity-copy">
-          <h2 class="clarity-title">Built for Clarity.<br>Designed for You</h2>
-          <p class="clarity-sub">
-            Azylis Eyewear makes glasses designed for real faces, not mannequins. Every pair uses premium,
-            lightweight materials and hand-polished hinges so your glasses feel completely natural.
-          </p>
-          <div class="cta-row">
-            <a class="btn btn-solid" href="#about"><span>Learn more</span></a>
-            <a class="btn btn-ghost" href="#categories"><span>Add new products</span></a>
+          <div class="clarity-promo">
+            <figure class="promo-clip">
+              <video src="assets/sale-01.mp4" muted loop playsinline preload="metadata" data-autoplay aria-label="The Azylis sale"></video>
+            </figure>
+            <div class="promo-copy">
+              <p class="promo-kicker">Sale on now</p>
+              <h2 class="promo-line">Half price on the frames you've been eyeing.</h2>
+              <a class="btn btn-solid" href="#sale"><span>Claim 50% off</span></a>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="scroll-cue" id="scrollCue" aria-hidden="true">
-        <span>Scroll</span>
-        <span class="scroll-cue-line"></span>
       </div>
 
     </div>
   </section>
 
-  <!-- ===================== BENTO GRID ===================== -->
-  <section class="bento" id="shop">
-    <div class="bento-grid">
+  <!-- ===================== VISIT THE STUDIO ===================== -->
+  <section class="visit" id="visit" data-seq>
+    <div class="visit-wrap">
 
-      <!-- online / in store -->
-      <article class="bcard bcard--sun" data-reveal="card" style="--d:0s">
-        <div class="bcard-copy">
-          <h2 class="bcard-title">Shop online, thrive in-store!</h2>
-          <p class="bcard-text">Online convenience meets in-store expertise for your ultimate eyewear experience.</p>
+      <header class="visit-head">
+        <p class="visit-kicker seq-up" data-seq-part=".10 .34">The studio</p>
+        <h2 class="visit-title" data-seq-part=".16 .50">Come and try them on</h2>
+      </header>
+
+      <div class="visit-body">
+        <!-- two clips that pop in once the section is on screen -->
+        <div class="visit-clips">
+          <figure class="visit-clip" data-reveal="pop" style="--d:.1s">
+            <video src="assets/visit-01.mp4" muted loop playsinline preload="metadata" data-autoplay aria-label="Inside the Azylis studio"></video>
+            <span class="visit-chip">Inside the studio</span>
+          </figure>
+          <figure class="visit-clip" data-reveal="pop" style="--d:.3s">
+            <video src="assets/visit-02.mp4" muted loop playsinline preload="metadata" data-autoplay aria-label="The studio's open sign"></video>
+            <span class="visit-chip">Now open</span>
+          </figure>
         </div>
-        <figure class="bcard-art bcard-art--drop">
-          <img src="assets/frame-moss.png" alt="Azylis frame in Moss Tortoise">
-        </figure>
-      </article>
 
-      <!-- how to find your fit -->
-      <article class="bcard bcard--peach bcard--w2 bcard--fit" id="fit" data-reveal="card" style="--d:.1s">
-        <div class="bcard-copy">
-          <h2 class="bcard-title">How to know the glasses that fit you</h2>
-          <p class="bcard-text">Three checks. Get them right and any frame you love will sit where it should.</p>
-          <div class="fit-list">
-            <div class="fit-row fit-row--lead">
-              <b>Contrast your face shape</b>
-              <span>Round and oval faces are flattered by angular frames; square and heart-shaped faces by rounder ones. Opposites, not echoes.</span>
+        <div class="visit-aside">
+          <p class="visit-lede seq-up" data-seq-part=".26 .56">
+            A fitting gets you the rest of the way. Bring the pair you wear now &mdash; we will
+            measure it, shape the acetate to your temples and hand it back sitting where it should.
+          </p>
+
+          <dl class="visit-facts">
+            <div class="seq-up" data-seq-part=".46 .68">
+              <dt>Where</dt>
+              <dd>Casablanca, Morocco</dd>
             </div>
-            <div class="fit-row">
-              <b>Match the width to your face</b>
-              <span>The frame should finish where your face does, never past your temples.</span>
+            <div class="seq-up" data-seq-part=".53 .75">
+              <dt>Opening hours</dt>
+              <dd>Monday to Saturday, 10:00 &ndash; 19:00</dd>
             </div>
-            <div class="fit-row">
-              <b>Read the numbers on the arm</b>
-              <span>Lens width, bridge and temple length are printed inside every temple. Copy them from a pair that already fits.</span>
+            <div class="seq-up" data-seq-part=".60 .82">
+              <dt>Fittings</dt>
+              <dd>Walk in, or write ahead and we will keep the shapes you like aside.</dd>
             </div>
+          </dl>
+
+          <div class="visit-cta seq-up" data-seq-part=".70 .92">
+            <a class="visit-btn" href="shop.html">See what is in stock</a>
           </div>
         </div>
-        <figure class="bcard-art bcard-art--photo bcard-art--fit">
-          <img class="fit-shot" src="assets/fit-01.jpg" alt="Azylis frames worn at the right width">
-          <img class="fit-shot fit-shot--top" src="assets/fit-02.jpg" alt="" aria-hidden="true">
-        </figure>
-      </article>
+      </div>
 
     </div>
   </section>
@@ -223,11 +223,11 @@
   </section>
 
   <!-- ===================== BESTSELLERS ===================== -->
-  <section class="shelf" id="bestsellers" data-rail>
+  <section class="shelf" id="shop" data-rail>
     <header class="shelf-head">
       <h2 class="shelf-title" data-reveal="mask"><span class="mask"><span class="mask-in">Bestsellers</span></span></h2>
       <div class="shelf-nav" data-reveal="up" style="--d:.1s">
-        <a class="see-all" href="#bestsellers">See all</a>
+        <a class="see-all" href="#shop">See all</a>
         <button class="rail-btn" data-rail-prev type="button" aria-label="Previous Bestsellers">
           <svg viewBox="0 0 24 24" fill="none"><path d="M14.5 5.5 8 12l6.5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>

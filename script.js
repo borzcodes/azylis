@@ -10,52 +10,47 @@
   /* ---------- tuning ---------------------------------------------------- */
 
   var TUNE = {
-    /* The film runs under all three beats and never shrinks — it turns in 3D
-       and overscales so the rotated plane still reaches every edge. It also
-       never stops: the loop is the constant the beats are cut against. */
-    filmScale: [1, 1.24],
-    filmY:     [0, -13],    // deg of yaw
-    filmTilt:  [0, 6],      // deg of pitch
-    filmVeil:  [0.52, 0.70],
-    filmRun:   [0, 1],
-
-    /* Where each beat sits on the 0..1 stage progress. The stage is 460vh,
-       so one unit of progress is 3.6 screens of scrolling.
-         .00-.17  hero leaves
-         .29-.49  clarity copy arrives
-         .33-.58  the deck builds beside it
-         .49-.60  both hold — this is the composed frame
-         .60-.97  the deck fans into the reel and travels
+    /* Where each beat sits on the 0..1 stage progress. The stage is 320vh,
+       so one unit of progress is 2.2 screens of scrolling.
+         .00-.28  hero copy leaves
+         .16-.75  the photo row gathers into the deck
+         .47-.80  clarity copy arrives
+         .80-1.0  both hold — this is the composed frame the stage ends on
     */
-    heroOut:     [0.00, 0.17],
-    clarityIn:   [0.29, 0.49],
-    clarityOut:  [0.60, 0.73],
-    deckIn:      [0.33, 0.58],
-    reelRun:     [0.60, 0.97],
-    reelCopyIn:  [0.68, 0.82],
-    reelTravel:  [22, -14],   // vw the rail drifts, right to left, and rests filling the frame
-    deckScale:   1.26,        // the stack sits larger than the gallery it becomes
+    heroOut:     [0.00, 0.28],
+    clarityIn:   [0.47, 0.80],
+    deckIn:      [0.16, 0.75],
+    deckScale:   1.26,        // relative to the 14.5vw frame the stack was tuned on
 
     smoothing: 0.14       // 0 = frozen, 1 = no smoothing
   };
 
-  /* Six cards, three arrangements each.
-       origin — a single point beside the clarity copy, where they grow from
-       deck   — the stack that fills the section's empty right half
-       reel   — the full-width gallery that closes the stage
-     x/y are viewport percentages so the composition survives any window
-     size, z is px of depth, r* are degrees. Progress interpolates
-     origin → deck → reel, so one set of cards carries the whole sequence
-     instead of three sets cross-fading. */
-  var DECK_X = 25;   // vw right of centre: the stack's centre, and its origin
+  /* Six cards, two arrangements each.
+       hero — the photo row the page opens on: five columns along the
+              bottom, the outer two bleeding off the edges, tops staggered
+              but all clear of the wordmark and its caption. The sixth
+              waits off the right edge.
+       deck — the stack that fills the section's empty right half
+     hero.col counts columns from the centre and hero.top is the card's top
+     edge in vh (row 1 sits a card below). deck x/y are viewport
+     percentages so the composition survives any window size, z is px of
+     depth, r* are degrees. Progress interpolates hero → deck, so one set
+     of cards carries the whole sequence instead of two sets cross-fading. */
+  var DECK_X = 25;   // vw right of centre: the stack's centre
 
   var CARDS = [
-    { deck:{ x:24.5, y:-8, z:-260, rz:-12, ry:15 }, reel:{ x:-53, y: 5, z:-140, rz:-3, ry: 11 } },
-    { deck:{ x:26.5, y: 3, z:-150, rz:  7, ry:12 }, reel:{ x:-32, y:-6, z: -50, rz: 2, ry:  7 } },
-    { deck:{ x:27.5, y:-2, z: -40, rz: -4, ry: 9 }, reel:{ x:-11, y: 4, z:  20, rz:-2, ry:  2 } },
-    { deck:{ x:28.5, y: 6, z:  70, rz: 10, ry: 6 }, reel:{ x: 11, y:-5, z:  20, rz: 3, ry: -2 } },
-    { deck:{ x:30.0, y:-5, z: 180, rz: -8, ry: 3 }, reel:{ x: 32, y: 5, z: -50, rz:-2, ry: -7 } },
-    { deck:{ x:26.0, y: 1, z: 290, rz:  5, ry: 0 }, reel:{ x: 53, y:-4, z:-140, rz: 2, ry:-11 } }
+    { hero:{ col:-2, top:40 }, deck:{ x:24.5, y:-8, z:-260, rz:-12, ry:15 } },
+    { hero:{ col:-1, top:70 }, deck:{ x:26.5, y: 3, z:-150, rz:  7, ry:12 } },
+    { hero:{ col: 0, top:62 }, deck:{ x:27.5, y:-2, z: -40, rz: -4, ry: 9 } },
+    { hero:{ col: 1, top:70 }, deck:{ x:28.5, y: 6, z:  70, rz: 10, ry: 6 } },
+    { hero:{ col: 2, top:40 }, deck:{ x:30.0, y:-5, z: 180, rz: -8, ry: 3 } },
+    { hero:{ col: 3, top:70 }, deck:{ x:26.0, y: 1, z: 290, rz:  5, ry: 0 } }
+  ];
+
+  /* under 900px the row is three across with a second row under the fold */
+  var HERO_NARROW = [
+    { col:-1, top:60 }, { col:0, top:67 }, { col:1, top:60 },
+    { col:-1, top:60, row:1 }, { col:0, top:67, row:1 }, { col:1, top:60, row:1 }
   ];
 
 
@@ -65,11 +60,7 @@
   var norm  = function (v, a, b) { return b === a ? 0 : clamp((v - a) / (b - a), 0, 1); };
   var mix   = function (a, b, t) { return a + (b - a) * t; };
 
-  var easeInOut = function (t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  };
   var easeOut = function (t) { return 1 - Math.pow(1 - t, 3); };
-  var smoothstep = function (t) { return t * t * (3 - 2 * t); };
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -82,18 +73,12 @@
   var hero     = $("layerHero");
   var strip    = $("featureStrip");
   var clarity  = $("layerClarity");
-  var film      = $("film");
-  var filmPlane = $("filmPlane");
-  var filmVeil  = $("filmVeil");
-  var video     = $("heroVideo");
   var cue      = $("scrollCue");
   var reelTrack = $("reelTrack");
-  var reelCopy  = $("reelCopy");
 
   var cardEls = reelTrack ? [].slice.call(reelTrack.querySelectorAll(".reel-card")) : [];
 
-  var clarityCopy  = clarity ? clarity.querySelector(".clarity-copy")  : null;
-  var clarityMedia = clarity ? clarity.querySelector(".clarity-media") : null;
+  var clarityCopy = clarity ? clarity.querySelector(".clarity-copy") : null;
 
   /* ---------- state ----------------------------------------------------- */
 
@@ -104,6 +89,12 @@
   var stageTop = 0;
   var stageRange = 1;
 
+  /* the card's CSS size (the hero row) and how far the deck has to scale
+     it down to land on the 14.5vw frame it was tuned against */
+  var cardW = 1;
+  var cardH = 1;
+  var cardK = 1;
+
 
   function measure() {
     vw = window.innerWidth;
@@ -113,6 +104,12 @@
     var rect = stage.getBoundingClientRect();
     stageTop = rect.top + window.pageYOffset;
     stageRange = Math.max(1, stage.offsetHeight - vh);
+
+    if (cardEls.length) {
+      cardW = cardEls[0].offsetWidth || 1;
+      cardH = cardEls[0].offsetHeight || 1;
+      cardK = clamp(vw * 0.145, 132, 214) / cardW;
+    }
   }
 
   function readScroll() {
@@ -131,54 +128,38 @@
     hero.style.visibility = ho >= 1 ? "hidden" : "visible";
 
     strip.style.opacity = (1 - ho).toFixed(3);
-    strip.style.transform = "translate(-50%," + (ho * 5).toFixed(2) + "vh)";
+    strip.style.transform = "translate3d(0," + (ho * 5).toFixed(2) + "vh,0)";
 
     if (cue) cue.style.opacity = (1 - Math.min(1, ho * 1.6)).toFixed(3);
 
-    /* --- film ---------------------------------------------------------- */
-    if (filmPlane) {
-      var fr = easeInOut(norm(p, TUNE.filmRun[0], TUNE.filmRun[1]));
-      filmPlane.style.transform =
-        "rotateY(" + mix(TUNE.filmY[0], TUNE.filmY[1], fr).toFixed(2) + "deg)" +
-        " rotateX(" + mix(TUNE.filmTilt[0], TUNE.filmTilt[1], fr).toFixed(2) + "deg)" +
-        " scale(" + mix(TUNE.filmScale[0], TUNE.filmScale[1], fr).toFixed(3) + ")";
-      if (filmVeil) filmVeil.style.opacity = mix(TUNE.filmVeil[0], TUNE.filmVeil[1], fr).toFixed(3);
-    }
-
-
-
-    /* --- clarity in, then out under the reel ---------------------------- */
+    /* --- clarity in ------------------------------------------------------ */
     var ci = easeOut(norm(p, TUNE.clarityIn[0], TUNE.clarityIn[1]));
-    var co = easeInOut(norm(p, TUNE.clarityOut[0], TUNE.clarityOut[1]));
-    var cv = ci * (1 - co);
-    clarity.style.opacity = cv.toFixed(3);
-    clarity.style.visibility = cv <= 0.001 ? "hidden" : "visible";
-    clarity.setAttribute("aria-hidden", cv < 0.5 ? "true" : "false");
+    clarity.style.opacity = ci.toFixed(3);
+    clarity.style.visibility = ci <= 0.001 ? "hidden" : "visible";
+    clarity.setAttribute("aria-hidden", ci < 0.5 ? "true" : "false");
 
     if (clarityCopy) {
       clarityCopy.style.transform =
-        "translate3d(" + ((1 - ci) * -46 - co * 70).toFixed(2) + "px,0,0)";
+        "translate3d(" + ((1 - ci) * -46).toFixed(2) + "px,0,0)";
     }
 
-    /* --- the reel ------------------------------------------------------- */
+    /* --- the cards: hero row into the deck ------------------------------- */
     if (cardEls.length) {
       /* Under 900px the clarity copy runs full width, so the stack cannot sit
-         beside it — it moves to the centre and lifts above the copy, and the
-         gallery pulls in so six cards still read on a narrow screen. */
+         beside it — it moves to the centre and lifts above the copy. */
       var narrow = vw < 900;
       var sx = narrow ? -DECK_X : 0;
       var sy = narrow ? -17 : 0;
-      var rk = narrow ? 0.9 : 1;
       /* the stack has to clear the copy below it, and a phone has far less
          height to spend on it than a desktop has width */
-      var ds = narrow ? 0.92 : TUNE.deckScale;
+      var ds = (narrow ? 0.92 : TUNE.deckScale) * cardK;
 
-      var ra = easeInOut(norm(p, TUNE.reelRun[0], TUNE.reelRun[1]));
-
-      /* The rail sweeps right-to-left as it forms. This rides on the reel
-         target rather than the track, so at ra = 0 it contributes nothing and
-         the deck is left exactly where it was placed. */
-      var tv = mix(TUNE.reelTravel[0], TUNE.reelTravel[1], ra);
+      /* the hero row's grid, in the vw/vh the transforms speak: columns a
+         card wide plus a gutter, rows a card tall plus the same gutter */
+      var gap = cardW * 0.052;
+      var pitchVw = (cardW + gap) / vw * 100;
+      var cardHvh = cardH / vh * 100;
+      var rowVh = cardHvh + gap / vh * 100;
 
       /* each card starts a little after the one before it */
       var d0 = TUNE.deckIn[0];
@@ -188,16 +169,21 @@
 
       for (var i = 0; i < cardEls.length; i++) {
         var c = CARDS[i];
+        var h = narrow ? HERO_NARROW[i] : c.hero;
         var da = easeOut(norm(p, d0 + i * step, d0 + i * step + run));
 
-        var x  = mix(mix(DECK_X + sx, c.deck.x + sx, da), c.reel.x * rk + tv, ra);
-        var y  = mix(mix(sy,          c.deck.y + sy, da), c.reel.y,      ra);
-        var z  = mix(mix(0,           c.deck.z,      da), c.reel.z,      ra);
-        var rz = mix(mix(0,           c.deck.rz,     da), c.reel.rz,     ra);
-        var ry = mix(mix(0,           c.deck.ry,     da), c.reel.ry,     ra);
-        var sc = mix(mix(0.06, ds, da), 1.06, ra);
+        var hx = h.col * pitchVw;
+        var hy = h.top + (h.row || 0) * rowVh + cardHvh / 2 - 50;
 
-        cardEls[i].style.opacity = da.toFixed(3);
+        var x  = mix(hx, c.deck.x + sx, da);
+        var y  = mix(hy, c.deck.y + sy, da);
+        var z  = mix(0,  c.deck.z,      da);
+        var rz = mix(0,  c.deck.rz,     da);
+        var ry = mix(0,  c.deck.ry,     da);
+        var sc = mix(1,  ds,            da);
+
+        /* flat in the row, shadowed once it lifts into the stack */
+        cardEls[i].style.setProperty("--sh", da.toFixed(3));
         cardEls[i].style.transform =
           "translate(-50%,-50%)" +
           " translate3d(" + x.toFixed(2) + "vw," + y.toFixed(2) + "vh,0)" +
@@ -206,12 +192,6 @@
           " rotateZ(" + rz.toFixed(2) + "deg)" +
           " scale(" + sc.toFixed(3) + ")";
       }
-    }
-
-    if (reelCopy) {
-      var rc = easeOut(norm(p, TUNE.reelCopyIn[0], TUNE.reelCopyIn[1]));
-      reelCopy.style.opacity = rc.toFixed(3);
-      reelCopy.style.transform = "translate3d(0," + ((1 - rc) * 26).toFixed(1) + "px,0)";
     }
   }
 
@@ -282,6 +262,75 @@
       }, { threshold: 0.16, rootMargin: "0px 0px -6% 0px" });
       revealables.forEach(function (el) { io.observe(el); });
     }
+  }
+
+  /* ---------- clips ------------------------------------------------------
+     Muted loops that only run while they are on screen. */
+
+  var clips = [].slice.call(document.querySelectorAll("video[data-autoplay]"));
+
+  if (clips.length) {
+    var playClip = function (v) {
+      v.muted = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    if ("IntersectionObserver" in window) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) playClip(e.target); else e.target.pause();
+        });
+      }, { threshold: 0.2 });
+      clips.forEach(function (v) { cio.observe(v); });
+    } else {
+      clips.forEach(playClip);
+    }
+  }
+
+  /* ---------- scroll-linked assembly -------------------------------------
+     A [data-seq] section turns its own scroll position into 0..1, and each
+     [data-seq-part] inside it declares the slice of that it cares about, e.g.
+     data-seq-part=".28 .56". The part gets --in, 0 to 1; CSS decides what the
+     number means. Sections finish assembling by the time their top reaches
+     the upper third of the screen, so nothing is still moving once you are
+     reading it. A section is marked .is-built at the end. */
+
+  var seqs = [].slice.call(document.querySelectorAll("[data-seq]"));
+
+  seqs.forEach(function (s) {
+    s._parts = [].slice.call(s.querySelectorAll("[data-seq-part]")).map(function (el) {
+      var r = (el.getAttribute("data-seq-part") || "0 1").split(/\s+/);
+      return { el: el, a: parseFloat(r[0]) || 0, b: parseFloat(r[1]) || 1 };
+    });
+  });
+
+  function seqRender() {
+    for (var i = 0; i < seqs.length; i++) {
+      var s = seqs[i];
+      var box = s.getBoundingClientRect();
+      if (box.bottom < -200 || box.top > vh + 200) continue;
+
+      /* 0 when the section's top edge is a screen down, 1 once it has risen
+         to the top eighth — one screen of scrolling buys the whole assembly */
+      var p = clamp((vh - box.top) / (vh * 0.88), 0, 1);
+
+      for (var k = 0; k < s._parts.length; k++) {
+        var q = s._parts[k];
+        q.el.style.setProperty("--in", easeOut(norm(p, q.a, q.b)).toFixed(3));
+      }
+      s.classList.toggle("is-built", p > 0.985);
+    }
+  }
+
+  if (reduced) {
+    seqs.forEach(function (s) {
+      s.classList.add("is-built");
+      s._parts.forEach(function (q) { q.el.style.setProperty("--in", "1"); });
+    });
+  } else {
+    window.addEventListener("scroll", seqRender, { passive: true });
+    window.addEventListener("resize", seqRender);
+    seqRender();
   }
 
   /* ---------- parallax --------------------------------------------------
@@ -400,16 +449,6 @@
   /* ---------- boot ------------------------------------------------------ */
 
   if (!stage) return;
-
-  /* The film simply plays and loops; scroll drives where it sits in space,
-     never its playhead. */
-  if (video) {
-    video.muted = true;
-    video.loop = true;
-    video.setAttribute("autoplay", "");
-    var go = video.play();
-    if (go && go.catch) go.catch(function () {});
-  }
 
   measure();
   readScroll();

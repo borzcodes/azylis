@@ -33,7 +33,6 @@
        "تُصمَّم نظارات أزيليس لتناسب الوجوه الحقيقية: أسيتات خفيف ومفصلات مصقولة يدويًا، لراحة تنسيك أنك ترتديها.",
        "Las monturas Azylis se ajustan a rostros reales: acetato ligero y bisagras pulidas a mano, para un ajuste que olvidarás llevar."],
     "Shop the edit": ["Voir la sélection", "تسوّق المجموعة", "Ver la selección"],
-    "Find my fit": ["Trouver ma taille", "اعرف مقاسي", "Encontrar mi talla"],
     "Feather-light build": ["Légèreté absolue", "خفة متناهية", "Ligereza absoluta"],
     "18 g of Italian acetate": ["18 g d'acétate italien", "18 غرامًا من الأسيتات الإيطالي", "18 g de acetato italiano"],
     "Hand-finished hinges": ["Charnières finies à la main", "مفصلات بلمسة يدوية", "Bisagras acabadas a mano"],
@@ -42,49 +41,33 @@
     "30 days, adjusted free": ["30 jours, ajustement offert", "30 يومًا مع تعديل مجاني", "30 días, ajuste gratuito"],
     "Scroll": ["Défiler", "مرّر", "Desplazar"],
 
-    /* ---- clarity ---- */
-    "Built for Clarity.": ["Conçues pour la clarté.", "صُنعت من أجل الوضوح.", "Creadas para la claridad."],
-    "Designed for You": ["Dessinées pour vous", "ومصمَّمة من أجلك", "Diseñadas para ti"],
-    "Azylis Eyewear makes glasses designed for real faces, not mannequins. Every pair uses premium, lightweight materials and hand-polished hinges so your glasses feel completely natural.":
-      ["Azylis dessine des lunettes pour de vrais visages, pas pour des mannequins. Chaque paire associe des matériaux légers haut de gamme et des charnières polies à la main, pour un port parfaitement naturel.",
-       "تصنع أزيليس نظارات لوجوه حقيقية لا لعارضات. كل زوج يجمع بين مواد فاخرة خفيفة ومفصلات مصقولة يدويًا ليمنحك إحساسًا طبيعيًا تمامًا.",
-       "Azylis crea gafas para rostros reales, no para maniquíes. Cada par combina materiales ligeros de alta gama y bisagras pulidas a mano para una sensación totalmente natural."],
-    "Learn more": ["En savoir plus", "اعرف المزيد", "Saber más"],
-    "Add new products": ["Voir les nouveautés", "أضف منتجات جديدة", "Ver novedades"],
+    /* ---- the sale ---- */
+    "Sale on now": ["Soldes en cours", "التخفيضات بدأت", "Rebajas en marcha"],
+    "Half price on the frames you've been eyeing.":
+      ["Moitié prix sur les montures qui vous font de l'œil.",
+       "نصف السعر على الإطارات التي وقعت في عينك.",
+       "Mitad de precio en las monturas que tienes en el punto de mira."],
+    "Claim 50% off": ["Profiter des -50 %", "احصل على خصم 50٪", "Aprovecha el 50 %"],
 
-    /* ---- the reel ---- */
-    "Seen in Azylis": ["Vu en Azylis", "إطلالات أزيليس", "Visto en Azylis"],
-    "Casablanca — 2026": ["Casablanca — 2026", "الدار البيضاء — 2026", "Casablanca — 2026"],
-
-    /* ---- bento ---- */
-    "Shop online, thrive in-store!": ["En ligne ou en boutique !", "تسوّق أونلاين، وجرّب في المتجر!", "¡Compra online, disfruta en tienda!"],
-    "Online convenience meets in-store expertise for your ultimate eyewear experience.":
-      ["La simplicité du web et l'expertise en boutique, pour une expérience optique complète.",
-       "سهولة الإنترنت وخبرة المتجر معًا، لتجربة نظارات متكاملة.",
-       "La comodidad online se une a la experiencia en tienda para una experiencia óptica completa."],
-    "How to know the glasses that fit you":
-      ["Comment savoir quelles lunettes vous vont",
-       "كيف تعرف النظارة التي تناسبك",
-       "Cómo saber qué gafas te quedan bien"],
-    "Three checks. Get them right and any frame you love will sit where it should.":
-      ["Trois repères. Respectez-les et toute monture qui vous plaît tombera juste.",
-       "ثلاث خطوات؛ اضبطها وستستقر أي نظارة تحبّها في مكانها الصحيح.",
-       "Tres comprobaciones. Acertadas, cualquier montura que te guste caerá en su sitio."],
-    "Contrast your face shape": ["Jouez le contraste avec votre visage", "اختر ما يعاكس شكل وجهك", "Contrasta la forma de tu rostro"],
-    "Round and oval faces are flattered by angular frames; square and heart-shaped faces by rounder ones. Opposites, not echoes.":
-      ["Les visages ronds et ovales sont mis en valeur par des montures anguleuses ; les visages carrés et en cœur, par des formes plus rondes. Le contraire, pas l'écho.",
-       "الوجوه المستديرة والبيضاوية تبرزها الإطارات الحادة الزوايا، والوجوه المربّعة والقلبية تناسبها الأشكال الأكثر استدارة: العكس لا التكرار.",
-       "Los rostros redondos y ovalados lucen mejor con monturas angulosas; los cuadrados y de corazón, con formas más redondeadas. Lo contrario, no el eco."],
-    "Match the width to your face": ["Ajustez la largeur à votre visage", "طابِق العرض مع عرض وجهك", "Ajusta el ancho a tu rostro"],
-    "The frame should finish where your face does, never past your temples.":
-      ["La monture doit s'arrêter là où s'arrête votre visage, jamais au-delà des tempes.",
-       "يجب أن ينتهي الإطار حيث ينتهي وجهك، دون أن يتجاوز الصدغين.",
-       "La montura debe terminar donde termina tu rostro, nunca más allá de las sienes."],
-    "Read the numbers on the arm": ["Lisez les chiffres sur la branche", "اقرأ الأرقام على ذراع النظارة", "Lee los números de la varilla"],
-    "Lens width, bridge and temple length are printed inside every temple. Copy them from a pair that already fits.":
-      ["Largeur du verre, pont et longueur de branche sont inscrits à l'intérieur de chaque branche. Reprenez-les d'une paire qui vous va déjà.",
-       "عرض العدسة ومقاس الجسر وطول الذراع مطبوعة داخل كل ذراع؛ انقلها من نظارة تناسبك بالفعل.",
-       "El ancho de la lente, el puente y la longitud de la varilla vienen impresos dentro de cada varilla. Cópialos de unas gafas que ya te queden bien."],
+    /* ---- visit the studio ---- */
+    "The studio": ["L'atelier", "الأتيليه", "El taller"],
+    "Come and try them on": ["Venez les essayer", "تعال وجرّبها", "Ven a probártelas"],
+    "Inside the studio": ["Dans l'atelier", "داخل الأتيليه", "Dentro del taller"],
+    "Now open": ["Ouvert", "مفتوح الآن", "Ya abierto"],
+    "A fitting gets you the rest of the way. Bring the pair you wear now — we will measure it, shape the acetate to your temples and hand it back sitting where it should.":
+      ["Un essayage fait le reste. Apportez la paire que vous portez : nous la mesurons, ajustons l'acétate à vos tempes et vous la rendons parfaitement en place.",
+       "القياس يكمل الباقي. أحضر نظارتك الحالية: نقيسها، ونشكّل الأسيتات على صدغيك، ونعيدها إليك في مكانها الصحيح تمامًا.",
+       "Una prueba hace el resto. Trae las gafas que llevas ahora: las medimos, moldeamos el acetato a tus sienes y te las devolvemos en su sitio."],
+    "Where": ["Adresse", "العنوان", "Dónde"],
+    "Casablanca, Morocco": ["Casablanca, Maroc", "الدار البيضاء، المغرب", "Casablanca, Marruecos"],
+    "Opening hours": ["Horaires", "ساعات العمل", "Horario"],
+    "Monday to Saturday, 10:00 – 19:00": ["Du lundi au samedi, 10h00 – 19h00", "من الاثنين إلى السبت، 10:00 – 19:00", "De lunes a sábado, 10:00 – 19:00"],
+    "Fittings": ["Essayages", "القياس", "Pruebas"],
+    "Walk in, or write ahead and we will keep the shapes you like aside.":
+      ["Venez quand vous voulez, ou écrivez-nous et nous mettrons de côté les formes qui vous plaisent.",
+       "تفضّل بالزيارة متى شئت، أو راسلنا وسنحتفظ لك بالأشكال التي تفضّلها.",
+       "Pásate cuando quieras, o escríbenos y apartamos las formas que te gusten."],
+    "See what is in stock": ["Voir ce qui est en boutique", "شاهد المتوفر", "Ver lo que hay en tienda"],
 
     /* ---- perks strip ---- */
     "Total protection": ["Protection totale", "حماية كاملة", "Protección total"],
@@ -261,7 +244,8 @@
   /* ---------------- machinery ---------------- */
 
   var KEY = "azylis-lang";
-  var current = "en";
+  var DEFAULT = "fr";   // first visit lands in French; a chosen language is remembered
+  var current = DEFAULT;
 
   function stored() {
     try { return localStorage.getItem(KEY); } catch (e) { return null; }
@@ -296,7 +280,7 @@
   var ATTRS = ["aria-label", "title", "placeholder"];
 
   function apply(lang) {
-    if (lang) current = LANGS.indexOf(lang) > -1 ? lang : "en";
+    if (lang) current = LANGS.indexOf(lang) > -1 ? lang : DEFAULT;
 
     var html = document.documentElement;
     html.setAttribute("lang", current);
@@ -334,7 +318,7 @@
   /* ---------------- boot ---------------- */
 
   var initial = stored();
-  if (LANGS.indexOf(initial) === -1) initial = "en";
+  if (LANGS.indexOf(initial) === -1) initial = DEFAULT;
   current = initial;
   document.documentElement.setAttribute("lang", current);
   document.documentElement.setAttribute("dir", current === "ar" ? "rtl" : "ltr");

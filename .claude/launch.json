@@ -2,12 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "vere",
-      "runtimeExecutable": "node",
-      "runtimeArgs": [
-        "dev-server.js"
-      ],
-      "port": 4321
+      "name": "azylis",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "-l", "5187", "."],
+      "port": 5187
     }
   ]
 }

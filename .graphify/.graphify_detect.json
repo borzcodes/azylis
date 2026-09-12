@@ -1,0 +1,74 @@
+{
+  "files": {
+    "code": [
+      "dev-server.js",
+      "i18n.js",
+      "product.js",
+      "script.js",
+      "shop.js"
+    ],
+    "document": [
+      "README.md",
+      "index.html",
+      "product.html",
+      "shop.html"
+    ],
+    "paper": [],
+    "image": [
+      "assets/cat-clip-on.jpg",
+      "assets/cat-lenses-men.jpg",
+      "assets/cat-lenses-women.jpg",
+      "assets/cat-sun-men.jpg",
+      "assets/cat-sun-women.jpg",
+      "assets/favicon.svg",
+      "assets/fit-01.jpg",
+      "assets/fit-02.jpg",
+      "assets/frame-angle.png",
+      "assets/frame-front.png",
+      "assets/frame-midnight.png",
+      "assets/frame-moss.png",
+      "assets/reel-01.jpg",
+      "assets/reel-02.jpg",
+      "assets/reel-03.jpg",
+      "assets/reel-04.jpg",
+      "assets/reel-05.jpg",
+      "assets/reel-06.jpg",
+      "assets/wear-01.jpg",
+      "assets/wear-02.jpg"
+    ],
+    "video": [
+      "assets/hero.mp4"
+    ]
+  },
+  "total_files": 30,
+  "total_words": 87753,
+  "needs_graph": true,
+  "warning": null,
+  "skipped_sensitive": [],
+  "graphifyignore_patterns": 4,
+  "git": {
+    "source_owner": "git",
+    "source_hash": "810e10251533158709e206ac41cae11208271582",
+    "branches": [
+      "main"
+    ],
+    "max_commits": 200,
+    "active_within_days": 30
+  },
+  "scope": {
+    "requested_mode": "auto",
+    "resolved_mode": "committed",
+    "source": "default-auto",
+    "root": ".",
+    "git_root": ".",
+    "head": "810e10251533158709e206ac41cae11208271582",
+    "candidate_count": 33,
+    "included_count": 30,
+    "excluded_untracked_count": 75,
+    "excluded_ignored_count": 0,
+    "excluded_sensitive_count": 0,
+    "missing_committed_count": 0,
+    "warnings": [],
+    "recommendation": "Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder."
+  }
+}
