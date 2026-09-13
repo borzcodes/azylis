@@ -1,7 +1,7 @@
 # Graph Report - .  (2026-09-13)
 
 ## Corpus Check
-- Large corpus: 1689 files · ~11,901,198 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
+- Large corpus: 1689 files · ~11,901,118 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
 
 ## Summary
 - 246 nodes · 328 edges · 32 communities detected
@@ -14,7 +14,7 @@
 - Requested: auto
 - Resolved: committed (source: default-auto)
 - Included files: 1689 · Candidates: 1793
-- Excluded: 2 untracked · 0 ignored · 0 sensitive · 0 missing committed
+- Excluded: 5 untracked · 0 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness

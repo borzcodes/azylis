@@ -28,16 +28,16 @@
     "hash": "2323613efb53164e7c969322e231bbcf"
   },
   "C:/Users/borz/Desktop/azylis/index.html": {
-    "mtime": 1789312130871.2012,
-    "hash": "5d288295d330a9be0a3e34e63b2cf560"
+    "mtime": 1789314034733.4226,
+    "hash": "1147108c5639a67d93800b8b0ac1a6c9"
   },
   "C:/Users/borz/Desktop/azylis/product.html": {
-    "mtime": 1789312130875.997,
-    "hash": "011f709bb26188aaa095653070f7c159"
+    "mtime": 1789314034736.8892,
+    "hash": "1e81aae4596b33f04db32f2d2aa2db31"
   },
   "C:/Users/borz/Desktop/azylis/shop.html": {
-    "mtime": 1789312130872.9912,
-    "hash": "01519bad7c5c0ec226e7bfd870cb0f68"
+    "mtime": 1789314034735.0837,
+    "hash": "d35cdfc7bb10d5993fd81f1a501a1981"
   },
   "C:/Users/borz/Desktop/azylis/assets/cat-clip-on.jpg": {
     "mtime": 1788489997488.1836,
@@ -148,8 +148,8 @@
     "hash": "c2496fe98396f8fddefe92f94d120af9"
   },
   "C:/Users/borz/Desktop/azylis/.graphify/GRAPH_REPORT.md": {
-    "mtime": 1789311288517.4878,
-    "hash": "bc864db95513caa93a01db6c46558574"
+    "mtime": 1789312203687.484,
+    "hash": "c47b4f651880e90397e1c2dcfbca3fc9"
   },
   "C:/Users/borz/Desktop/azylis/.graphify/studio/index.html": {
     "mtime": 1788964529329.9836,
@@ -192,12 +192,12 @@
     "hash": "3b768ecaaa5872b1445d9eec037d0765"
   },
   "C:/Users/borz/Desktop/azylis/.graphify/2026-09-13/GRAPH_REPORT.md": {
-    "mtime": 1789310999490.0044,
-    "hash": "63d63af8e673a27c0ea8b6f45e3f975c"
+    "mtime": 1789311288517.4878,
+    "hash": "bc864db95513caa93a01db6c46558574"
   },
   "C:/Users/borz/Desktop/azylis/checkout.html": {
-    "mtime": 1789312130878.48,
-    "hash": "f019d83d83d8c8856ce0abe510122321"
+    "mtime": 1789314034739.5156,
+    "hash": "1aaa66621d10d5ebe74da15983313659"
   },
   "C:/Users/borz/Desktop/azylis/assets/catalog/abiti-brown-1.jpg": {
     "mtime": 1789263377492.9136,
@@ -6754,5 +6754,13 @@
   "C:/Users/borz/Desktop/azylis/assets/catalog/votiq-tigred.jpeg": {
     "mtime": 1789308242247.1543,
     "hash": "b08c3a151da7e14356b26b5a88e09cb3"
+  },
+  "C:/Users/borz/Desktop/azylis/assets/favicon.png": {
+    "mtime": 1789312075535.7856,
+    "hash": "a3926c80c7bb321c09e195df41250ee9"
+  },
+  "C:/Users/borz/Desktop/azylis/assets/logo.png": {
+    "mtime": 1789312112566.3706,
+    "hash": "2d881754b52bc24789f9a64d3abb03f7"
   }
 }
