@@ -318,17 +318,6 @@
     : 0);
   booted = true;   // figures drawn from here on are swapped in view, so they reveal at once
 
-  /* ---------- size ------------------------------------------------------- */
-
-  var sizeTrack = $("sizeTrack");
-  sizeTrack.addEventListener("click", function (e) {
-    var dot = e.target.closest(".size-dot");
-    if (!dot) return;
-    [].forEach.call(sizeTrack.querySelectorAll(".size-dot"), function (d) {
-      d.setAttribute("aria-checked", d === dot ? "true" : "false");
-    });
-  });
-
   /* ---------- accordions -------------------------------------------------- */
 
   var measurementRows = (product.measurements || [])
@@ -376,7 +365,6 @@
 
   add.addEventListener("click", function () {
     var color = product.colors[chosen];
-    var size = sizeTrack.querySelector('.size-dot[aria-checked="true"]');
     /* frames without photography still get a thumbnail from their lead colour */
     var thumb = color.img || (product.colors[0] && product.colors[0].img) || null;
 
@@ -384,7 +372,6 @@
       slug: color.slug || key, name: product.name,
       price: color.price != null ? color.price : product.price,
       color: color.name,
-      size: size ? size.getAttribute("data-size") : "",
       img: thumb
     });
 

@@ -194,11 +194,6 @@
       ["Chaque fiche produit indique la largeur de verre, le pont et la longueur des branches en millimètres. Comparez-les à une paire que vous portez déjà, ou choisissez une taille sur le curseur. Si l'ajustement ne convient pas à la réception, nous l'ajustons ou l'échangeons gratuitement.",
        "تعرض كل صفحة منتج عرض العدسة والجسر وطول الذراع بالمليمتر. قارنها بنظارة ترتديها بالفعل، أو اختر مقاسًا من المؤشر. وإن لم تكن مناسبة عند الاستلام، نعدّلها أو نستبدلها مجانًا.",
        "Cada ficha de producto indica el ancho de lente, el puente y la longitud de las patillas en milímetros. Compáralos con unas gafas que ya uses, o elige una talla en el selector. Si al llegar no encajan, las ajustamos o cambiamos gratis."],
-    "Can I try frames on before I buy?": ["Puis-je essayer avant d'acheter ?", "هل يمكنني التجربة قبل الشراء؟", "¿Puedo probarlas antes de comprar?"],
-    "Yes. Virtual try-on runs on any product page, so you can see the shape on your own face before ordering. In a Azylis studio you can try the full collection and book a fitting with an optician.":
-      ["Oui. L'essayage virtuel est disponible sur chaque fiche produit, pour voir la forme sur votre visage avant de commander. En studio Azylis, vous pouvez essayer toute la collection et réserver un ajustement avec un opticien.",
-       "نعم. القياس الافتراضي متاح في كل صفحة منتج لترى الشكل على وجهك قبل الطلب. وفي استوديو أزيليس يمكنك تجربة المجموعة كاملة وحجز موعد ضبط مع أخصائي بصريات.",
-       "Sí. El probador virtual está disponible en cada ficha de producto para ver la forma en tu rostro antes de pedir. En un estudio Azylis puedes probar toda la colección y reservar un ajuste con un óptico."],
     "How long does delivery take, and what does it cost?": ["Quels sont les délais et frais de livraison ?", "كم تستغرق مدة التوصيل وما تكلفته؟", "¿Cuánto tarda el envío y cuánto cuesta?"],
     "Shipping is free worldwide and orders leave us within two working days. Expect two to four days domestically and five to nine internationally. You get a tracking link by email as soon as it ships.":
       ["La livraison est offerte dans le monde entier et les commandes partent sous deux jours ouvrés. Comptez deux à quatre jours au Maroc et cinq à neuf jours à l'international. Un lien de suivi vous est envoyé par e-mail dès l'expédition.",
@@ -228,13 +223,7 @@
     /* ---- product page ---- */
     "New arrivals": ["Nouveautés", "وصل حديثًا", "Novedades"],
     "Product": ["Produit", "المنتج", "Producto"],
-    "2-Years": ["2 ans", "سنتان", "2 años"],
-    "Frame Warranty": ["de garantie monture", "ضمان على المونتير", "de garantía en la montura"],
     "Color:": ["Couleur :", "اللون:", "Color:"],
-    "Size:": ["Taille :", "المقاس:", "Talla:"],
-    "Narrow": ["Étroit", "ضيّق", "Estrecha"],
-    "Regular": ["Standard", "عادي", "Estándar"],
-    "Wide fit": ["Large", "واسع", "Ancha"],
     "Add to cart": ["Ajouter au panier", "أضف إلى السلة", "Añadir al carrito"],
     "Added": ["Ajouté", "تمت الإضافة", "Añadido"],
 
