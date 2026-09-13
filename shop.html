@@ -42,8 +42,9 @@
     <button class="icon-btn" type="button" aria-label="Account">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.4" r="3.7" stroke="currentColor" stroke-width="1.7"/><path d="M5.2 19.4c.7-3.5 3.4-5.3 6.8-5.3s6.1 1.8 6.8 5.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
     </button>
-    <button class="icon-btn" type="button" aria-label="Bag">
+    <button class="icon-btn bag-btn" type="button" aria-label="Bag">
       <svg viewBox="0 0 24 24" fill="none"><path d="M5.6 8.6h12.8l-1 11H6.6l-1-11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.1 10.2V7.9a2.9 2.9 0 0 1 5.8 0v2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <span class="bag-count" id="bagCount" hidden>0</span>
     </button>
     <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>
@@ -70,6 +71,7 @@
     <h1 class="shop-title" id="shopTitle">All frames</h1>
     <p class="shop-lede" id="shopLede"></p>
     <div class="chips" id="chips"></div>
+    <p class="shop-count"><b id="shopCount">0</b> <span>frames</span></p>
   </header>
 
   <div class="shop-grid" id="shopGrid"></div>
@@ -87,7 +89,7 @@
   <div class="foot-inner">
 
     <div class="foot-top">
-      <div class="foot-brand">
+      <div class="foot-brand" data-reveal="up">
         <a class="brand" href="index.html" aria-label="Azylis home">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>
@@ -98,7 +100,7 @@
       </div>
 
       <div class="foot-side">
-        <div class="foot-where">
+        <div class="foot-where" data-reveal="up" style="--d:.08s">
           <h3 class="foot-label">Studio</h3>
           <p class="foot-city">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.6-5.2 6.6-10.2A6.6 6.6 0 0 0 5.4 10.8C5.4 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.4" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -106,7 +108,7 @@
           </p>
         </div>
 
-        <div class="foot-social">
+        <div class="foot-social" data-reveal="up" style="--d:.16s">
           <h3 class="foot-label">Follow</h3>
           <div class="socials">
         <a class="social" href="#" aria-label="Instagram (opens in a new tab)">
@@ -126,7 +128,7 @@
       </div>
     </div>
 
-    <div class="foot-bar">
+    <div class="foot-bar" data-reveal="up" style="--d:.1s">
       <p>&copy; 2026 Azylis. All rights reserved.</p>
     </div>
 
@@ -134,6 +136,8 @@
 </footer>
 
 <script src="i18n.js"></script>
+<script src="cart.js"></script>
+<script src="catalogue-data.js"></script>
 <script src="shop.js"></script>
 </body>
 </html>

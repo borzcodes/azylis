@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azylis — Commande</title>
+<meta name="description" content="Finalisez votre commande Azylis — paiement à la livraison.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="is-pdp">
+
+<header class="site-header is-stuck" id="siteHeader">
+  <a class="brand" href="index.html" aria-label="Azylis home">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>
+    </span>
+    <span class="brand-word">AZYLIS</span>
+  </a>
+
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="shop.html" class="nav-link">Shop</a>
+    <a href="index.html#categories" class="nav-link">Collections</a>
+    <a href="index.html#about" class="nav-link">About</a>
+    <a href="index.html#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <div class="utility">
+    <nav class="langs" aria-label="Language">
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ar">AR</button>
+      <button type="button" data-lang="es">SPA</button>
+    </nav>
+    <button class="icon-btn" type="button" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.6" stroke="currentColor" stroke-width="1.7"/><path d="m15.7 15.7 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn" type="button" aria-label="Account">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.4" r="3.7" stroke="currentColor" stroke-width="1.7"/><path d="M5.2 19.4c.7-3.5 3.4-5.3 6.8-5.3s6.1 1.8 6.8 5.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn bag-btn" type="button" aria-label="Bag">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5.6 8.6h12.8l-1 11H6.6l-1-11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.1 10.2V7.9a2.9 2.9 0 0 1 5.8 0v2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <span class="bag-count" id="bagCount" hidden>0</span>
+    </button>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="index.html#categories">Collections</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<main class="co" id="checkout">
+
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Home</a><span aria-hidden="true">/</span>
+    <a href="shop.html">Shop</a><span aria-hidden="true">/</span>
+    <em>Checkout</em>
+  </nav>
+
+  <header class="co-head" data-reveal="up">
+    <h1 class="co-title">Checkout</h1>
+    <ol class="co-steps" id="coSteps" aria-label="Progress">
+      <li class="is-on" data-step="1"><b>1</b><span>Bag</span></li>
+      <li data-step="2"><b>2</b><span>Your details</span></li>
+      <li data-step="3"><b>3</b><span>Confirm</span></li>
+    </ol>
+  </header>
+
+  <div class="co-grid">
+
+    <section class="co-main">
+
+      <!-- step 1 · the bag -->
+      <div class="co-pane" id="paneBag" data-reveal="up" style="--d:.08s">
+        <h2 class="co-h">Your bag</h2>
+        <div class="co-items" id="coItems"></div>
+        <div class="co-empty" id="coEmpty" hidden>
+          <p>Your bag is empty.</p>
+          <a class="btn-block" href="shop.html"><span>Browse the frames</span></a>
+        </div>
+        <div class="co-actions" id="bagActions">
+          <button class="btn-block btn-block--solid" id="toDetails" type="button"><span>Continue to details</span></button>
+        </div>
+      </div>
+
+      <!-- step 2 · the details -->
+      <form class="co-pane" id="paneDetails" hidden>
+        <h2 class="co-h">Your details</h2>
+        <p class="co-sub">We only use these to deliver your order and to call you to confirm it.</p>
+        <div class="co-fields">
+          <label class="field">
+            <span>Full name</span>
+            <input name="name" type="text" required autocomplete="name">
+          </label>
+          <label class="field">
+            <span>Phone</span>
+            <input name="phone" type="tel" required autocomplete="tel" inputmode="tel" pattern="[+0-9 ]{9,16}" placeholder="06 12 34 56 78">
+          </label>
+          <label class="field">
+            <span>City</span>
+            <input name="city" type="text" required autocomplete="address-level2">
+          </label>
+          <label class="field field--wide">
+            <span>Delivery address</span>
+            <input name="address" type="text" required autocomplete="street-address">
+          </label>
+          <label class="field field--wide">
+            <span>Notes (optional)</span>
+            <textarea name="notes" rows="3"></textarea>
+          </label>
+        </div>
+        <div class="co-actions">
+          <button class="btn-block" type="button" data-back="1"><span>Back to bag</span></button>
+          <button class="btn-block btn-block--solid" type="submit"><span>Review order</span></button>
+        </div>
+      </form>
+
+      <!-- step 3 · confirm -->
+      <div class="co-pane" id="paneConfirm" hidden>
+        <h2 class="co-h">Review your order</h2>
+        <dl class="co-recap" id="coRecap"></dl>
+        <div class="co-items co-items--compact" id="coItemsRecap"></div>
+        <p class="co-cod">Cash on delivery — you pay when your frames arrive. We will call you first to confirm.</p>
+        <div class="co-actions">
+          <button class="btn-block" type="button" data-back="2"><span>Edit details</span></button>
+          <button class="btn-block btn-block--solid" id="placeOrder" type="button"><span>Confirm order</span></button>
+        </div>
+      </div>
+
+      <!-- done -->
+      <div class="co-pane co-done" id="paneDone" hidden>
+        <span class="co-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h2 class="co-h">Order confirmed</h2>
+        <p class="co-sub">Thank you. We will call you shortly to confirm your delivery.</p>
+        <dl class="co-recap" id="doneRecap"></dl>
+        <a class="btn-block btn-block--solid co-wa" id="waLink" href="#" target="_blank" rel="noopener" hidden>
+          <span>Send my order on WhatsApp</span>
+        </a>
+        <p class="co-hint" id="waHint" hidden>Sending the summary on WhatsApp lets the studio confirm faster.</p>
+        <a class="back-link co-home" href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to the home page
+        </a>
+      </div>
+
+    </section>
+
+    <aside class="co-summary" id="coSummary" data-reveal="up" style="--d:.14s">
+      <h2 class="co-h">Order summary</h2>
+      <dl class="co-totals">
+        <div><dt>Subtotal</dt><dd id="sumSub">0 MAD</dd></div>
+        <div><dt>Delivery</dt><dd>Free</dd></div>
+        <div class="co-total"><dt>Total</dt><dd id="sumTotal">0 MAD</dd></div>
+      </dl>
+      <p class="co-badge">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="1.6" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Cash on delivery
+      </p>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="foot-inner">
+    <div class="foot-bar" data-reveal="up">
+      <p>&copy; 2026 Azylis. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="cart.js"></script>
+<script src="checkout.js"></script>
+</body>
+</html>

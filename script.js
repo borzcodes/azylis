@@ -39,18 +39,20 @@
   var DECK_X = 25;   // vw right of centre: the stack's centre
 
   var CARDS = [
-    { hero:{ col:-2, top:40 }, deck:{ x:24.5, y:-8, z:-260, rz:-12, ry:15 } },
-    { hero:{ col:-1, top:70 }, deck:{ x:26.5, y: 3, z:-150, rz:  7, ry:12 } },
-    { hero:{ col: 0, top:62 }, deck:{ x:27.5, y:-2, z: -40, rz: -4, ry: 9 } },
-    { hero:{ col: 1, top:70 }, deck:{ x:28.5, y: 6, z:  70, rz: 10, ry: 6 } },
-    { hero:{ col: 2, top:40 }, deck:{ x:30.0, y:-5, z: 180, rz: -8, ry: 3 } },
-    { hero:{ col: 3, top:70 }, deck:{ x:26.0, y: 1, z: 290, rz:  5, ry: 0 } }
+    { hero:{ col:-2, top:25 }, deck:{ x:24.5, y:-8, z:-260, rz:-12, ry:15 } },
+    { hero:{ col:-1, top:55 }, deck:{ x:26.5, y: 3, z:-150, rz:  7, ry:12 } },
+    { hero:{ col: 0, top:47 }, deck:{ x:27.5, y:-2, z: -40, rz: -4, ry: 9 } },
+    { hero:{ col: 1, top:55 }, deck:{ x:28.5, y: 6, z:  70, rz: 10, ry: 6 } },
+    { hero:{ col: 2, top:25 }, deck:{ x:30.0, y:-5, z: 180, rz: -8, ry: 3 } },
+    { hero:{ col: 3, top:55 }, deck:{ x:26.0, y: 1, z: 290, rz:  5, ry: 0 } }
   ];
 
-  /* under 900px the row is three across with a second row under the fold */
+  /* under 900px the row is three across with a second row under the fold.
+     Pushed low enough to clear the hero column stacked above it (mark,
+     tagline, lede, links all run full-width here). */
   var HERO_NARROW = [
-    { col:-1, top:60 }, { col:0, top:67 }, { col:1, top:60 },
-    { col:-1, top:60, row:1 }, { col:0, top:67, row:1 }, { col:1, top:60, row:1 }
+    { col:-1, top:65 }, { col:0, top:72 }, { col:1, top:65 },
+    { col:-1, top:65, row:1 }, { col:0, top:72, row:1 }, { col:1, top:65, row:1 }
   ];
 
 
@@ -244,6 +246,76 @@
       document.body.style.overflow = "";
     });
   }
+
+  /* ---------- home shelves -----------------------------------------------
+     Drawn from the imported catalogue so every card on the home page opens
+     a real product. Runs before the reveal observer and the rails collect
+     their elements. */
+
+  (function () {
+    var REAL = window.AZYLIS_CATALOGUE || [];
+    var rails = document.querySelectorAll("[data-shelf]");
+    if (!REAL.length || !rails.length) return;
+
+    var money = window.Bag ? window.Bag.money : function (n) { return n + " MAD"; };
+    var esc = function (s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    };
+    var TRYON = '<span class="tryon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 8V5.5A2 2 0 0 1 5.5 3.5H8M16 3.5h2.5a2 2 0 0 1 2 2V8M20.5 16v2.5a2 2 0 0 1-2 2H16M8 20.5H5.5a2 2 0 0 1-2-2V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9.4" cy="12" r="2.3" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="12" r="2.3" stroke="currentColor" stroke-width="1.4"/><path d="M11.7 11.8h.6" stroke="currentColor" stroke-width="1.4"/></svg></span>';
+
+    var familySize = {};
+    REAL.forEach(function (p) { familySize[p.family] = (familySize[p.family] || 0) + 1; });
+
+    /* one card per family, so a shelf does not show the same frame twice */
+    function firstOfFamily(list) {
+      var seen = {};
+      return list.filter(function (p) {
+        if (seen[p.family]) return false;
+        seen[p.family] = true;
+        return true;
+      });
+    }
+
+    var full = REAL.filter(function (p) { return !p.oldPrice; });
+    var PICK = {
+      bestsellers: firstOfFamily(full).slice(0, 8),
+      arrivals:    firstOfFamily(full.slice(8)).slice(0, 8),
+      sale:        firstOfFamily(REAL.filter(function (p) { return p.oldPrice; })).slice(0, 8)
+    };
+
+    function card(p, i, tag) {
+      var colours = familySize[p.family];
+      var price = p.oldPrice
+        ? "<s>" + money(p.oldPrice) + "</s> <b>" + money(p.price) + "</b>"
+        : money(p.price);
+      return '' +
+        '<a class="pcard pcard--photo" href="product.html?p=' + esc(p.slug) + '" data-reveal="card" style="--d:' + (i * 0.06).toFixed(2) + 's">' +
+          '<div class="pcard-shot">' +
+            (tag ? '<span class="tag">' + esc(tag) + "</span>" : "") +
+            (colours > 1 ? '<span class="colours">' + colours + " colours</span>" : "") +
+            '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">' +
+          "</div>" +
+          '<div class="pcard-foot">' +
+            '<div class="pcard-meta">' +
+              '<h3 class="pcard-name">' + esc(p.family) + "</h3>" +
+              (p.color ? '<p class="pcard-var">' + esc(p.color) + "</p>" : "") +
+              '<p class="pcard-price">' + price + "</p>" +
+            "</div>" + TRYON +
+          "</div>" +
+        "</a>";
+    }
+
+    var TAGS = { bestsellers: "Best seller", arrivals: "New", sale: "Sale" };
+
+    [].forEach.call(rails, function (rail) {
+      var kind = rail.getAttribute("data-shelf");
+      rail.innerHTML = (PICK[kind] || []).map(function (p, i) { return card(p, i, TAGS[kind]); }).join("");
+    });
+
+    if (window.I18N) window.I18N.apply();
+  })();
 
   /* ---------- scroll reveals -------------------------------------------- */
 

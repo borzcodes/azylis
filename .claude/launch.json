@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "azylis",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "-l", "5187", "."],
-      "port": 5187
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["dev-server.js"],
+      "port": 4321
     }
   ]
 }

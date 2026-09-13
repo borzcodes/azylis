@@ -1,6 +1,7 @@
 {
   "files": {
     "code": [
+      ".graphify/studio/assets/index-CU5cXRnL.js",
       "dev-server.js",
       "i18n.js",
       "product.js",
@@ -8,6 +9,12 @@
       "shop.js"
     ],
     "document": [
+      ".graphify/2026-09-12/GRAPH_REPORT.md",
+      ".graphify/GRAPH_REPORT.md",
+      ".graphify/studio/index.html",
+      ".graphify/studio/studio-template.html",
+      ".graphify/studio/studio.html",
+      "CLAUDE.md",
       "README.md",
       "index.html",
       "product.html",
@@ -23,6 +30,9 @@
       "assets/favicon.svg",
       "assets/fit-01.jpg",
       "assets/fit-02.jpg",
+      "assets/fitx-01.jpg",
+      "assets/fitx-02.jpg",
+      "assets/fitx-03.jpg",
       "assets/frame-angle.png",
       "assets/frame-front.png",
       "assets/frame-midnight.png",
@@ -33,22 +43,26 @@
       "assets/reel-04.jpg",
       "assets/reel-05.jpg",
       "assets/reel-06.jpg",
+      "assets/store-01.jpg",
       "assets/wear-01.jpg",
       "assets/wear-02.jpg"
     ],
     "video": [
-      "assets/hero.mp4"
+      "assets/hero.mp4",
+      "assets/sale-01.mp4",
+      "assets/visit-01.mp4",
+      "assets/visit-02.mp4"
     ]
   },
-  "total_files": 30,
-  "total_words": 87753,
+  "total_files": 44,
+  "total_words": 119646,
   "needs_graph": true,
   "warning": null,
   "skipped_sensitive": [],
   "graphifyignore_patterns": 4,
   "git": {
     "source_owner": "git",
-    "source_hash": "810e10251533158709e206ac41cae11208271582",
+    "source_hash": "754ecccce423330766d666b07caea776108ca5ee",
     "branches": [
       "main"
     ],
@@ -61,10 +75,10 @@
     "source": "default-auto",
     "root": ".",
     "git_root": ".",
-    "head": "810e10251533158709e206ac41cae11208271582",
-    "candidate_count": 33,
-    "included_count": 30,
-    "excluded_untracked_count": 75,
+    "head": "754ecccce423330766d666b07caea776108ca5ee",
+    "candidate_count": 110,
+    "included_count": 44,
+    "excluded_untracked_count": 1380,
     "excluded_ignored_count": 0,
     "excluded_sensitive_count": 0,
     "missing_committed_count": 0,

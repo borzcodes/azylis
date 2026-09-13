@@ -165,7 +165,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .layer-hero{z-index:0}
 
 .hero-mark{
-  position:absolute; inset-inline-start:17vw; top:30vh;
+  position:absolute; inset-inline-start:17vw; top:15vh;
   margin:0;
   font-size:clamp(3.4rem, min(13.6vw, 25vh), 15.5rem);
   font-weight:800; line-height:.86; letter-spacing:-.05em;
@@ -173,7 +173,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 .hero-side{
-  position:absolute; inset-inline-start:62vw; top:32vh;
+  position:absolute; inset-inline-start:62vw; top:17vh;
   /* the last term keeps it clear of the right-hand card, which pulls
      inward when a short window caps the card's width by height */
   width:min(23.5vw, 21rem, calc(70vh - 12vw));
@@ -262,7 +262,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* a three-line caption under the mark, above the row */
 .feature-strip{
   position:absolute; z-index:0;
-  inset-inline-start:17vw; top:52vh;
+  inset-inline-start:17vw; top:37vh;
   display:grid; gap:.4rem;
   will-change:opacity,transform;
 }
@@ -413,8 +413,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   /* the mark and tagline stack at the left; the row runs three across with
      a second row peeking under the fold, so there is no pocket for the caption */
-  .hero-mark{inset-inline-start:6vw;top:24vh;font-size:clamp(3.2rem,21vw,7rem)}
-  .hero-side{inset-inline-start:6vw;top:35vh;width:min(86vw,24rem)}
+  .hero-mark{inset-inline-start:6vw;top:20vh;font-size:clamp(3.2rem,21vw,7rem)}
+  .hero-side{inset-inline-start:6vw;top:37vh;width:min(86vw,24rem)}
   .hero-title{font-size:clamp(1.05rem,4.6vw,1.3rem)}
   .feature-strip{display:none}
   .reel-card{width:min(44vw,36vh)}
@@ -489,6 +489,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 [data-reveal="mask"].is-in .mask-in{transform:none;opacity:1}
 [data-reveal="mask"].is-in .mask:nth-child(2) .mask-in{transition-delay:.1s}
+
+/* cards and tiles: rise and settle with a touch of overshoot. This runs on
+   the individual translate/scale properties, never on transform, so the
+   hover lifts written in transform on .cat and .pcard-shot are untouched. */
+[data-reveal="card"]{opacity:0; translate:0 36px; scale:.94}
+[data-reveal="card"].is-in{
+  animation:tileIn .9s var(--d,0s) cubic-bezier(.2,1.12,.3,1) forwards;
+}
+@keyframes tileIn{to{opacity:1; translate:0 0; scale:1}}
 
 
 /* ============================================================
@@ -573,7 +582,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* visit-01 is pillarboxed inside a 16:9 file; cover on a 9:16 frame crops
    those bars away exactly and leaves the recording itself untouched */
 .visit-clip video{width:100%; height:100%; object-fit:cover; display:block}
-.visit-chip{
+.visit-chip,
+.voices-chip{
   position:absolute; top:1.1rem; left:1.1rem; z-index:1;
   padding:.5rem .75rem;
   background:rgba(70,66,62,.72); color:#fff;
@@ -873,6 +883,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font-size:clamp(.8rem,.92vw,.9rem); line-height:1.65; color:var(--ink-70);
 }
 .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem}
+.shop-count{
+  margin:1.4rem 0 0;
+  font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-45);
+}
+.shop-count b{color:var(--ink); font-weight:700}
+/* imported frames are square product photos, not cut-outs: fill the frame */
+.pcard--photo .pcard-shot{padding:0}
+.pcard--photo .pcard-shot img{width:100%; height:100%; object-fit:cover}
+.pdp-shot.pdp-shot--photo{padding:0; aspect-ratio:1; background:var(--paper-3); overflow:hidden}
+.pdp-shot.pdp-shot--photo img{max-width:none; width:100%; height:100%; object-fit:cover; mix-blend-mode:normal}
+/* the details infographic sits at the top of the open Details panel */
+.pdp-detail{margin:0 0 1rem; background:var(--paper-2)}
+.pdp-detail img{width:100%; height:auto; display:block}
 .chip-link{
   padding:.42rem .9rem; border-radius:999px;
   border:1.4px solid var(--ink-14);
@@ -894,8 +917,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============================================================
    TESTIMONIALS
-   White cards on a grey band, slid two-thirds of a screen at a time.
-   No imagery, so the card is only as tall as the quote needs.
+   A featured voice — a clip, tilted like a card from the deck, with
+   the statement beside it — then white quote cards on the grey band,
+   slid two-thirds of a screen at a time.
    ============================================================ */
 
 .voices{
@@ -907,14 +931,69 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .voices > *{max-width:1180px; margin-inline:auto}
 
-.voices-head{
-  display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
-  margin-bottom:clamp(1.6rem,3vw,2.4rem);
-}
+.voices-head{margin-bottom:clamp(1.8rem,3.4vw,2.8rem)}
 .voices-title{
   margin:0;
   font-size:clamp(1.4rem,2.6vw,2.1rem);
   font-weight:800; letter-spacing:-.035em; line-height:1.1;
+}
+
+/* ---------------- the featured voice ---------------- */
+
+.voices-feature{
+  display:grid; grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(2.2rem,5vw,5rem);
+  align-items:center;
+  margin-bottom:clamp(2.6rem,5vw,4.4rem);
+}
+/* the tilt sits on a wrapper so the pop below can own the figure's transform */
+.voices-clip-tilt{
+  transform:rotate(-2.5deg);
+  margin:1.5rem 1rem;            /* room for the corners the tilt pushes out */
+}
+.voices-clip{
+  position:relative; margin:0; overflow:hidden;
+  width:min(calc(62vh * 9 / 16), 22vw, 330px);
+  aspect-ratio:9/16;
+  background:var(--paper);
+  box-shadow:0 44px 70px -34px rgba(0,0,0,.55);
+  opacity:0; transform:scale(0);
+  will-change:transform, opacity;
+}
+.voices-clip video{width:100%; height:100%; object-fit:cover; display:block}
+
+.voices-feature-copy{max-width:34rem}
+.voices-kicker{
+  margin:0 0 1rem;
+  font-size:.68rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-45);
+}
+.voices-statement{
+  margin:0;
+  font-size:clamp(1.7rem,3.3vw,2.9rem);
+  font-weight:800; letter-spacing:-.04em; line-height:1.04;
+}
+.voices-note{
+  margin:1.4rem 0 0; max-width:44ch;
+  font-size:clamp(.9rem,1vw,1rem); line-height:1.72; color:var(--ink-70);
+}
+.voices-caption{
+  margin:1.6rem 0 0;
+  font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-45);
+}
+
+/* the row that hands over to the rail */
+.voices-railhead{
+  display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+  margin-bottom:1.1rem;
+  padding-top:1.4rem;
+  border-top:1px solid var(--ink-14);
+}
+.voices-more{
+  margin:0;
+  font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink-45);
 }
 .voices-nav{display:flex;gap:.5rem;flex:none}
 
@@ -975,9 +1054,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .dot:hover{background:var(--ink-45)}
 .dot.is-on{background:var(--ink);width:20px}
 
+@media (max-width:900px){
+  .voices-feature{grid-template-columns:1fr; gap:1.6rem; justify-items:start}
+  .voices-clip{width:min(60vw, 280px)}
+  .voices-clip-tilt{margin:1rem .8rem 1.2rem}
+}
 @media (max-width:560px){
   .voices-rail{grid-auto-columns:82%}
-  .voices-head{align-items:flex-start}
 }
 
 
@@ -1458,6 +1541,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* headline tracking that suits Latin is too tight for Arabic */
 [dir="rtl"] .hero-title,
 [dir="rtl"] .promo-line,
+[dir="rtl"] .voices-statement,
 [dir="rtl"] .shelf-title,
 [dir="rtl"] .voices-title,
 [dir="rtl"] .faq-heading,
@@ -1533,11 +1617,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 .tag--sale{background:var(--ink);color:var(--paper)}
 
-.pcard-price s{
+.pcard-price s,
+.pdp-price s{
   color:var(--ink-45); text-decoration-thickness:1px;
   margin-inline-end:.3rem; font-weight:400;
 }
 .pcard-price b{font-weight:700}
+.pdp-price s{font-size:.6em; vertical-align:.18em}
 
 /* ============================================================
    PERKS — IDLE MOTION
@@ -1569,4 +1655,250 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 @media (prefers-reduced-motion:reduce){
   .perk-ico{animation:none !important}
+}
+
+/* ============================================================
+   THE BAG
+   A drawer from the inline end, drawn by cart.js on every page.
+   Square edges and the same block buttons as the product page.
+   ============================================================ */
+
+.bag-veil{
+  position:fixed; inset:0; z-index:70;
+  background:rgba(20,17,14,.32);
+  opacity:0; pointer-events:none;
+  transition:opacity .45s var(--ease);
+}
+.bag-veil.is-open{opacity:1; pointer-events:auto}
+
+.bag{
+  position:fixed; top:0; bottom:0; inset-inline-end:0; z-index:71;
+  width:min(420px, 100vw);
+  background:var(--paper);
+  display:flex; flex-direction:column;
+  transform:translateX(102%);
+  transition:transform .6s var(--ease-out);
+  box-shadow:-30px 0 60px -40px rgba(0,0,0,.4);
+}
+[dir="rtl"] .bag{transform:translateX(-102%)}
+.bag.is-open{transform:none}
+body.bag-open{overflow:hidden}
+
+.bag-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.3rem 1.5rem 1.1rem;
+  border-bottom:1px solid var(--ink-14);
+}
+.bag-title{margin:0; font-size:1.05rem; font-weight:800; letter-spacing:-.02em}
+
+.bag-list{flex:1 1 auto; overflow-y:auto; padding:.4rem 1.5rem}
+
+.bag-item{
+  display:grid; grid-template-columns:72px minmax(0,1fr) auto; gap:1rem;
+  padding:1.1rem 0;
+  border-bottom:1px solid var(--ink-14);
+}
+.bag-item:last-child{border-bottom:0}
+.bag-thumb{
+  display:block; aspect-ratio:1; background:var(--paper-3);
+  overflow:hidden;
+}
+.bag-thumb img{width:100%; height:100%; object-fit:contain; display:block; padding:6px}
+.bag-thumb-blank{
+  width:100%; height:100%; display:grid; place-items:center;
+  font-size:.72rem; font-weight:700; letter-spacing:.08em; color:var(--ink-45);
+}
+.bag-info{min-width:0}
+.bag-name{margin:0; font-size:.9rem; font-weight:700; letter-spacing:-.01em}
+.bag-var{margin:.2rem 0 0; font-size:.74rem; color:var(--ink-45)}
+.bag-price{margin:0; font-size:.88rem; font-weight:600; white-space:nowrap}
+
+.bag-ctl{display:flex; align-items:center; gap:1rem; margin-top:.75rem}
+.qty{
+  display:inline-flex; align-items:center;
+  border:1.4px solid var(--ink-14);
+}
+.qty button{
+  width:30px; height:30px; display:grid; place-items:center;
+  font-size:1rem; color:var(--ink);
+  transition:background .3s var(--ease);
+}
+.qty button:hover{background:var(--paper-3)}
+.qty span{min-width:26px; text-align:center; font-size:.82rem; font-weight:600}
+.bag-remove{
+  font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-45); padding:0;
+  transition:color .3s var(--ease);
+}
+.bag-remove:hover{color:var(--ink)}
+
+.bag-empty{padding:3rem 0; text-align:center}
+.bag-empty p{margin:0 0 1rem; color:var(--ink-70); font-size:.92rem}
+.bag-browse{
+  font-size:.74rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  border-bottom:1px solid currentColor; padding-bottom:.15rem;
+}
+
+.bag-foot{
+  padding:1.2rem 1.5rem 1.5rem;
+  border-top:1px solid var(--ink-14);
+  display:grid; gap:.9rem;
+}
+.bag-row{margin:0; display:flex; justify-content:space-between; font-size:.9rem}
+.bag-row b{font-weight:700}
+.bag-cod{margin:0; font-size:.74rem; line-height:1.5; color:var(--ink-45)}
+
+.bag-foot-actions{display:grid; grid-template-columns:1fr 1fr; gap:.6rem}
+.bag-checkout.is-off{opacity:.35; pointer-events:none}
+
+/* ============================================================
+   CHECKOUT
+   Three panes on the left, the totals on the right. Cash on
+   delivery, so the last step is a confirmation, not a payment.
+   ============================================================ */
+
+.co{
+  max-width:1180px; margin:0 auto;
+  padding:calc(var(--header-h) + 1.4rem) max(1.25rem,3vw) clamp(3rem,6vw,5rem);
+}
+
+.co-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap;
+  margin:.4rem 0 clamp(1.8rem,3.4vw,2.8rem);
+  padding-bottom:1.4rem;
+  border-bottom:1px solid var(--ink-14);
+}
+.co-title{
+  margin:0;
+  font-size:clamp(1.8rem,3.4vw,2.8rem);
+  font-weight:800; letter-spacing:-.04em; line-height:1;
+}
+
+/* step indicator */
+.co-steps{
+  list-style:none; margin:0; padding:0;
+  display:flex; gap:clamp(1rem,2.4vw,2rem);
+}
+.co-steps li{
+  display:flex; align-items:center; gap:.55rem;
+  font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-45);
+  transition:color .35s var(--ease);
+}
+.co-steps b{
+  width:24px; height:24px; border-radius:50%;
+  display:grid; place-items:center;
+  font-size:.66rem; font-weight:700; letter-spacing:0;
+  border:1.4px solid var(--ink-14); color:var(--ink-45);
+  transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+}
+.co-steps li.is-on{color:var(--ink)}
+.co-steps li.is-on b,
+.co-steps li.is-done b{background:var(--ink); color:#fff; border-color:var(--ink)}
+.co-steps li.is-done{color:var(--ink-70)}
+
+.co-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.55fr);
+  gap:clamp(2rem,4.5vw,4.5rem);
+  align-items:start;
+}
+
+.co-pane{animation:paneIn .55s var(--ease-out)}
+@keyframes paneIn{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+.co-h{
+  margin:0 0 1.2rem;
+  font-size:1.1rem; font-weight:800; letter-spacing:-.02em;
+}
+.co-sub{margin:-.6rem 0 1.4rem; font-size:.88rem; line-height:1.6; color:var(--ink-70)}
+
+.co-items .bag-item{grid-template-columns:84px minmax(0,1fr) auto}
+.co-items .bag-item:first-child{padding-top:0}
+.co-items--compact .bag-item{grid-template-columns:56px minmax(0,1fr) auto; padding:.8rem 0}
+.co-empty{padding:1rem 0 0}
+.co-empty p{margin:0 0 1.2rem; color:var(--ink-70)}
+.co-empty .btn-block{display:inline-grid; padding:0 1.6rem}
+
+.co-actions{
+  display:flex; flex-wrap:wrap; gap:.7rem; justify-content:flex-end;
+  margin-top:1.8rem; padding-top:1.4rem;
+  border-top:1px solid var(--ink-14);
+}
+.co-actions .btn-block{padding:0 1.6rem}
+
+/* fields */
+.co-fields{display:grid; grid-template-columns:1fr 1fr; gap:1rem 1.2rem}
+.field{display:grid; gap:.45rem}
+.field--wide{grid-column:1 / -1}
+.field > span{
+  font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-45);
+}
+.field input,.field textarea{
+  width:100%; padding:.85rem 1rem;
+  font:inherit; font-size:.92rem; color:var(--ink);
+  background:var(--paper); border:1.4px solid var(--ink-14); border-radius:0;
+  transition:border-color .3s var(--ease), background .3s var(--ease);
+}
+.field textarea{resize:vertical; min-height:5.5rem}
+.field input:focus,.field textarea:focus{outline:none; border-color:var(--ink); background:var(--paper-2)}
+.field input:user-invalid,.field textarea:user-invalid{border-color:#B9432E}
+
+/* recap */
+.co-recap{margin:0 0 1.4rem; padding:0; display:grid}
+.co-recap > div{
+  display:grid; grid-template-columns:9.5rem minmax(0,1fr); gap:1rem;
+  padding:.75rem 0;
+  border-top:1px solid var(--ink-14);
+}
+.co-recap > div:last-child{border-bottom:1px solid var(--ink-14)}
+.co-recap dt{margin:0; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-45); padding-top:.15rem}
+.co-recap dd{margin:0; font-size:.9rem; line-height:1.5; overflow-wrap:anywhere}
+.co-cod{margin:1.2rem 0 0; font-size:.82rem; line-height:1.6; color:var(--ink-70)}
+
+/* done */
+.co-check{
+  width:52px; height:52px; border-radius:50%;
+  display:grid; place-items:center;
+  background:var(--ink); color:#fff; margin-bottom:1.2rem;
+}
+.co-check svg{width:26px; height:26px}
+.co-wa{margin-top:.4rem; padding:0 1.6rem; display:inline-grid}
+.co-hint{margin:.9rem 0 0; font-size:.78rem; color:var(--ink-45)}
+.co-home{margin-top:2rem}
+
+/* summary */
+.co-summary{
+  position:sticky; top:calc(var(--header-h) + 1rem);
+  padding:1.5rem 1.6rem 1.6rem;
+  background:var(--paper-3);
+}
+.co-totals{margin:0; padding:0; display:grid}
+.co-totals > div{
+  display:flex; justify-content:space-between; gap:1rem;
+  padding:.7rem 0; font-size:.88rem;
+  border-top:1px solid var(--ink-14);
+}
+.co-totals dt{margin:0; color:var(--ink-70)}
+.co-totals dd{margin:0; font-weight:600}
+.co-totals .co-total{font-size:1rem; padding-top:1rem}
+.co-totals .co-total dt{color:var(--ink); font-weight:700}
+.co-totals .co-total dd{font-weight:800}
+.co-badge{
+  margin:1.3rem 0 0; display:flex; align-items:center; gap:.55rem;
+  font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-70);
+}
+.co-badge svg{width:18px; height:18px; flex:none}
+
+@media (max-width:900px){
+  .co-grid{grid-template-columns:1fr}
+  .co-summary{position:static; order:-1}
+}
+@media (max-width:640px){
+  .co-fields{grid-template-columns:1fr}
+  .co-recap > div{grid-template-columns:1fr; gap:.25rem}
+  .co-actions{flex-direction:column-reverse}
+  .co-actions .btn-block{width:100%}
+  .bag-item,.co-items .bag-item{grid-template-columns:60px minmax(0,1fr)}
+  .bag-price{grid-column:2; justify-self:start}
 }

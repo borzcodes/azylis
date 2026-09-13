@@ -18,7 +18,7 @@
     "havana-round": {
       name: "Havana Round",
       lede: "Havana Round reinterprets the classic panto for those who blend restraint with warmth. Its softened geometry makes eyewear a quiet statement.",
-      price: "$149.00",
+      price: 349,
       category: "Glasses",
       life: "assets/wear-02.jpg",
       lifePos: "30%",
@@ -41,7 +41,7 @@
     "cat-eye-sun": {
       name: "Linea Cat-Eye",
       lede: "Linea sharpens the cat-eye into something architectural — an upswept line cut from a single block of acetate.",
-      price: "$139.00",
+      price: 299,
       category: "Sunglasses",
       life: "assets/wear-01.jpg",
       lifePos: "44%",
@@ -64,7 +64,7 @@
     "round-metal": {
       name: "Filo Round Metal",
       lede: "Filo strips the frame back to a wire outline — a whisper of gunmetal around the lens and nothing else.",
-      price: "$159.00",
+      price: 379,
       category: "Glasses",
       life: "assets/wear-02.jpg",
       lifePos: "30%",
@@ -87,7 +87,7 @@
     "rim-round-sun": {
       name: "Orbit Rim-Round",
       lede: "Orbit pairs a heavy acetate rim with a bottle-green lens — the most protective frame in the edit, and the least apologetic.",
-      price: "$169.00",
+      price: 349,
       category: "Sunglasses",
       life: "assets/wear-01.jpg",
       lifePos: "44%",
@@ -113,22 +113,94 @@
     midnight: "linear-gradient(135deg,#3A3A3A,#0C0C0C 60%,#262626)",
     moss:     "linear-gradient(135deg,#7E9147,#243015 55%,#5A6B32)",
     gunmetal: "linear-gradient(135deg,#B9B4AC,#6E685F 60%,#969086)",
-    gold:     "linear-gradient(135deg,#E3C88B,#A98436 60%,#C9A75E)"
+    gold:     "linear-gradient(135deg,#E3C88B,#A98436 60%,#C9A75E)",
+    /* the colourway words used across the imported catalogue */
+    black:     "linear-gradient(135deg,#3A3A3A,#0C0C0C 60%,#262626)",
+    dark:      "linear-gradient(135deg,#4A4642,#15120F 60%,#2E2A26)",
+    grey:      "linear-gradient(135deg,#B9B4AC,#6E685F 60%,#969086)",
+    gray:      "linear-gradient(135deg,#B9B4AC,#6E685F 60%,#969086)",
+    silver:    "linear-gradient(135deg,#E2E2E0,#9A9A98 60%,#C6C6C4)",
+    white:     "linear-gradient(135deg,#FFFFFF,#D8D5D0 60%,#F1EFEB)",
+    trans:     "linear-gradient(135deg,#F4F1EB,#CFC9BF 60%,#E6E1D8)",
+    brown:     "linear-gradient(135deg,#A06A3B,#4A2E17 60%,#7A4E2A)",
+    tigred:    "linear-gradient(135deg,#B07C3E,#4A2E17 55%,#8A5A2A)",
+    sahara:    "linear-gradient(135deg,#D8B98A,#9C7A48 60%,#C2A06A)",
+    beige:     "linear-gradient(135deg,#E6D6C0,#B39B7A 60%,#D2BFA2)",
+    blue:      "linear-gradient(135deg,#5B7FB5,#1F3A66 60%,#3B5C93)",
+    sky:       "linear-gradient(135deg,#9CC5E8,#5B8FBF 60%,#7FB0DA)",
+    turquoise: "linear-gradient(135deg,#4FB3B0,#1F6F6D 60%,#3A9C99)",
+    electro:   "linear-gradient(135deg,#3C6BFF,#1A2E99 60%,#2E4FD1)",
+    green:     "linear-gradient(135deg,#7E9147,#243015 55%,#5A6B32)",
+    verde:     "linear-gradient(135deg,#6E9E6A,#1F4A2C 60%,#4F7C4E)",
+    olive:     "linear-gradient(135deg,#8A8A52,#3E3E1A 60%,#6B6B3B)",
+    orange:    "linear-gradient(135deg,#E58A2F,#8A4A0F 60%,#C86F1F)",
+    red:       "linear-gradient(135deg,#C8453B,#6E1B15 60%,#A6332A)",
+    purple:    "linear-gradient(135deg,#8E6AB8,#3F2560 60%,#6C4B94)",
+    pink:      "linear-gradient(135deg,#E9A7A0,#B86A62 60%,#D68A83)",
+    saumon:    "linear-gradient(135deg,#F0B39E,#C27A62 60%,#DE9880)",
+    yellow:    "linear-gradient(135deg,#E3C25B,#A88A1E 60%,#CBAA3E)",
+    orne:      "linear-gradient(135deg,#E3C88B,#A98436 60%,#C9A75E)",
+    solar:     "linear-gradient(135deg,#F2C14E,#B5741A 60%,#D99A2E)"
   };
 
+  function paintFor(name) {
+    var words = String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().split(/\s+/);
+    for (var i = words.length - 1; i >= 0; i--) if (SWATCH_PAINT[words[i]]) return SWATCH_PAINT[words[i]];
+    return "linear-gradient(135deg,#D9D4CC,#9A948B 60%,#BDB7AE)";
+  }
+
   var $ = function (id) { return document.getElementById(id); };
+  var money = window.Bag ? window.Bag.money : function (n) { return n + " MAD"; };
 
   /* ---------- pick the product ------------------------------------------ */
 
+  var REAL = window.AZYLIS_CATALOGUE || [];
   var slug = new URLSearchParams(location.search).get("p");
-  var key = CATALOGUE[slug] ? slug : "havana-round";
-  var product = CATALOGUE[key];
+
+  /* an imported frame: the product is its family, the colourways its
+     siblings, each one a page of its own */
+  var real = REAL.filter(function (p) { return p.slug === slug; })[0];
+  var product, key;
+
+  if (real) {
+    var siblings = REAL.filter(function (p) { return p.family === real.family; });
+    key = real.slug;
+    product = {
+      imported: true,
+      name: siblings.length > 1 ? real.family : real.name,
+      lede: "Acetate frame with UV400 lenses, fitted and adjusted at the studio in Casablanca.",
+      price: real.price,
+      oldPrice: real.oldPrice,
+      category: "Sunglasses",
+      life: null, angle: null,
+      colors: siblings.map(function (s) {
+        return { id: s.slug, slug: s.slug, name: s.color || s.name, img: s.img,
+                 gallery: s.gallery || [s.img], price: s.price, oldPrice: s.oldPrice };
+      }),
+      details: "Every pair is checked and adjusted by hand before it leaves the studio — hinges tightened, temples shaped to sit level. Cash on delivery across Morocco, and a free adjustment in store whenever you need one.",
+      detailImages: real.details || [],
+      measurements: null
+    };
+  } else if (CATALOGUE[slug]) {
+    key = slug;
+    product = CATALOGUE[key];
+  } else {
+    /* no such frame: never show a placeholder in its place */
+    location.replace("shop.html");
+    return;
+  }
+
+  function priceHtml(p) {
+    return p.oldPrice
+      ? "<s>" + money(p.oldPrice) + "</s> <b>" + money(p.price) + "</b>"
+      : money(p.price);
+  }
 
   document.title = "Azylis — " + product.name;
   $("pName").textContent = product.name;
   $("crumbName").textContent = product.name;
   $("pLede").textContent = product.lede;
-  $("pPrice").textContent = product.price;
+  $("pPrice").innerHTML = priceHtml(product);
 
   $("pPoints").innerHTML = SHARED_POINTS
     .map(function (p) { return "<li>" + p + "</li>"; })
@@ -137,12 +209,40 @@
   /* ---------- media ------------------------------------------------------ */
 
   var shotMain  = $("shotMain");
+  if (product.imported) shotMain.parentNode.classList.add("pdp-shot--photo");
   var lifeFig   = document.querySelector(".pdp-life");
   var angleFig  = document.querySelector(".pdp-shot--alt");
   var shotLife  = $("shotLife");
   var shotAngle = $("shotAngle");
 
+  /* An imported frame brings the photos from its page on azylis.ma: the
+     first sits in the main shot, the rest follow it down the column. */
+  var mediaCol = document.querySelector(".pdp-media");
+  var booted = false;
+
+  function paintGallery(color) {
+    var shots = color.gallery && color.gallery.length ? color.gallery : [color.img];
+    shotMain.hidden = false;
+    shotMain.src = shots[0];
+    shotMain.alt = product.name + " in " + color.name;
+
+    [].forEach.call(mediaCol.querySelectorAll(".pdp-extra"), function (el) { el.remove(); });
+    shots.slice(1).forEach(function (src, k) {
+      var f = document.createElement("figure");
+      f.className = "pdp-shot pdp-shot--photo pdp-extra" + (booted ? " is-in" : "");
+      f.setAttribute("data-reveal", "wipe");
+      f.style.setProperty("--d", (0.08 * (k + 1)).toFixed(2) + "s");
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = product.name + " in " + color.name + ", view " + (k + 2);
+      img.loading = "lazy";
+      f.appendChild(img);
+      mediaCol.appendChild(f);
+    });
+  }
+
   function paintMain(color) {
+    if (product.imported) return paintGallery(color);
     if (color && color.img) {
       shotMain.hidden = false;
       shotMain.src = color.img;
@@ -188,21 +288,35 @@
     b.setAttribute("aria-label", color.name);
     b.title = color.name;
     b.innerHTML = '<span class="swatch-chip" style="background:' +
-      (SWATCH_PAINT[color.id] || "#999") + '"></span>';
+      (SWATCH_PAINT[color.id] || paintFor(color.name)) + '"></span>';
     b.addEventListener("click", function () { choose(i); });
     swatches.appendChild(b);
   });
 
+  var chosen = 0;
+
   function choose(i) {
+    chosen = i;
     var color = product.colors[i];
     [].forEach.call(swatches.children, function (el, n) {
       el.setAttribute("aria-checked", n === i ? "true" : "false");
     });
     colorName.textContent = color.name;
     paintMain(color);
+
+    /* an imported colourway is a product of its own: follow its price and address */
+    if (product.imported) {
+      $("pPrice").innerHTML = priceHtml(color);
+      if (color.slug !== new URLSearchParams(location.search).get("p")) {
+        history.replaceState(null, "", "product.html?p=" + color.slug);
+      }
+    }
   }
 
-  choose(0);
+  choose(product.imported
+    ? Math.max(0, product.colors.map(function (c) { return c.slug; }).indexOf(key))
+    : 0);
+  booted = true;   // figures drawn from here on are swapped in view, so they reveal at once
 
   /* ---------- size ------------------------------------------------------- */
 
@@ -217,16 +331,21 @@
 
   /* ---------- accordions -------------------------------------------------- */
 
-  var measurementRows = product.measurements
+  var measurementRows = (product.measurements || [])
     .map(function (r) { return "<div class='spec'><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; })
     .join("");
 
+  /* the infographic from the product's page on azylis.ma, when it has one */
+  var detailFigures = (product.detailImages || []).map(function (src) {
+    return '<figure class="pdp-detail"><img src="' + src + '" alt="" loading="lazy"></figure>';
+  }).join("");
+
   var PANELS = [
-    { t: "Details",          html: "<p>" + product.details + "</p>", open: true },
-    { t: "Measurements",     html: "<dl class='specs'>" + measurementRows + "</dl>" },
+    { t: "Details",          html: detailFigures + "<p>" + product.details + "</p>", open: true },
+    product.measurements && { t: "Measurements", html: "<dl class='specs'>" + measurementRows + "</dl>" },
     { t: "Lenses",           html: "<p>Every frame ships with anti-reflective, scratch-resistant lenses. Add a blue-light filter, a photochromic tint or your own prescription at the next step — all glazing is done in our own lab.</p>" },
     { t: "Shipping &amp; return", html: "<p>Free worldwide shipping, dispatched within two working days. Wear them for 30 days; if the fit is not right, return them free and we will remake or refund.</p>" }
-  ];
+  ].filter(Boolean);
 
   $("accordions").innerHTML = PANELS.map(function (p, i) {
     return '' +
@@ -250,20 +369,24 @@
     head.setAttribute("aria-expanded", open ? "true" : "false");
   });
 
-  /* ---------- add to cart -------------------------------------------------- */
+  /* ---------- add to bag --------------------------------------------------- */
 
-  var bag = $("bagCount");
   var add = $("addToCart");
-  var count = 0;
   var resetLabel;
 
   add.addEventListener("click", function () {
-    count++;
-    bag.hidden = false;
-    bag.textContent = count;
-    bag.classList.remove("pop");
-    void bag.offsetWidth;              // restart the keyframe
-    bag.classList.add("pop");
+    var color = product.colors[chosen];
+    var size = sizeTrack.querySelector('.size-dot[aria-checked="true"]');
+    /* frames without photography still get a thumbnail from their lead colour */
+    var thumb = color.img || (product.colors[0] && product.colors[0].img) || null;
+
+    window.Bag.add({
+      slug: color.slug || key, name: product.name,
+      price: color.price != null ? color.price : product.price,
+      color: color.name,
+      size: size ? size.getAttribute("data-size") : "",
+      img: thumb
+    });
 
     var label = add.querySelector("span");
     label.textContent = "Added";
@@ -296,25 +419,44 @@
 
   var alsoGrid = $("alsoGrid");
   if (alsoGrid) {
-    var others = Object.keys(CATALOGUE).filter(function (s) { return s !== key; });
+    var cards;
 
-    alsoGrid.innerHTML = others.map(function (s, i) {
-      var p = CATALOGUE[s];
-      var lead = p.colors && p.colors[0];
-      var media = lead && lead.img
-        ? '<img src="' + lead.img + '" alt="' + p.name + '">'
-        : (p.svg || "");
+    if (real) {
+      /* other families from the same shelf, one card per family */
+      var cat = real.cats[0];
+      var seenFamily = {};
+      seenFamily[real.family] = true;
+      cards = REAL.filter(function (p) {
+        if (seenFamily[p.family] || p.cats.indexOf(cat) < 0) return false;
+        seenFamily[p.family] = true;
+        return true;
+      }).slice(0, 8).map(function (p) {
+        return { slug: p.slug, name: p.family, tag: p.oldPrice ? "Sale" : "", colours: 0,
+                 media: '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">',
+                 price: priceHtml(p) };
+      });
+    } else {
+      cards = Object.keys(CATALOGUE).filter(function (s) { return s !== key; }).map(function (s) {
+        var p = CATALOGUE[s];
+        var lead = p.colors && p.colors[0];
+        return { slug: s, name: p.name, tag: p.category, colours: p.colors.length,
+                 media: lead && lead.img ? '<img src="' + lead.img + '" alt="' + p.name + '">' : (p.svg || ""),
+                 price: priceHtml(p) };
+      });
+    }
+
+    alsoGrid.innerHTML = cards.map(function (c, i) {
       return '' +
-        '<a class="pcard" href="product.html?p=' + s + '" data-reveal="card" style="--d:.' + (i * 6) + 's">' +
+        '<a class="pcard' + (real ? " pcard--photo" : "") + '" href="product.html?p=' + c.slug + '" data-reveal="card" style="--d:' + (i * 0.06).toFixed(2) + 's">' +
           '<div class="pcard-shot">' +
-            '<span class="tag">' + p.category + "</span>" +
-            '<span class="colours">' + p.colors.length + " colours</span>" +
-            media +
+            (c.tag ? '<span class="tag">' + c.tag + "</span>" : "") +
+            (c.colours > 1 ? '<span class="colours">' + c.colours + " colours</span>" : "") +
+            c.media +
           "</div>" +
           '<div class="pcard-foot">' +
             '<div class="pcard-meta">' +
-              '<h3 class="pcard-name">' + p.name + "</h3>" +
-              '<p class="pcard-price">' + p.price + "</p>" +
+              '<h3 class="pcard-name">' + c.name + "</h3>" +
+              '<p class="pcard-price">' + c.price + "</p>" +
             "</div>" + TRYON +
           "</div>" +
         "</a>";

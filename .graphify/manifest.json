@@ -4,20 +4,20 @@
     "hash": "8d54cfe79ce9436eecac49c7633a6f99"
   },
   "C:/Users/borz/Desktop/azylis/i18n.js": {
-    "mtime": 1789179317668.168,
-    "hash": "0e30d6f6bda609a4e206d7ad42e89970"
+    "mtime": 1789262459208.0679,
+    "hash": "b8943a4ad52ad813be29ff7af7a7c0cd"
   },
   "C:/Users/borz/Desktop/azylis/product.js": {
-    "mtime": 1788289680000,
-    "hash": "daa53bc1433ae32ff3fd7fe93c6c1a97"
+    "mtime": 1789264117867.6558,
+    "hash": "11a3ff09a07b8ae94210463dd2d8b3de"
   },
   "C:/Users/borz/Desktop/azylis/script.js": {
-    "mtime": 1789177859777.1265,
-    "hash": "e135332008965a7bb1eef286e6383a43"
+    "mtime": 1789263828834.4731,
+    "hash": "d0a432d1526dfd0c6f2d518f1cc6b776"
   },
   "C:/Users/borz/Desktop/azylis/shop.js": {
-    "mtime": 1789179347966.62,
-    "hash": "de3b8c4914295119f5a448b44b009b2f"
+    "mtime": 1789262498160.6553,
+    "hash": "e388fe4bd20807a202f97897014a3fa6"
   },
   "C:/Users/borz/Desktop/azylis/CLAUDE.md": {
     "mtime": 1788969340239.5022,
@@ -28,16 +28,16 @@
     "hash": "2323613efb53164e7c969322e231bbcf"
   },
   "C:/Users/borz/Desktop/azylis/index.html": {
-    "mtime": 1789179325537.771,
-    "hash": "ec56f7d0581a446b4c38c5c0fee6e2f2"
+    "mtime": 1789263808505.7278,
+    "hash": "fbbfe509e56215dd3bdead3a326adfda"
   },
   "C:/Users/borz/Desktop/azylis/product.html": {
-    "mtime": 1789179333060.1584,
-    "hash": "393507ee33c6c28049956289fd0cb95c"
+    "mtime": 1789262348008.8079,
+    "hash": "af487e5eaac321e088169c1e638032ef"
   },
   "C:/Users/borz/Desktop/azylis/shop.html": {
-    "mtime": 1789179329323.04,
-    "hash": "d819e70667c37276214b0d19a84605c5"
+    "mtime": 1789262347998.52,
+    "hash": "c0738cbd9ce4edd4646d63d0e6ca4c58"
   },
   "C:/Users/borz/Desktop/azylis/assets/cat-clip-on.jpg": {
     "mtime": 1788489997488.1836,
@@ -138,5 +138,41 @@
   "C:/Users/borz/Desktop/azylis/assets/hero.mp4": {
     "mtime": 1788289680000,
     "hash": "936453767a7152d28363e21e3edb0673"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/studio/assets/index-CU5cXRnL.js": {
+    "mtime": 1788964530122.8064,
+    "hash": "4a1731652aadc733229941e111688870"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/2026-09-12/GRAPH_REPORT.md": {
+    "mtime": 1788969964446.7097,
+    "hash": "c2496fe98396f8fddefe92f94d120af9"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/GRAPH_REPORT.md": {
+    "mtime": 1788969964446.7097,
+    "hash": "c2496fe98396f8fddefe92f94d120af9"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/studio/index.html": {
+    "mtime": 1788964529329.9836,
+    "hash": "e0de6f474f81b1f12f740e284df72b38"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/studio/studio-template.html": {
+    "mtime": 1788964529409.8433,
+    "hash": "7c18608bfef6b2223ce0af585ad18e47"
+  },
+  "C:/Users/borz/Desktop/azylis/.graphify/studio/studio.html": {
+    "mtime": 1788969968545.459,
+    "hash": "6bcc2492f338bbf5b24efbe3b884db77"
+  },
+  "C:/Users/borz/Desktop/azylis/assets/sale-01.mp4": {
+    "mtime": 1789178752072.357,
+    "hash": "6a8785b9e8e370381dd01d328cd793fd"
+  },
+  "C:/Users/borz/Desktop/azylis/assets/visit-01.mp4": {
+    "mtime": 1789177783277.7778,
+    "hash": "01dcc6904b5667637e2ea4132295d07b"
+  },
+  "C:/Users/borz/Desktop/azylis/assets/visit-02.mp4": {
+    "mtime": 1789177783358.2585,
+    "hash": "06bc22f0076ae6012804d62c5b5802d3"
   }
 }

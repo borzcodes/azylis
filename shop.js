@@ -15,15 +15,32 @@
 
   var TRYON = '<span class="tryon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 8V5.5A2 2 0 0 1 5.5 3.5H8M16 3.5h2.5a2 2 0 0 1 2 2V8M20.5 16v2.5a2 2 0 0 1-2 2H16M8 20.5H5.5a2 2 0 0 1-2-2V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9.4" cy="12" r="2.3" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="12" r="2.3" stroke="currentColor" stroke-width="1.4"/><path d="M11.7 11.8h.6" stroke="currentColor" stroke-width="1.4"/></svg></span>';
 
-  /* cats: lenses = clear optical, sun = tinted */
+  var money = window.Bag ? window.Bag.money : function (n) { return n + " MAD"; };
+
+  /* Placeholders drawn as line art. They only show in a category that has
+     nothing imported yet — see REAL below. cats: lenses = clear optical. */
   var ITEMS = [
-    { slug: "havana-round",  sku: "VR-2548 Optics", name: "Havana Round",     variant: "Havana Tortoise", price: "$149.00", img: "assets/frame-front.png",    colours: 3, tag: "Best seller", cats: ["lenses-men", "lenses-women", "clip-on"] },
-    { slug: "havana-round",  sku: "VR-2549 Optics", name: "Havana Round",     variant: "Midnight Black",  price: "$149.00", img: "assets/frame-midnight.png", colours: 3, tag: "Top pick",    cats: ["lenses-men", "clip-on"] },
-    { slug: "havana-round",  sku: "VR-2551 Optics", name: "Havana Round",     variant: "Moss Tortoise",   price: "$149.00", img: "assets/frame-moss.png",     colours: 3, tag: "New",         cats: ["lenses-women", "clip-on"] },
-    { slug: "round-metal",   sku: "VR-2790 Optics", name: "Filo Round Metal", variant: "Gunmetal",        price: "$159.00", svg: SVG.metal, colours: 2, tag: "Lightweight", cats: ["lenses-men", "lenses-women", "clip-on"] },
-    { slug: "rim-round-sun", sku: "VR-3110 Sun",    name: "Orbit Rim-Round",  variant: "Midnight Black",  price: "$169.00", svg: SVG.orbit, colours: 2, tag: "Sun",         cats: ["sun-men"] },
-    { slug: "cat-eye-sun",   sku: "VR-3042 Sun",    name: "Linea Cat-Eye",    variant: "Midnight Black",  price: "$139.00", svg: SVG.cat,   colours: 2, tag: "Top pick",    cats: ["sun-women"] }
+    { slug: "havana-round",  sku: "VR-2548 Optics", name: "Havana Round",     variant: "Havana Tortoise", price: 349, img: "assets/frame-front.png",    colours: 3, tag: "Best seller", cats: ["lenses-men", "lenses-women", "clip-on"] },
+    { slug: "havana-round",  sku: "VR-2549 Optics", name: "Havana Round",     variant: "Midnight Black",  price: 349, img: "assets/frame-midnight.png", colours: 3, tag: "Top pick",    cats: ["lenses-men", "clip-on"] },
+    { slug: "havana-round",  sku: "VR-2551 Optics", name: "Havana Round",     variant: "Moss Tortoise",   price: 349, img: "assets/frame-moss.png",     colours: 3, tag: "New",         cats: ["lenses-women", "clip-on"] },
+    { slug: "round-metal",   sku: "VR-2790 Optics", name: "Filo Round Metal", variant: "Gunmetal",        price: 379, svg: SVG.metal, colours: 2, tag: "Lightweight", cats: ["lenses-men", "lenses-women", "clip-on"] },
+    { slug: "rim-round-sun", sku: "VR-3110 Sun",    name: "Orbit Rim-Round",  variant: "Midnight Black",  price: 349, svg: SVG.orbit, colours: 2, tag: "Sun",         cats: ["sun-men"] },
+    { slug: "cat-eye-sun",   sku: "VR-3042 Sun",    name: "Linea Cat-Eye",    variant: "Midnight Black",  price: 299, svg: SVG.cat,   colours: 2, tag: "Top pick",    cats: ["sun-women"] }
   ];
+
+  /* The real stock, imported from azylis.ma by scripts/import-catalogue.js.
+     A category with imported frames shows only those; the placeholders
+     above stay for the categories still to be imported. */
+  var REAL = window.AZYLIS_CATALOGUE || [];
+  var realCats = {};
+  REAL.forEach(function (p) { p.cats.forEach(function (c) { realCats[c] = true; }); });
+
+  var familySize = {};
+  REAL.forEach(function (p) { familySize[p.family] = (familySize[p.family] || 0) + 1; });
+
+  var DEMO = ITEMS.filter(function (i) {
+    return !i.cats.some(function (c) { return realCats[c]; });
+  });
 
   var CATS = {
     "sun-men":      { title: "Sunglasses men",   lede: "Tinted frames cut a little squarer and a little wider, for faces that need the room." },
@@ -54,29 +71,50 @@
     }).join("");
 
   /* grid */
-  var list = cat ? ITEMS.filter(function (i) { return i.cats.indexOf(cat) > -1; }) : ITEMS;
+  var inCat = function (p) { return !cat || p.cats.indexOf(cat) > -1; };
+  var list = REAL.filter(inCat).concat(DEMO.filter(inCat));
 
-  $("shopGrid").innerHTML = list.map(function (p, i) {
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  function priceHtml(p) {
+    return p.oldPrice
+      ? "<s>" + money(p.oldPrice) + "</s> <b>" + money(p.price) + "</b>"
+      : money(p.price);
+  }
+
+  function card(p, i) {
+    var real = !p.sku;
+    var colours = real ? familySize[p.family] : p.colours;
+    var tag = real ? (p.oldPrice ? "Sale" : "") : p.tag;
     var media = p.img
-      ? '<img src="' + p.img + '" alt="' + p.name + " in " + p.variant + '">'
+      ? '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">'
       : p.svg;
+    /* the stagger only needs to cover one screen of cards */
+    var d = ((i % 8) * 0.06).toFixed(2);
     return '' +
-      '<a class="pcard" href="product.html?p=' + p.slug + '" data-reveal="card" style="--d:.' + (i * 6) + 's">' +
+      '<a class="pcard' + (real ? " pcard--photo" : "") + '" href="product.html?p=' + esc(p.slug) + '" data-reveal="card" style="--d:' + d + 's">' +
         '<div class="pcard-shot">' +
-          '<span class="tag">' + p.tag + "</span>" +
-          '<span class="colours">' + p.colours + " colours</span>" +
+          (tag ? '<span class="tag">' + esc(tag) + "</span>" : "") +
+          (colours > 1 ? '<span class="colours">' + colours + " colours</span>" : "") +
           media +
         "</div>" +
         '<div class="pcard-foot">' +
           '<div class="pcard-meta">' +
-            '<p class="pcard-sku">' + p.sku + "</p>" +
-            '<h3 class="pcard-name">' + p.name + "</h3>" +
-            '<p class="pcard-var">' + p.variant + "</p>" +
-            '<p class="pcard-price">' + p.price + "</p>" +
+            (real ? "" : '<p class="pcard-sku">' + esc(p.sku) + "</p>") +
+            '<h3 class="pcard-name">' + esc(real ? p.family : p.name) + "</h3>" +
+            ((real ? p.color : p.variant) ? '<p class="pcard-var">' + esc(real ? p.color : p.variant) + "</p>" : "") +
+            '<p class="pcard-price">' + priceHtml(p) + "</p>" +
           "</div>" + TRYON +
         "</div>" +
       "</a>";
-  }).join("");
+  }
+
+  $("shopGrid").innerHTML = list.map(card).join("");
+  $("shopCount").textContent = list.length;
 
   if (!list.length) {
     $("shopGrid").innerHTML = '<p class="shop-empty">Nothing in this category yet.</p>';
