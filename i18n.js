@@ -120,6 +120,11 @@
     "Lenses men": ["Optique homme", "عدسات رجالية", "Lentes hombre"],
     "Lenses women": ["Optique femme", "عدسات نسائية", "Lentes mujer"],
     "Clip-ons": ["Lunettes à clips", "نظارات بكليبس", "Gafas con clip"],
+    "Clearance": ["Déstockage", "تصفية المخزون", "Liquidación"],
+    "Last pieces at reduced prices — while they last.":
+      ["Dernières pièces à prix réduit — jusqu'à épuisement.",
+       "آخر القطع بأسعار مخفّضة — حتى نفاد الكمية.",
+       "Últimas piezas a precio reducido, hasta agotar existencias."],
     "Tinted frames cut a little squarer and a little wider, for faces that need the room.":
       ["Des montures teintées plus carrées et plus larges, pour les visages qui ont besoin d'espace.",
        "مونتيرات ملوّنة أكثر تربيعًا واتساعًا، للوجوه التي تحتاج مساحة أكبر.",

@@ -30,9 +30,13 @@ const CATS = {
   "solaire-femmes": "sun-women",
   "optique-hommes": "lenses-men",
   "optique-femmes": "lenses-women",
+  "optiques-hommes": "lenses-men",
+  "optiques-femmes": "lenses-women",
   "lunettes-de-vue-hommes": "lenses-men",
   "lunettes-de-vue-femmes": "lenses-women",
-  "clip-on": "clip-on"
+  "clip-on": "clip-on",
+  "lunettes-a-clips": "clip-on",
+  "destockage": "sale"
 };
 
 /* the last word(s) of a title that name the colourway */
@@ -40,7 +44,7 @@ const COLOURS = new Set([
   "BLACK", "BLUE", "BROWN", "GREY", "GRAY", "GOLD", "GREEN", "VERDE", "ORANGE",
   "RED", "PURPLE", "PINK", "YELLOW", "OLIVE", "TIGRED", "TRANS", "SAUMON", "SKY",
   "SAHARA", "TURQUOISE", "ELECTRO", "DARK", "ORNÉ", "ORNE", "SILVER", "WHITE",
-  "BEIGE", "SOLAR", "PONT"
+  "BEIGE", "SOLAR", "PONT", "DÉGRADÉ", "DEGRADÉ", "DEGRADE"
 ]);
 
 const args = process.argv.slice(2);
@@ -59,19 +63,22 @@ const titleCase = (s) => s.toLowerCase().replace(/(^|[\s-])(\p{L})/gu, (m, a, b)
 const slugify = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
+/* accents come through in either Unicode form, so compare without them */
+const plain = (w) => w.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+const COLOUR_KEYS = new Set([...COLOURS].map(plain));
+
 function splitName(title) {
   const words = title.replace(/\s+/g, " ").trim().split(" ");
   const colour = [];
-  while (words.length > 1 && COLOURS.has(words[words.length - 1].toUpperCase())) {
+  while (words.length > 1 && COLOUR_KEYS.has(plain(words[words.length - 1]))) {
     colour.unshift(words.pop());
   }
   return { family: titleCase(words.join(" ")), color: colour.length ? titleCase(colour.join(" ")) : "" };
 }
 
-/* Photo sizes. A card renders at ~350px, so 1024 is three times that and
-   stays crisp on a retina screen; the product page shows the photo large,
-   so it gets the original file — the one their site's lightbox opens. */
-const CARD_SIZE = 1024;
+/* Photo sizes: the original file everywhere — the one their site's lightbox
+   opens. Set CARD_SIZE to a width (e.g. 1024) to lighten the shop grid. */
+const CARD_SIZE = "original";
 const GALLERY_SIZE = "original";
 
 function pickImage(srcset, src, want) {

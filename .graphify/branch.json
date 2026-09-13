@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "branchName": "main",
+  "worktreePath": "C:\\Users\\borz\\Desktop\\azylis",
+  "upstream": "origin/main",
+  "mergeBase": "ef225b307c8e8129d79c0eb26dc3e288b2d04fe1",
+  "firstSeenHead": "ef225b307c8e8129d79c0eb26dc3e288b2d04fe1",
+  "lastSeenHead": "ef225b307c8e8129d79c0eb26dc3e288b2d04fe1",
+  "lastAnalyzedHead": "ef225b307c8e8129d79c0eb26dc3e288b2d04fe1",
+  "stale": false,
+  "staleReason": null,
+  "staleSince": null,
+  "lifecycleEvent": null,
+  "createdAt": "2026-09-13T13:51:57.720Z",
+  "updatedAt": "2026-09-13T14:11:36.164Z"
+}

@@ -47,7 +47,8 @@
     "sun-women":    { title: "Sunglasses women", lede: "Tinted frames with softer geometry, balanced to sit light on the bridge." },
     "lenses-men":   { title: "Lenses men",       lede: "Clear optical frames — no tint. Add your prescription, a blue-light filter or Transitions® at checkout." },
     "lenses-women": { title: "Lenses women",     lede: "Clear optical frames — no tint. Add your prescription, a blue-light filter or Transitions® at checkout." },
-    "clip-on":      { title: "Clip-ons",         lede: "Optical frames that take a magnetic sun clip — one pair that works indoors and out." }
+    "clip-on":      { title: "Clip-ons",         lede: "Optical frames that take a magnetic sun clip — one pair that works indoors and out." },
+    "sale":         { title: "Clearance",        lede: "Last pieces at reduced prices — while they last." }
   };
 
   var $ = function (id) { return document.getElementById(id); };

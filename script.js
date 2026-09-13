@@ -279,10 +279,14 @@
     }
 
     var full = REAL.filter(function (p) { return !p.oldPrice; });
+    /* the sale shelf mirrors their "destockage" category; any discounted
+       frame fills in if that category is ever empty */
+    var clearance = REAL.filter(function (p) { return p.cats.indexOf("sale") > -1; });
+    if (!clearance.length) clearance = REAL.filter(function (p) { return p.oldPrice; });
     var PICK = {
       bestsellers: firstOfFamily(full).slice(0, 8),
       arrivals:    firstOfFamily(full.slice(8)).slice(0, 8),
-      sale:        firstOfFamily(REAL.filter(function (p) { return p.oldPrice; })).slice(0, 8)
+      sale:        firstOfFamily(clearance).slice(0, 8)
     };
 
     function card(p, i, tag) {
