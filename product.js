@@ -168,7 +168,7 @@
     product = {
       imported: true,
       name: siblings.length > 1 ? real.family : real.name,
-      lede: "Acetate frame with UV400 lenses, fitted and adjusted at the studio in Casablanca.",
+      lede: "Acetate frame with UV400 lenses, fitted and adjusted at our store in Casablanca.",
       price: real.price,
       oldPrice: real.oldPrice,
       category: "Sunglasses",
@@ -177,7 +177,7 @@
         return { id: s.slug, slug: s.slug, name: s.color || s.name, img: s.img,
                  gallery: s.gallery || [s.img], price: s.price, oldPrice: s.oldPrice };
       }),
-      details: "Every pair is checked and adjusted by hand before it leaves the studio — hinges tightened, temples shaped to sit level. Cash on delivery across Morocco, and a free adjustment in store whenever you need one.",
+      details: "Every pair is checked and adjusted by hand before it leaves the store — hinges tightened, temples shaped to sit level. Cash on delivery across Morocco, and a free adjustment in store whenever you need one.",
       detailImages: real.details || [],
       measurements: null
     };
@@ -220,10 +220,24 @@
   var mediaCol = document.querySelector(".pdp-media");
   var booted = false;
 
+  /* An <img> keeps showing its old picture until the new one has decoded,
+     so a straight src swap flashes the previous frame. Fetch the new one
+     first and only then point the element at it. */
+  function swap(img, src) {
+    if (img.getAttribute("src") === src) return;
+    img.dataset.pending = "1";
+    var pre = new Image();
+    pre.onload = pre.onerror = function () {
+      delete img.dataset.pending;
+      img.src = src;
+    };
+    pre.src = src;
+  }
+
   function paintGallery(color) {
     var shots = color.gallery && color.gallery.length ? color.gallery : [color.img];
     shotMain.hidden = false;
-    shotMain.src = shots[0];
+    swap(shotMain, shots[0]);
     shotMain.alt = product.name + " in " + color.name;
 
     [].forEach.call(mediaCol.querySelectorAll(".pdp-extra"), function (el) { el.remove(); });
@@ -245,7 +259,7 @@
     if (product.imported) return paintGallery(color);
     if (color && color.img) {
       shotMain.hidden = false;
-      shotMain.src = color.img;
+      swap(shotMain, color.img);
       shotMain.alt = product.name + " in " + color.name;
       var drawn = shotMain.parentNode.querySelector(".shot-svg");
       if (drawn) drawn.remove();
@@ -333,7 +347,7 @@
     { t: "Details",          html: detailFigures + "<p>" + product.details + "</p>", open: true },
     product.measurements && { t: "Measurements", html: "<dl class='specs'>" + measurementRows + "</dl>" },
     { t: "Lenses",           html: "<p>Every frame ships with anti-reflective, scratch-resistant lenses. Add a blue-light filter, a photochromic tint or your own prescription at the next step — all glazing is done in our own lab.</p>" },
-    { t: "Shipping &amp; return", html: "<p>Free worldwide shipping, dispatched within two working days. Wear them for 30 days; if the fit is not right, return them free and we will remake or refund.</p>" }
+    { t: "Shipping &amp; return", html: "<p>Free delivery, dispatched within two working days. You have 7 days from delivery to request a return or an exchange — a faulty pair is exchanged free of charge.</p>" }
   ].filter(Boolean);
 
   $("accordions").innerHTML = PANELS.map(function (p, i) {
@@ -376,17 +390,17 @@
     });
 
     var label = add.querySelector("span");
-    label.textContent = "Added";
+    label.textContent = window.I18N ? window.I18N.t("Added") : "Added";
     add.classList.add("is-added");
     clearTimeout(resetLabel);
     resetLabel = setTimeout(function () {
-      label.textContent = label.getAttribute("data-label");
+      label.textContent = window.I18N ? window.I18N.t(label.getAttribute("data-label")) : label.getAttribute("data-label");
       add.classList.remove("is-added");
     }, 1600);
   });
 
   $("selectLenses").addEventListener("click", function () {
-    var lenses = document.querySelectorAll(".acc")[2];
+    var lenses = document.querySelectorAll(".acc")[PANELS.map(function (p) { return p.t; }).indexOf("Lenses")];
     if (!lenses) return;
     lenses.classList.add("is-open");
     lenses.querySelector(".acc-head").setAttribute("aria-expanded", "true");
@@ -458,13 +472,27 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var revealables = [].slice.call(document.querySelectorAll("[data-reveal]"));
 
+  /* A figure's wipe only starts once its photo is on screen: otherwise the
+     curtain lifts on an empty box and the picture pops in afterwards. */
+  function reveal(el) {
+    var go = function () { el.classList.add("is-in"); };
+    var img = el.querySelector("img");
+    if (!img || img.hidden || !(img.dataset.pending || img.getAttribute("src"))) return go();
+    if (!img.dataset.pending && img.complete && img.naturalWidth) return go();
+    img.addEventListener("load", go, { once: true });
+    img.addEventListener("error", go, { once: true });
+    /* the curtain clips the image to nothing, and a fully clipped image never
+       starts a native lazy load — it is in view now, so fetch it ourselves */
+    if (img.loading === "lazy") img.loading = "eager";
+  }
+
   if (reduced || !("IntersectionObserver" in window)) {
-    revealables.forEach(function (el) { el.classList.add("is-in"); });
+    revealables.forEach(reveal);
   } else {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.classList.add("is-in");
+        reveal(e.target);
         io.unobserve(e.target);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });

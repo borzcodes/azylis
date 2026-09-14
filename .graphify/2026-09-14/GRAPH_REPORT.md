@@ -1,20 +1,20 @@
 # Graph Report - .  (2026-09-14)
 
 ## Corpus Check
-- Large corpus: 1691 files · ~11,903,168 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
+- Large corpus: 1691 files · ~11,902,553 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
 
 ## Summary
-- 250 nodes · 338 edges · 31 communities detected
+- 248 nodes · 334 edges · 31 communities detected
 - Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 54 edges (avg confidence: 0.75)
 - Token cost: 0 input · 0 output
-- Edge kinds: conceptually_related_to: 131 · contains: 89 · calls: 57 · MODIFIES: 25 · semantically_similar_to: 15 · references: 8 · ON_BRANCH: 7 · PARENT_OF: 6
+- Edge kinds: conceptually_related_to: 131 · contains: 87 · calls: 55 · MODIFIES: 25 · semantically_similar_to: 15 · references: 8 · ON_BRANCH: 7 · PARENT_OF: 6
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
 - Included files: 1691 · Candidates: 1798
-- Excluded: 9 untracked · 0 ignored · 0 sensitive · 0 missing committed
+- Excluded: 0 untracked · 0 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
@@ -68,48 +68,48 @@ Cohesion: 0.29
 Nodes (8): Transparent/Clear Frame Style, Dark Tinted Lenses, Female Model with Long Caramel Hair, Fitx-01 Product Lifestyle Photo, Small Stud Earrings, Dark Studio Background, Clear Square-Frame Sunglasses, Cream Lace Turtleneck Top
 
 ### Community 6 - "Dev Server (dev-server.js)"
-Cohesion: 0.43
-Nodes (5): choose(), paintGallery(), paintMain(), priceHtml(), swap()
-
-### Community 7 - "Fit-02 Photo (Rimless Sunglasses, Suit)"
 Cohesion: 0.36
 Nodes (8): Brown Utility Jacket Outfit, Tortoiseshell Cat-Eye Sunglasses, Chin-Resting Editorial Pose, Female Model Wearing Sunglasses, Gold Bangle, Ring and Hoop Earring, Reel 06 Lifestyle Photo, Urban Stone Steps Setting, Reel Content Series (Social/Lifestyle)
 
-### Community 8 - "FitX-02 Photo (Rimless Sunglasses, Suit)"
+### Community 7 - "Fit-02 Photo (Rimless Sunglasses, Suit)"
 Cohesion: 0.29
 Nodes (7): Azylis Brand Marking, Men's Eyewear Category, Bronze/Tortoise-Tone Acetate Frame, Geometric Square Frame Shape, Olive-Green Tinted Lenses, Bearded Male Model, Wavy Hair, Smart-Casual Outfit, Men's Sunglasses (Product Photo)
 
-### Community 9 - "FitX-03 Photo (Car Scene, Amber Sunglasses)"
+### Community 8 - "FitX-02 Photo (Rimless Sunglasses, Suit)"
 Cohesion: 0.29
 Nodes (6): fs, http, path, port, root, types
 
-### Community 10 - "Frame Angle Product Shot"
+### Community 9 - "FitX-03 Photo (Car Scene, Amber Sunglasses)"
 Cohesion: 0.48
 Nodes (7): Beige Tailored Suit, Editorial Fashion/Lifestyle Photo, Bearded Male Model in Suit, Navy Polka-Dot Tie, Formal Menswear Outfit Styling, Rimless Blue-Tinted Sunglasses, Light Blue Striped Dress Shirt
 
-### Community 11 - "Frame Front Product Shot"
+### Community 10 - "Frame Angle Product Shot"
 Cohesion: 0.48
 Nodes (7): Beige Tailored Suit, Formal Menswear Styling Concept, Eyewear Lifestyle Product Photography, Bearded Man Model, Navy Polka-Dot Tie, Rimless Blue-Tint Sunglasses, Light Blue Striped Dress Shirt
 
-### Community 12 - "Reel-01 Photo (Urban, Clear Glasses)"
+### Community 11 - "Frame Front Product Shot"
 Cohesion: 0.43
 Nodes (7): Wrist Bracelet Accessory, Car Interior Sunset Scene, Golden Hour Dusk Lighting Aesthetic, FitX-03 Product Lifestyle Photo, Male Model with Goatee, Maroon Knit Sweater, Round Amber-Tinted Sunglasses
 
-### Community 13 - "Wear-01 Photo (Wraparound Sunglasses)"
+### Community 12 - "Reel-01 Photo (Urban, Clear Glasses)"
 Cohesion: 0.29
 Nodes (7): Azylis Tortoiseshell Round Frame (Angled Rear View), Metal Barrel Hinge Detail, Rear Three-Quarter Product Angle, Round Lens Shape, Neutral Grey Studio Backdrop, Temple Arm Engraving, Tortoiseshell Acetate Pattern
 
-### Community 14 - "Translation Engine (i18n.js)"
+### Community 13 - "Wear-01 Photo (Wraparound Sunglasses)"
 Cohesion: 0.33
 Nodes (7): Temple Engraving Branding, Azylis Eyewear Frame (Front View), Keyhole-Style Nose Bridge, Layered Acetate Temple Arms, Folded/Closed Presentation Pose, Round/Panto Lens Shape, Tortoiseshell Acetate Pattern
 
-### Community 15 - "Reel-02 Photo (Blazer, Two-Tone Sunglasses)"
+### Community 14 - "Translation Engine (i18n.js)"
 Cohesion: 0.38
 Nodes (7): Navy Ribbed Knit Sweater Styling, Clear/Transparent Acetate Eyeglasses, Male Model Close-Up Portrait, Natural Sunlight / Golden Hour Lighting, Outdoor Urban Bridge/Overpass Setting, Reel/Social Content Series (Lifestyle Eyewear), Round/Panto Frame Shape
 
-### Community 16 - "Reel-03 Photo (Framing Gesture)"
+### Community 15 - "Reel-02 Photo (Blazer, Two-Tone Sunglasses)"
 Cohesion: 0.47
 Nodes (6): Azylis Eyewear Brand, Model Wearing Sunglasses Lifestyle Photo, Male Model with Short Ginger Hair, Checked Houndstooth Blazer Outfit, Neutral Studio Backdrop, Black Angular Wraparound Sunglasses
+
+### Community 16 - "Reel-03 Photo (Framing Gesture)"
+Cohesion: 0.53
+Nodes (4): choose(), paintGallery(), paintMain(), priceHtml()
 
 ### Community 17 - "Store-01 Photo (Trench Coat, Aviators)"
 Cohesion: 0.47

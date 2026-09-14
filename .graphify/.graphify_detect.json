@@ -1702,14 +1702,14 @@
     ]
   },
   "total_files": 1691,
-  "total_words": 11901954,
+  "total_words": 11903168,
   "needs_graph": true,
-  "warning": "Large corpus: 1691 files · ~11,901,954 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.",
+  "warning": "Large corpus: 1691 files · ~11,903,168 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.",
   "skipped_sensitive": [],
   "graphifyignore_patterns": 4,
   "git": {
     "source_owner": "git",
-    "source_hash": "e3428bf0d73205f3a35cdbc1d2ac57b41b875bab",
+    "source_hash": "5c57fd1722c581a82a9ebaa4626637fdda4727d0",
     "branches": [
       "main"
     ],
@@ -1722,10 +1722,10 @@
     "source": "default-auto",
     "root": ".",
     "git_root": ".",
-    "head": "e3428bf0d73205f3a35cdbc1d2ac57b41b875bab",
+    "head": "5c57fd1722c581a82a9ebaa4626637fdda4727d0",
     "candidate_count": 1798,
     "included_count": 1691,
-    "excluded_untracked_count": 0,
+    "excluded_untracked_count": 9,
     "excluded_ignored_count": 0,
     "excluded_sensitive_count": 0,
     "missing_committed_count": 0,
